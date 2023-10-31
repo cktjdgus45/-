@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import { NavermapsProvider } from 'react-naver-maps';
-import MyMap from './components/myMap';
+// @ts-ignore
+import MyMap from './components/MyMap.tsx';
 
 function App() {
   console.log(process.env.REACT_APP_NAVER_Client_ID);
