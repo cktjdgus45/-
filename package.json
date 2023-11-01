@@ -141,5 +141,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "@types/navermaps": "^3.7.2"
   }
 }
