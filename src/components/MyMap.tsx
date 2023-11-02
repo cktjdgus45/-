@@ -31,13 +31,30 @@ export default function MyMap() {
             position.coords.latitude,
             position.coords.longitude,
         )
+
+        naver.maps.Service.fromCoordToAddr({ coords: location }, function (status, response) {
+            if (status !== naver.maps.Service.Status.OK) {
+                return alert('Something wrong!');
+            }
+
+            var result = response.v2, // 검색 결과의 컨테이너
+                address = result.address; // 검색 결과로 만든 주소
+
+            // do Something
+            infowindow.setContent(
+                '<div style="padding:10px;">' +
+                `${address.jibunAddress}` +
+                '</div>',
+            )
+        });
+
         map.setCenter(location);
         map.setZoom(10);
-        infowindow.setContent(
-            '<div style="padding:10px;">' +
-            `${location.toString()}` +
-            '</div>',
-        )
+        // infowindow.setContent(
+        //     '<div style="padding:10px;">' +
+        //     `${location.toString()}` +
+        //     '</div>',
+        // )
         infowindow.setPosition(location);
         infowindow.open(map, location) //정보창을 엽니다.
     }
