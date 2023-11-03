@@ -1,13 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Container as MapDiv, NaverMap, useNavermaps, InfoWindow } from 'react-naver-maps';
+import { coords } from '../data/latlon.ts';
+import Marker from './Marker.tsx';
 
 export default function MyMap() {
-    const navermaps = useNavermaps()
-
+    const navermaps = useNavermaps();
     const [map, setMap] = useState<naver.maps.Map | null>(null)
     const [infowindow, setInfoWindow] = useState<naver.maps.InfoWindow | null>(null)
-
+    console.log(coords);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function onSuccessGeolocation(position) {
         if (!map || !infowindow) return
@@ -73,7 +74,7 @@ export default function MyMap() {
                 onErrorGeolocation,
             )
         } else {
-            var center = map.getCenter()
+            const center = map.getCenter()
             infowindow.setContent(
                 '<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5></div>',
             )
@@ -96,6 +97,11 @@ export default function MyMap() {
                 ref={setMap}
             >
                 <InfoWindow ref={setInfoWindow} content={'³» À§Ä¡'} />
+                {
+                    coords.map((coord) =>
+                        <Marker coord={coord} />
+                    )
+                }
             </NaverMap>
         </MapDiv>
     )
