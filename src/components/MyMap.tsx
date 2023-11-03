@@ -39,6 +39,7 @@ export default function MyMap() {
 
             var result = response.v2, // 검색 결과의 컨테이너
                 address = result.address; // 검색 결과로 만든 주소
+            console.log(result, address, location);
 
             // do Something
             infowindow.setContent(
