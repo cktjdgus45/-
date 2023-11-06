@@ -1,14 +1,13 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Container as MapDiv, NaverMap, useNavermaps, InfoWindow } from 'react-naver-maps';
-import { coords } from '../data/latlon.ts';
+import { hospitals } from '../data/latlon.ts';
 import Marker from './Marker.tsx';
 
 export default function MyMap() {
     const navermaps = useNavermaps();
     const [map, setMap] = useState<naver.maps.Map | null>(null)
     const [infowindow, setInfoWindow] = useState<naver.maps.InfoWindow | null>(null)
-    console.log(coords);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function onSuccessGeolocation(position) {
         if (!map || !infowindow) return
@@ -98,8 +97,8 @@ export default function MyMap() {
             >
                 <InfoWindow ref={setInfoWindow} content={'³» À§Ä¡'} />
                 {
-                    coords.map((coord) =>
-                        <Marker coord={coord} />
+                    hospitals.map((hospital) =>
+                        <Marker coord={hospital.coord} map={map} hospital={hospital} />
                     )
                 }
             </NaverMap>

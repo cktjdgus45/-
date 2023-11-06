@@ -23,18 +23,18 @@ export const coords: Coord[] = [
 
 export const hospitals: Hospital[] = [
     {
-        name: 'aº´¿ø',
+        name: 'aë³‘ì›',
         phone: '010-0111-1111',
-        jibunAdress: '°æ±âµµ È­¼º½Ã ºÀ´ãÀ¾ 10-35',
+        jibunAdress: 'ê²½ê¸°ë„ í™”ì„±ì‹œ ë´‰ë‹´ì 10-35',
         coord: {
             lat: 37.223313,
             lng: 126.952805
         }
     },
     {
-        name: 'bº´¿ø',
+        name: 'bë³‘ì›',
         phone: '010-0000-2222',
-        jibunAdress: '°æ±âµµ È­¼º½Ã ºÀ´ãÀ¾ 11-10',
+        jibunAdress: 'ê²½ê¸°ë„ í™”ì„±ì‹œ ë´‰ë‹´ì 11-10',
         coord: {
             lat: 37.224726,
             lng: 126.947334
