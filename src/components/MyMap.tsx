@@ -98,7 +98,7 @@ export default function MyMap() {
                 <InfoWindow ref={setInfoWindow} content={'³» À§Ä¡'} />
                 {
                     hospitals.map((hospital) =>
-                        <Marker coord={hospital.coord} map={map} hospital={hospital} />
+                        <Marker coord={hospital.coord} map={map} hospital={hospital} infowindow={infowindow} />
                     )
                 }
             </NaverMap>

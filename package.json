@@ -25,7 +25,6 @@
     "css-minimizer-webpack-plugin": "^3.2.0",
     "dotenv": "^10.0.0",
     "dotenv-expand": "^5.1.0",
-    "eslint": "^8.3.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^3.1.1",
     "file-loader": "^6.2.0",
@@ -73,7 +72,10 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "env": {
+      "NODE_ENV": "development"
+    }
   },
   "browserslist": {
     "production": [
@@ -144,6 +146,8 @@
     ]
   },
   "devDependencies": {
-    "@types/navermaps": "^3.7.2"
+    "@types/navermaps": "^3.7.2",
+    "eslint": "^8.53.0",
+    "eslint-plugin-prettier": "^5.0.1"
   }
 }
