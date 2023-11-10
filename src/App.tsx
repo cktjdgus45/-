@@ -3,6 +3,7 @@ import './App.css';
 import { NavermapsProvider } from 'react-naver-maps';
 import MyMap from './components/MyMap.tsx';
 import { dfs_xy_conv } from './service/changeCoordsToGrid.ts';
+import Weather from './components/weather/weather.tsx';
 
 function App() {
 
@@ -14,8 +15,8 @@ function App() {
     <NavermapsProvider
       ncpClientId={process.env.REACT_APP_NAVER_Client_ID! as string}
     >
-      <MyMap />
-
+      {/* <MyMap /> */}
+      <Weather />
       <div>
         <a href={'https://map.naver.com/p/directions/-/-/-/transit?c=13.00,0,0,0,dh'} target="_blank" rel="noopener noreferrer">Open in NMap</a>
       </div>

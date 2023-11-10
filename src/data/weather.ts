@@ -16,7 +16,7 @@ export type SKY = {
     4: "Èå¸²",
 }
 
-export type weatherData = {
+export type resWeatherData = {
     "baseDate": string,
     "baseTime": "0500",
     "category": Code,
@@ -25,6 +25,19 @@ export type weatherData = {
     "fcstValue": string,
     "nx": number,
     "ny": number
+}
+
+export const YYYYMMDD = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    const todayDate = `${year}${month}${day}`;
+    return parseInt(todayDate);
+}
+
+export const weatherApiWithGridXY = (ny: number, nx: number) => {
+    return `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&pageNo=1&numOfRows=10&dataType=JSON&base_date=${YYYYMMDD()}&base_time=0500&nx=${ny}&ny=${nx}`.trim();
 }
 
 export const pcp = (rain: number) => { //°­¼ö·®
