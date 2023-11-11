@@ -11,7 +11,7 @@ const YO = 136; // ±â1ÁØÁ¡ YÁÂÇ¥(GRID)
 //
 
 
-export function dfs_xy_conv(code, v1, v2) {
+export const dfs_xy_conv = (code, v1, v2) => {
     const DEGRAD = Math.PI / 180.0;
     const RADDEG = 180.0 / Math.PI;
 

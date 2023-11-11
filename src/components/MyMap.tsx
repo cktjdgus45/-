@@ -1,20 +1,32 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Container as MapDiv, NaverMap, useNavermaps, InfoWindow } from 'react-naver-maps';
-import { hospitals } from '../data/latlon.ts';
+import { Coord, hospitals } from '../data/latlon.ts';
 import Marker from './Marker.tsx';
 
-export default function MyMap() {
+
+interface MyMapProps {
+    setCoord: React.Dispatch<React.SetStateAction<Coord>>;
+}
+
+export default function MyMap(props: MyMapProps) {
+    const { setCoord } = props;
     const navermaps = useNavermaps();
     const [map, setMap] = useState<naver.maps.Map | null>(null)
     const [infowindow, setInfoWindow] = useState<naver.maps.InfoWindow | null>(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function onSuccessGeolocation(position) {
         if (!map || !infowindow) return
+        const myPosition: Coord = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+        }
         const location = new navermaps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude,
+            myPosition.lat,
+            myPosition.lng
         )
+
+        setCoord(myPosition);
         naver.maps.Service.fromCoordToAddr({ coords: location }, function (status, response) {
             if (status !== naver.maps.Service.Status.OK) {
                 return alert('Something wrong!');
@@ -82,27 +94,33 @@ export default function MyMap() {
     }, [map, infowindow, onSuccessGeolocation, onErrorGeolocation])
 
     return (
-        <MapDiv
-            style={{
-                position: 'relative',
-                width: '100%',
-                height: '600px',
-            }}
-        >
-            <NaverMap
-                defaultCenter={new navermaps.LatLng(37.5666805, 126.9784147)}
-                defaultZoom={10}
-                defaultMapTypeId={navermaps.MapTypeId.NORMAL}
-                ref={setMap}
+        <>
+            <MapDiv
+                style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '600px',
+                }}
             >
-                <InfoWindow ref={setInfoWindow} content={'내 위치'} />
-                {
-                    hospitals.map((hospital) =>
-                        <Marker coord={hospital.coord} map={map} hospital={hospital} infowindow={infowindow} />
-                    )
-                }
-            </NaverMap>
-        </MapDiv>
+                <NaverMap
+                    defaultCenter={new navermaps.LatLng(37.5666805, 126.9784147)}
+                    defaultZoom={10}
+                    defaultMapTypeId={navermaps.MapTypeId.NORMAL}
+                    ref={setMap}
+                >
+                    <InfoWindow ref={setInfoWindow} content={'내 위치'} />
+                    {
+                        hospitals.map((hospital) =>
+                            <Marker coord={hospital.coord} map={map} hospital={hospital} infowindow={infowindow} />
+                        )
+                    }
+                </NaverMap>
+
+            </MapDiv>
+            <div>
+                <a href={'https://map.naver.com/p/directions/-/-/-/transit?c=13.00,0,0,0,dh'} target="_blank" rel="noopener noreferrer">Open in NMap</a>
+            </div>
+        </>
     )
 }
 

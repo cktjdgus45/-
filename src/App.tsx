@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { NavermapsProvider } from 'react-naver-maps';
 import MyMap from './components/MyMap.tsx';
-import { dfs_xy_conv } from './service/changeCoordsToGrid.ts';
 import Weather from './components/weather/weather.tsx';
+import { Coord } from './data/latlon.ts';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
+import Header from './components/UI/Header.tsx';
 
 function App() {
-
-
-  let rs = dfs_xy_conv("toXY", 37.579871128849334, 126.98935225645432);
-  console.log(rs);
-
+  const [coord, setCoord] = useState<Coord>({ lat: 0, lng: 0 });
   return (
-    <NavermapsProvider
-      ncpClientId={process.env.REACT_APP_NAVER_Client_ID! as string}
-    >
-      {/* <MyMap /> */}
-      <Weather />
-      <div>
-        <a href={'https://map.naver.com/p/directions/-/-/-/transit?c=13.00,0,0,0,dh'} target="_blank" rel="noopener noreferrer">Open in NMap</a>
-      </div>
-
-      {/*  */}
+    <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_Client_ID! as string}>
+      <BrowserRouter>
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/map" element={< MyMap setCoord={setCoord} />} />
+            <Route path="/weather" element={<Weather coord={coord} setCoord={setCoord} />} />
+          </Routes>
+        </main>
+      </BrowserRouter>
     </NavermapsProvider>
   );
 }
