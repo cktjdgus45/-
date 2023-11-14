@@ -12,15 +12,13 @@ import {
 import Header from './components/UI/Header.tsx';
 
 function App() {
-  const [coord, setCoord] = useState<Coord>({ lat: 0, lng: 0 });
-  console.log(coord);
   return (
     <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_Client_ID! as string}>
       <BrowserRouter>
         <Header />
         <main>
           <Routes>
-            <Route path="/map" element={< MyMap setCoord={setCoord} />} />
+            <Route path="/map" element={< MyMap />} />
             <Route path="/weather" element={<WeatherTemplate />} />
           </Routes>
         </main>

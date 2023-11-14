@@ -11,7 +11,7 @@ const YO = 136; // ±â1ÁØÁ¡ YÁÂÇ¥(GRID)
 //
 
 
-export const dfs_xy_conv = (code, v1, v2) => {
+export const dfs_xy_conv = (code: "toXY" | "not", v1: number, v2: number,) => {
     const DEGRAD = Math.PI / 180.0;
     const RADDEG = 180.0 / Math.PI;
 
@@ -40,6 +40,8 @@ export const dfs_xy_conv = (code, v1, v2) => {
         theta *= sn;
         rs['x'] = Math.floor(ra * Math.sin(theta) + XO + 0.5);
         rs['y'] = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
+        return rs;
+
     }
     else {
         rs['x'] = v1;
@@ -66,6 +68,7 @@ export const dfs_xy_conv = (code, v1, v2) => {
         let alon = theta / sn + olon;
         rs['lat'] = alat * RADDEG;
         rs['lng'] = alon * RADDEG;
+        return rs;
+
     }
-    return rs;
 }
