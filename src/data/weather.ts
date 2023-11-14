@@ -7,6 +7,14 @@ export type PTY = {
     4: "소나기",
 }
 
+export type Weather = {
+    "baseTime": "0500",
+    "category": Code,
+    "fcstDate": string,
+    "fcstTime": "0600",
+    "fcstValue": string,
+}
+
 export type FcstTime = "0600" | "0700" | "0800" | "0900" | "1000" | "1100" | "1200" | "1300" | "1400" | "1500" | "1600" | "1700" | "1800" | "1900" | "2000" | "2100" | "2200" | "2300" | "0000";
 
 export type SKY = {
@@ -17,14 +25,11 @@ export type SKY = {
 }
 
 export type resWeatherData = {
-    "baseDate": string,
-    "baseTime": "0500",
-    "category": Code,
-    "fcstDate": string,
-    "fcstTime": FcstTime,
-    "fcstValue": string,
-    "nx": number,
-    "ny": number
+    "response": {
+        body: {
+            items: Weather[];
+        }
+    }
 }
 
 export const YYYYMMDD = () => {
@@ -37,7 +42,8 @@ export const YYYYMMDD = () => {
 }
 
 export const weatherApiWithGridXY = (ny: number, nx: number) => {
-    return `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&pageNo=1&numOfRows=10&dataType=JSON&base_date=${YYYYMMDD()}&base_time=0500&nx=${ny}&ny=${nx}`.trim();
+    console.log(ny, nx);
+    return `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&pageNo=${1}&numOfRows=${505}&dataType=${'JSON'}&base_date=${YYYYMMDD()}&base_time=${'0500'}&nx=${ny}&ny=${nx}`.trim();
 }
 
 export const pcp = (rain: number) => { //강수량
@@ -49,3 +55,4 @@ export const pcp = (rain: number) => { //강수량
 
     else return "50.0mm이상";
 }
+
