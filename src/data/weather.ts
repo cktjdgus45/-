@@ -1,10 +1,40 @@
 export type Code = "TMP" | "TMN" | "TMX" | "SKY" | "PTY" | "PCP" | "POP";
 export type PTY = {
-    0: "¾øÀ½",
-    1: "ºñ",
-    2: "ºñ/´«",
-    3: "´«",
-    4: "¼Ò³ª±â",
+    0: "ì—†ìŒ",
+    1: "ë¹„",
+    2: "ë¹„/ëˆˆ",
+    3: "ëˆˆ",
+    4: "ì†Œë‚˜ê¸°",
+}
+const myMap: Map<Code, Weather[]> = new Map();
+myMap.set("TMP", []);
+myMap.set("TMN", []);
+myMap.set("TMX", []);
+myMap.set("SKY", []);
+myMap.set("PTY", []);
+myMap.set("PCP", []);
+myMap.set("POP", []);
+
+
+export const weathersClassifiedWithCatergory = (element: Weather) => {
+    for (const [key, value] of myMap) {
+        if (value.length === 84) {
+            value.splice(0, value.length / 2);
+        }
+        if (key === "PCP" && value.length === 42) {
+            value.splice(0, value.length / 2);
+        }
+        if (key === "TMX" && value.length === 4) {
+            value.splice(0, value.length / 2);
+        }
+        if (key === "TMN" && value.length === 2) {
+            value.splice(0, value.length / 2);
+        }
+        if (element.category === key) {
+            value.push(element);
+        }
+    }
+    return myMap;
 }
 
 export type Weather = {
@@ -16,18 +46,19 @@ export type Weather = {
 }
 
 export type FcstTime = "0600" | "0700" | "0800" | "0900" | "1000" | "1100" | "1200" | "1300" | "1400" | "1500" | "1600" | "1700" | "1800" | "1900" | "2000" | "2100" | "2200" | "2300" | "0000";
-
 export type SKY = {
-    1: "¸¼À½",
-    2: "ºñ/´«",
-    3: "±¸¸§¸¹À½",
-    4: "Èå¸²",
+    1: "ë§‘ìŒ",
+    2: "ë¹„/ëˆˆ",
+    3: "êµ¬ë¦„ë§ìŒ",
+    4: "íë¦¼",
 }
 
 export type resWeatherData = {
     "response": {
         body: {
-            items: Weather[];
+            items: {
+                item: Weather[]
+            };
         }
     }
 }
@@ -46,13 +77,13 @@ export const weatherApiWithGridXY = (ny: number, nx: number) => {
     return `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&pageNo=${1}&numOfRows=${505}&dataType=${'JSON'}&base_date=${YYYYMMDD()}&base_time=${'0500'}&nx=${ny}&ny=${nx}`.trim();
 }
 
-export const pcp = (rain: number) => { //°­¼ö·®
-    if (rain < 1.0) return "1.0mm¹Ì¸¸ ";
+export const pcp = (rain: number) => { //ê°•ìˆ˜ëŸ‰
+    if (rain < 1.0) return "1.0mmë¯¸ë§Œ ";
 
     else if (rain >= 1.0 && rain < 30.0) return "1.0~29.0mm";
 
     else if (rain >= 30.0 && rain < 50.0) return "30.0~50.0mm";
 
-    else return "50.0mmÀÌ»ó";
+    else return "50.0mmì´ìƒ";
 }
 
