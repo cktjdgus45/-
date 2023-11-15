@@ -72,6 +72,16 @@ export const YYYYMMDD = () => {
     return parseInt(todayDate);
 }
 
+export const nowHours = () => {
+    let now = new Date();
+    let hours: string | number = now.getHours();
+
+    hours = hours < 10 ? '0' + hours : hours;
+
+    let time = '' + hours + "00";
+    return time;
+}
+
 export const weatherApiWithGridXY = (ny: number, nx: number) => {
     console.log(ny, nx);
     return `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&pageNo=${1}&numOfRows=${505}&dataType=${'JSON'}&base_date=${YYYYMMDD()}&base_time=${'0500'}&nx=${ny}&ny=${nx}`.trim();
