@@ -9,7 +9,7 @@ const Header = () => {
     return (
         <>
             <nav>
-                <ul>
+                <ul className='bg-red-200'>
 
                     <li>
                         <span onClick={() => handleNavigate('/')}>Home</span>

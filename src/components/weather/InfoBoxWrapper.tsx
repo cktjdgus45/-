@@ -29,11 +29,13 @@ const InfoBoxWrapper = (props: InfoBoxWrapperProps) => {
     }
 
     return (
-        <>
+        <div className='grid w-full bg-red grid-cols-6'>
             {
-                <InfoBox tmpsky={tmpsky} />
+                tmpsky.map(item => (
+                    <InfoBox tmp={item.tmp} sky={item.sky} />
+                ))
             }
-        </>
+        </div>
     )
 }
 export default InfoBoxWrapper;

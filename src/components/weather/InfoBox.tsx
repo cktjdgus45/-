@@ -2,18 +2,22 @@ import React from 'react';
 import { Weather } from '../../data/weather';
 
 interface InfoBoxProps {
-    tmpsky: { tmp: Weather, sky: Weather }[]
+    tmp: Weather,
+    sky: Weather
 }
-const InfoBox = ({ tmpsky }: InfoBoxProps) => {
+const InfoBox = ({ tmp, sky }: InfoBoxProps) => {
     return (
-        <>
-            {tmpsky.map(item => (
-                <>
-                    {item.sky.fcstValue}
-                    {item.tmp.fcstValue}
-                </>
-            ))}
-        </>
+        <div className="flex flex-col ">
+            <div>
+                {tmp.fcstTime}
+            </div>
+            <div>
+                {tmp.fcstValue}
+            </div>
+            <div>
+                {sky.fcstValue}
+            </div>
+        </div>
     )
 }
 
