@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       colors: {
         'main-color': '#FF914D',
-        'sub-color': '#F9F5EC'
+        'sub-color': '#F9F5EC',
+        'span-color': '#231F1F'
       },
       flexBasis: {
         '7/10': '70%',

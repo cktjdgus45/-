@@ -16,9 +16,8 @@ function App() {
     <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_Client_ID! as string}>
       <BrowserRouter>
         <div className='w-[880px] bg-sub-color flex flex-col h-full'>
-          <h3 className='text-slate-100 text-8xl'>asdasd</h3>
           <Header />
-          <main>
+          <main className='basis-7/10 bg-slate-500'>
             <Routes>
               <Route path="/" element={< Community />} />
               <Route path="/map" element={< MyMap />} />
