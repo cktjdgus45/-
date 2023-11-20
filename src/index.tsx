@@ -8,7 +8,7 @@ import store from './store/store.ts';
 const root = ReactDOM.createRoot(document.getElementById('root')! as Element);
 root.render(
   <Provider store={store}>
-    <div className='w-screen h-screen flex justify-center bg-red-200'>
+    <div className='w-screen h-screen flex justify-center'>
       <App />
     </div>
   </Provider>

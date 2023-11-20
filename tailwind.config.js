@@ -5,8 +5,10 @@ module.exports = {
     extend: {
       colors: {
         'main-color': '#FF914D',
+        'hover-main-color': '#EF7931',
         'sub-color': '#F9F5EC',
-        'span-color': '#231F1F'
+        'span-color': '#231F1F',
+        'third-color': '#F3F3F3',
       },
       flexBasis: {
         '7/10': '70%',

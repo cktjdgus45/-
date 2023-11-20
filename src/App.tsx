@@ -17,7 +17,7 @@ function App() {
       <BrowserRouter>
         <div className='w-[880px] bg-sub-color flex flex-col h-full'>
           <Header />
-          <main className='basis-7/10 bg-slate-500'>
+          <main className='basis-7/10 bg-third-color'>
             <Routes>
               <Route path="/" element={< Community />} />
               <Route path="/map" element={< MyMap />} />

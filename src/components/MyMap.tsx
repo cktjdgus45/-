@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { Container as MapDiv, NaverMap, useNavermaps, InfoWindow } from 'react-naver-maps';
 import { hospitals } from '../data/latlon.ts';
 import Marker from './Marker.tsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsSplitUpAndLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -60,7 +62,7 @@ export default function MyMap() {
                 style={{
                     position: 'relative',
                     width: '100%',
-                    height: '600px',
+                    height: '100%',
                 }}
             >
                 <NaverMap
@@ -76,16 +78,14 @@ export default function MyMap() {
                         )
                     }
                 </NaverMap>
-
+                <button className='absolute right-1 bottom-5 rounded-full transition-transform duration-300 ease-linear transform'>
+                    <a href={'https://map.naver.com/p/directions/-/-/-/transit?c=13.00,0,0,0,dh'} target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faArrowsSplitUpAndLeft} className='text-3xl text-main-color p-4 font-bold hover:scale-105 shadow-md rounded-full' />
+                    </a>
+                </button>
             </MapDiv>
-            <div>
-                <a href={'https://map.naver.com/p/directions/-/-/-/transit?c=13.00,0,0,0,dh'} target="_blank" rel="noopener noreferrer">Open in NMap</a>
-            </div>
         </>
     )
 }
 
-function dispatch(arg0: any) {
-    throw new Error('Function not implemented.');
-}
 
