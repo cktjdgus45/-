@@ -45,13 +45,13 @@ const WeatherTemplate = () => {
     }, [data, isLoading])
 
     return (
-        <>
+        <div className='w-full h-full'>
             {
                 !isLoading && data && classifedWeather ?
                     <InfoBoxWrapper codes={["TMP", "SKY"]} classifedWeather={classifedWeather} />
                     : "로딩중입니다"
             }
-        </>
+        </div>
     )
 }
 

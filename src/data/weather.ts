@@ -6,6 +6,14 @@ export type PTY = {
     3: "눈",
     4: "소나기",
 }
+const SKY = {
+    1: "맑음",
+    2: "비/눈",
+    3: "구름많음",
+    4: "흐림",
+}
+
+export const sky = { ...SKY };
 const myMap: Map<Code, Weather[]> = new Map();
 myMap.set("TMP", []);
 myMap.set("TMN", []);
@@ -38,20 +46,15 @@ export const weathersClassifiedWithCatergory = (element: Weather) => {
 }
 
 export type Weather = {
-    "baseTime": "0500",
+    "baseTime": string,
     "category": Code,
     "fcstDate": string,
-    "fcstTime": "0600",
+    "fcstTime": string,
     "fcstValue": string,
 }
 
 export type FcstTime = "0600" | "0700" | "0800" | "0900" | "1000" | "1100" | "1200" | "1300" | "1400" | "1500" | "1600" | "1700" | "1800" | "1900" | "2000" | "2100" | "2200" | "2300" | "0000";
-export type SKY = {
-    1: "맑음",
-    2: "비/눈",
-    3: "구름많음",
-    4: "흐림",
-}
+
 
 export type resWeatherData = {
     "response": {
