@@ -14,6 +14,12 @@ module.exports = {
         '7/10': '70%',
         '2/10': '20%',
         '1/10': '10%',
+      },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        }
       }
     }
   },

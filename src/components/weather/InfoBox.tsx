@@ -28,12 +28,14 @@ const InfoBox = ({ tmp, sky }: InfoBoxProps) => {
             </div>
             <div className='p-4 '>
                 <div className="relative">
-                    <p className="relative p-3 text-xl">
-                        {tmp.fcstValue}
+                    <div className="relative p-3 text-xl">
+                        <span>
+                            {tmp.fcstValue}
+                        </span>
                         <div className="absolute right-0 top-0">
                             <FontAwesomeIcon className='text-[10px] font-extrabold' icon={faO} />
                         </div>
-                    </p>
+                    </div>
                 </div>
             </div>
         </motion.div>

@@ -8,6 +8,7 @@ import { setXY } from '../../store/features/coords.ts';
 import { dfs_xy_conv } from '../../service/changeCoordsToGrid.ts';
 import InfoBoxWrapper from './InfoBoxWrapper.tsx';
 import Loader from '../UI/Loader.tsx';
+import TodayWeather from './TodayWeather.tsx';
 
 
 const WeatherTemplate = () => {
@@ -41,12 +42,17 @@ const WeatherTemplate = () => {
             }
         }
     }, [data, isLoading])
-
+    classifedWeather?.forEach(item => console.log(item))
     return (
         <div className='w-full h-full'>
             {
                 !isLoading && data && classifedWeather ?
-                    <InfoBoxWrapper codes={["TMP", "SKY"]} classifedWeather={classifedWeather} />
+                    (
+                        <div className='relative w-full h-full                       '>
+                            <TodayWeather codes={["TMP", "SKY", "TMX", "TMN"]} classifedWeather={classifedWeather} />
+                            <InfoBoxWrapper codes={["TMP", "SKY"]} classifedWeather={classifedWeather} />
+                        </div>
+                    )
                     : <Loader isLoading={true} color='#FF914D' />
             }
         </div>
