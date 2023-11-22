@@ -7,12 +7,12 @@ import { RootState } from '../../store/store.ts';
 import { setXY } from '../../store/features/coords.ts';
 import { dfs_xy_conv } from '../../service/changeCoordsToGrid.ts';
 import InfoBoxWrapper from './InfoBoxWrapper.tsx';
+import Loader from '../UI/Loader.tsx';
 
 
 const WeatherTemplate = () => {
     const storeValue = useSelector((state: RootState) => state.coords);
     const { nx, ny } = storeValue;
-    console.log(nx, ny);
     const dispatch = useDispatch();
     useEffect(() => {
         if (navigator.geolocation) {
@@ -21,8 +21,6 @@ const WeatherTemplate = () => {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     const nxny = dfs_xy_conv("toXY", lat, lng)! as { x: number, y: number };
-                    console.log(nxny);
-
                     dispatch(setXY({ nx: nxny.x, ny: nxny.y }));
                 }
             );
@@ -49,7 +47,7 @@ const WeatherTemplate = () => {
             {
                 !isLoading && data && classifedWeather ?
                     <InfoBoxWrapper codes={["TMP", "SKY"]} classifedWeather={classifedWeather} />
-                    : "로딩중입니다"
+                    : <Loader isLoading={true} color='#FF914D' />
             }
         </div>
     )
