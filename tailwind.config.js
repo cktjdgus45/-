@@ -4,11 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'main-color': '#FF914D',
-        'hover-main-color': '#EF7931',
-        'sub-color': '#F9F5EC',
+        'main-color': '#776B5D',
+        'hover-main-color': '#B0A695',
+        'sub-color': '#EBE3D5',
         'span-color': '#231F1F',
-        'third-color': '#F3F3F3',
+        'third-color': '#F3EEEA',
       },
       flexBasis: {
         '7/10': '70%',

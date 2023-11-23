@@ -38,14 +38,13 @@ const InfoBoxWrapper = (props: InfoBoxWrapperProps) => {
     const [page, setPage] = useState(0);
     const [back, setBack] = useState(false);
     const prevPage = () => {
-        const maxPage = Math.floor(tmpsky.length / OFFSET) - 1;
-        setPage(prev => prev > 0 ? page - 1 : maxPage);
+        setPage(prev => prev > 0 ? page - 1 : 0);
         setBack(true);
     }
 
     const nextPage = () => {
-        const maxPage = Math.floor(tmpsky.length / OFFSET) - 1;
-        setPage(prev => prev === maxPage ? 0 : prev + 1);
+        const maxPage = Math.floor(tmpskypty.length / OFFSET) - 1;
+        setPage(prev => prev === maxPage ? maxPage : prev + 1);
         setBack(false);
     }
     const { codes, classifedWeather } = props;
@@ -61,12 +60,18 @@ const InfoBoxWrapper = (props: InfoBoxWrapperProps) => {
         if (YYYYMMDD() + nowHours().toString() <= item.fcstDate + item.fcstTime)
             return item;
     });
-    const tmpsky: { tmp: Weather, sky: Weather }[] = [];
-    if (tmps && skys) {
+    // eslint-disable-next-line array-callback-return
+    const ptys = classifedWeather?.get(codes[2])?.filter((item) => {
+        if (YYYYMMDD() + nowHours().toString() <= item.fcstDate + item.fcstTime)
+            return item;
+    });
+    const tmpskypty: { tmp: Weather, sky: Weather, pty: Weather }[] = [];
+    if (tmps && skys && ptys) {
         for (let idx = 0; idx < tmps.length; idx++) {
             const tmp = tmps[idx];
             const sky = skys[idx];
-            tmpsky.push({ tmp, sky });
+            const pty = ptys[idx];
+            tmpskypty.push({ tmp, sky, pty });
         }
     }
 
@@ -75,13 +80,13 @@ const InfoBoxWrapper = (props: InfoBoxWrapperProps) => {
             <div className='relative w-full h-full'>
                 <motion.div custom={back} variants={rowVariants} initial="hidden" animate="visible" exit="exit" transition={{ type: "tween", duration: 1 }} key={page} className='grid w-full h-32 grid-cols-6 absolute bottom-1/4'>
                     {
-                        tmpsky.slice(OFFSET * page, OFFSET * page + OFFSET).map((item, i) => (
-                            <InfoBox key={i} tmp={item.tmp} sky={item.sky} />
+                        tmpskypty.slice(OFFSET * page, OFFSET * page + OFFSET).map((item, i) => (
+                            <InfoBox key={i} tmp={item.tmp} sky={item.sky} pty={item.pty} />
                         ))
                     }
                 </motion.div>
-                <FontAwesomeIcon className='text-white absolute left-0 bottom-[26%] cursor-pointer text-3xl font-bold ' onClick={prevPage} icon={faArrowLeft} />
-                <FontAwesomeIcon className='text-white absolute right-0 bottom-[26%] cursor-pointer text-3xl font-bold ' onClick={nextPage} icon={faArrowRight} />
+                <FontAwesomeIcon className='absolute top-1/2 left-0 transform -translate-y-1/5 cursor-pointer text-3xl font-bold ' onClick={prevPage} icon={faArrowLeft} />
+                <FontAwesomeIcon className='absolute top-1/2 right-0 transform -translate-y-1/5 cursor-pointer text-3xl font-bold ' onClick={nextPage} icon={faArrowRight} />
             </div>
         </AnimatePresence>
     )

@@ -42,15 +42,14 @@ const WeatherTemplate = () => {
             }
         }
     }, [data, isLoading])
-    classifedWeather?.forEach(item => console.log(item))
     return (
         <div className='w-full h-full'>
             {
                 !isLoading && data && classifedWeather ?
                     (
                         <div className='relative w-full h-full                       '>
-                            <TodayWeather codes={["TMP", "SKY", "TMX", "TMN"]} classifedWeather={classifedWeather} />
-                            <InfoBoxWrapper codes={["TMP", "SKY"]} classifedWeather={classifedWeather} />
+                            <TodayWeather codes={["TMP", "SKY", "TMX", "TMN", "PTY"]} classifedWeather={classifedWeather} />
+                            <InfoBoxWrapper codes={["TMP", "SKY", "PTY"]} classifedWeather={classifedWeather} />
                         </div>
                     )
                     : <Loader isLoading={true} color='#FF914D' />
