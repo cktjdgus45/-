@@ -4,11 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'main-color': '#776B5D',
-        'hover-main-color': '#B0A695',
-        'sub-color': '#EBE3D5',
+        'main-color': '#776B5D',//1
+        'hover-main-color': '#B0A695',//2
+        'sub-color': '#EBE3D5',//3
         'span-color': '#231F1F',
-        'third-color': '#F3EEEA',
+        'third-color': '#F3EEEA',//4
       },
       flexBasis: {
         '7/10': '70%',
@@ -24,4 +24,10 @@ module.exports = {
     }
   },
   plugins: [],
+  variants: {
+    extend: {
+      backgroundColor: ['active'],
+      textColor: ['active'],
+    },
+  },
 };

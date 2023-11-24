@@ -5,16 +5,35 @@ import { resWeatherData, weatherApiWithGridXY, weathersClassifiedWithCatergory, 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store.ts';
 import { setXY } from '../../store/features/coords.ts';
+import { setAddress } from '../../store/features/address.ts';
 import { dfs_xy_conv } from '../../service/changeCoordsToGrid.ts';
 import InfoBoxWrapper from './InfoBoxWrapper.tsx';
 import Loader from '../UI/Loader.tsx';
 import TodayWeather from './TodayWeather.tsx';
+import { useNavermaps } from 'react-naver-maps';
 
 
 const WeatherTemplate = () => {
-    const storeValue = useSelector((state: RootState) => state.coords);
-    const { nx, ny } = storeValue;
     const dispatch = useDispatch();
+    const storeValue = useSelector((state: RootState) => state.coords);
+    const storeValue2 = useSelector((state: RootState) => state.address);
+    const { nx, ny } = storeValue;
+    const { name } = storeValue2;
+    console.log(name);
+    const navermaps = useNavermaps();
+    const latlong = dfs_xy_conv("not", nx, ny)! as { lat: number, lng: number };
+    const location = new navermaps.LatLng(
+        latlong?.lat! as number,
+        latlong?.lng! as number
+    )
+    naver.maps.Service.fromCoordToAddr({ coords: location }, function (status, response) {
+        if (status !== naver.maps.Service.Status.OK) {
+            return alert('Something wrong!');
+        }
+        const result = response.v2;
+        const address = result.address;
+        dispatch(setAddress({ name: address.jibunAddress }));
+    });
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -33,6 +52,7 @@ const WeatherTemplate = () => {
 
     const { data, isLoading } = useSWR<resWeatherData>(weatherApiWithGridXY(nx, ny), fetcher);
     const [classifedWeather, setClassfiedWeather] = useState<Map<Code, Weather[]>>();
+    console.log(data, isLoading);
     useEffect(() => {
         if (!isLoading && data) {
             const weathers = data?.response.body.items.item;
@@ -52,7 +72,7 @@ const WeatherTemplate = () => {
                             <InfoBoxWrapper codes={["TMP", "SKY", "PTY"]} classifedWeather={classifedWeather} />
                         </div>
                     )
-                    : <Loader isLoading={true} color='#FF914D' />
+                    : <Loader isLoading={true} color='#776B5D' />
             }
         </div>
     )

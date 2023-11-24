@@ -67,6 +67,33 @@ export type resWeatherData = {
     }
 }
 
+export const miseGrade = {
+    1: '좋음',
+    2: '보통',
+    3: '나쁨',
+    4: '매우나쁨',
+}
+
+export type MiseDust = {
+    dataTime: string;
+    pm10Grade: string;
+    pm10Value: string;
+    pm25Grade: string;
+    pm25Value: string;
+}
+export type resMiseData = {
+    response: {
+        body: {
+            items: MiseDust[];
+        }
+    }
+}
+
+
+
+
+
+
 export const YYYYMMDD = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -88,6 +115,21 @@ export const nowHours = () => {
 
 export const weatherApiWithGridXY = (ny: number, nx: number) => { //기상청
     return `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&pageNo=${1}&numOfRows=${505}&dataType=${'JSON'}&base_date=${YYYYMMDD()}&base_time=${'0500'}&nx=${ny}&ny=${nx}`.trim();
+}
+
+export const tmxTmyCoordsWithAddress = (address: string) => {
+    console.log(address);
+    return `https://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getTMStdrCrdnt?serviceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&returnType=${'json'}&numOfRows=${100}&pageNo=${1}&umdName=${address}`.trim();
+}
+
+export const stationNameWithTmxTmy = (tmx: string, tmy: string) => {
+    console.log(tmx, tmy);
+    return `https://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList?serviceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&returnType=${'json'}&tmX=${Number(tmx)}6&tmY=${Number(tmy)}&ver=${1.1}`.trim();
+}
+
+export const miseDustWithStationName = (stationName: string) => {
+    console.log(stationName);
+    return `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&returnType=${'json'}&numOfRows=${100}&pageNo=${1}&stationName=${stationName}&dataTerm=${'DAILY'}&ver=${'1.0'}`;
 }
 
 export const pcp = (rain: number) => { //강수량

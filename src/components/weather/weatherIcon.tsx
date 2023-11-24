@@ -1,12 +1,12 @@
 /* eslint-disable no-mixed-operators */
 import React from 'react';
-interface IconProps {
+interface WeatherIconProps {
     skyState: number;
     ptyState: number;
     isNight: boolean;
 }
 
-const Icon = ({ skyState, isNight, ptyState }: IconProps) => {
+const WeatherIcon = ({ skyState, isNight, ptyState }: WeatherIconProps) => {
     const publicUrl: string = process.env.PUBLIC_URL ?? '';
     return (
         <>
@@ -31,4 +31,4 @@ const Icon = ({ skyState, isNight, ptyState }: IconProps) => {
     )
 }
 
-export default Icon;
+export default WeatherIcon;

@@ -7,7 +7,7 @@ const Footer = () => {
                 <img alt='logo' src={process.env.PUBLIC_URL + '/logo.png'} />
                 <p className='mt-2 text-sm text-span-color font-semibold'>@2023오늘도안전하개 All rights reserved</p>
             </div>
-            <img className='bg-contain bg-center w-[200px] h-[140px]' src={process.env.PUBLIC_URL + '/foot.png'} alt="foots" />
+            <img className='bg-contain bg-center w-[200px] h-[140px]' src={process.env.PUBLIC_URL + '/bone.png'} alt="bone" />
         </footer>
     )
 }

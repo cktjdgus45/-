@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
-import { Code, Weather, YYYYMMDD, nowHours, sky } from '../../data/weather.ts';
-import Icon from '../UI/Icon.tsx';
-import { useNavermaps } from 'react-naver-maps';
-import { dfs_xy_conv } from '../../service/changeCoordsToGrid.ts';
+import React from 'react';
+import { Code, MiseDust, Weather, YYYYMMDD, miseDustWithStationName, nowHours, resMiseData, sky, stationNameWithTmxTmy, tmxTmyCoordsWithAddress } from '../../data/weather.ts';
+import Icon from '../weather/weatherIcon.tsx';
+import useSWR from 'swr';
+import { fetcher } from '../../network/fetcher.ts';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store.ts';
+import Loader from '../UI/Loader.tsx';
 
 interface TodayWeatherProps {
     classifedWeather: Map<Code, Weather[]> | undefined;
     codes: Code[];
 }
 const TodayWeather = (props: TodayWeatherProps) => {
-    const [address, setAddress] = useState<string>();
+    const storeValue2 = useSelector((state: RootState) => state.address);
+    const { name } = storeValue2;
+
+    // const [address, setAddress] = useState<string>();
     const { codes, classifedWeather } = props;
     // eslint-disable-next-line array-callback-return
     const tmps = classifedWeather?.get(codes[0])?.filter((item) => {
@@ -36,26 +42,29 @@ const TodayWeather = (props: TodayWeatherProps) => {
         if (YYYYMMDD() + nowHours().toString() <= item.fcstDate + item.fcstTime)
             return item;
     });
-    const navermaps = useNavermaps();
-    const latlong = skys && dfs_xy_conv("not", skys[0].nx, skys[0].ny)! as { lat: number, lng: number };
 
-    const location = new navermaps.LatLng(
-        latlong?.lat! as number,
-        latlong?.lng! as number
-    )
-    naver.maps.Service.fromCoordToAddr({ coords: location }, function (status, response) {
-        if (status !== naver.maps.Service.Status.OK) {
-            return alert('Something wrong!');
-        }
-        const result = response.v2;
-        const address = result.address;
-        setAddress(address.jibunAddress);
-    });
+    const { data: tmxtmy } = useSWR(tmxTmyCoordsWithAddress(name?.slice(8, 11)! as string), fetcher);
+    const { data: stationName } = useSWR(tmxtmy ? stationNameWithTmxTmy(tmxtmy.response.body.items[0]["tmX"], tmxtmy.response.body.items[0]["tmY"]) : null, fetcher);
+    const { data: miseDust, isLoading } = useSWR<resMiseData>(stationName ? miseDustWithStationName(stationName.response.body.items[0]["stationName"]) : null, fetcher);
     return (
         <div className='absolute top-0 w-full flex flex-col items-center  bg-main-color text-white py-2 px-1 h-1/2'>
+            <div className=' absolute right-0 bottom-0 bg-slate-300 flex'>
+                {isLoading ? (<Loader isLoading={isLoading} color='#776B5D' />) : (
+                    <>
+                        <div>
+                            {miseDust?.response.body.items[0].pm10Grade}10grade
+                            {miseDust?.response.body.items[0].pm10Value}10value
+                        </div>
+                        <div>
+                            {miseDust?.response.body.items[0].pm25Grade}25grade
+                            {miseDust?.response.body.items[0].pm25Value}25value
+                        </div>
+                    </>
+                )}
+            </div>
             {tmps && skys && tmxs && tmns && ptys && (
                 <>
-                    <h1 className='text-2xl font-normal'>{address?.slice(4, 11)}</h1>
+                    <h1 className='text-2xl font-normal'>{name?.slice(7, 11).trim()}</h1>
                     <h4 className='text-base font-normal'>{sky[skys[0].fcstValue]}</h4>
                     <div className='p-4 text-8xl font-extrabold'>
                         <Icon isNight={'1800' <= tmps[0].fcstTime || '0700' > tmps[0].fcstTime} skyState={Number(skys[0].fcstValue)} ptyState={Number(ptys[0].fcstValue)} />

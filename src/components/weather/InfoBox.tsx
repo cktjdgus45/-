@@ -1,8 +1,8 @@
 /* eslint-disable no-self-compare */
 import React from 'react';
 import { Weather } from '../../data/weather';
+import Icon from '../weather/weatherIcon.tsx';
 import { motion } from 'framer-motion';
-import Icon from '../UI/Icon.tsx';
 
 interface InfoBoxProps {
     tmp: Weather;
