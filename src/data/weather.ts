@@ -118,17 +118,14 @@ export const weatherApiWithGridXY = (ny: number, nx: number) => { //기상청
 }
 
 export const tmxTmyCoordsWithAddress = (address: string) => {
-    console.log(address);
     return `https://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getTMStdrCrdnt?serviceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&returnType=${'json'}&numOfRows=${100}&pageNo=${1}&umdName=${address}`.trim();
 }
 
 export const stationNameWithTmxTmy = (tmx: string, tmy: string) => {
-    console.log(tmx, tmy);
     return `https://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList?serviceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&returnType=${'json'}&tmX=${Number(tmx)}6&tmY=${Number(tmy)}&ver=${1.1}`.trim();
 }
 
 export const miseDustWithStationName = (stationName: string) => {
-    console.log(stationName);
     return `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey=${process.env.REACT_APP_WEAHTER_ServiceKey}&returnType=${'json'}&numOfRows=${100}&pageNo=${1}&stationName=${stationName}&dataTerm=${'DAILY'}&ver=${'1.0'}`;
 }
 

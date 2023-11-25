@@ -10,6 +10,9 @@ module.exports = {
         'span-color': '#231F1F',
         'third-color': '#F3EEEA',//4
       },
+      backgroundColor: {
+        'glass': 'hsla(0,0%,100%,.2)',
+      },
       flexBasis: {
         '7/10': '70%',
         '2/10': '20%',

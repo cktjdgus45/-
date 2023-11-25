@@ -1,18 +1,19 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFaceAngry, faFaceFrown, faFaceSmile, faFaceSmileWink } from '@fortawesome/free-solid-svg-icons';
 
 interface MiseIconProps {
-    miseGrade: string
+    miseGrade: string | undefined;
 }
 
-const miseIcon = ({ miseGrade }: MiseIconProps) => {
-    const publicUrl: string = process.env.PUBLIC_URL ?? '';
+const MiseIcon = ({ miseGrade }: MiseIconProps) => {
     return (
-        <>
-            {miseGrade === "1" && (<img className='w-20 h-20' alt='logo' src={publicUrl} />)}
-            {miseGrade === "2" && (<img className='w-20 h-20' alt='logo' src={publicUrl} />)}
-            {miseGrade === "3" && (<img className='w-20 h-20' alt='logo' src={publicUrl} />)}
-            {miseGrade === "4" && (<img className='w-20 h-20' alt='logo' src={publicUrl} />)}
-        </>
+        <div className='text-2xl flex justify-center items-center rounded-full bg-white p-1'>
+            {miseGrade === "1" && (<FontAwesomeIcon className='text-sky-500' icon={faFaceSmileWink} />)}
+            {miseGrade === "2" && (<FontAwesomeIcon className='text-green-500' icon={faFaceSmile} />)}
+            {miseGrade === "3" && (<FontAwesomeIcon className='text-orange-500' icon={faFaceFrown} />)}
+            {miseGrade === "4" && (<FontAwesomeIcon className='text-red-500' icon={faFaceAngry} />)}
+        </div>
     )
 }
-export default miseIcon;
+export default MiseIcon;

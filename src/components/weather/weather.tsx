@@ -19,7 +19,6 @@ const WeatherTemplate = () => {
     const storeValue2 = useSelector((state: RootState) => state.address);
     const { nx, ny } = storeValue;
     const { name } = storeValue2;
-    console.log(name);
     const navermaps = useNavermaps();
     const latlong = dfs_xy_conv("not", nx, ny)! as { lat: number, lng: number };
     const location = new navermaps.LatLng(
@@ -52,7 +51,6 @@ const WeatherTemplate = () => {
 
     const { data, isLoading } = useSWR<resWeatherData>(weatherApiWithGridXY(nx, ny), fetcher);
     const [classifedWeather, setClassfiedWeather] = useState<Map<Code, Weather[]>>();
-    console.log(data, isLoading);
     useEffect(() => {
         if (!isLoading && data) {
             const weathers = data?.response.body.items.item;

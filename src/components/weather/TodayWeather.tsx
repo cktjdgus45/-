@@ -1,18 +1,20 @@
-import React from 'react';
-import { Code, MiseDust, Weather, YYYYMMDD, miseDustWithStationName, nowHours, resMiseData, sky, stationNameWithTmxTmy, tmxTmyCoordsWithAddress } from '../../data/weather.ts';
+import React, { useState } from 'react';
+import { Code, Weather, YYYYMMDD, miseDustWithStationName, miseGrade, nowHours, resMiseData, sky, stationNameWithTmxTmy, tmxTmyCoordsWithAddress } from '../../data/weather.ts';
+import MiseIcon from '../weather/MiseIcon.tsx';
 import Icon from '../weather/weatherIcon.tsx';
 import useSWR from 'swr';
 import { fetcher } from '../../network/fetcher.ts';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store.ts';
 import Loader from '../UI/Loader.tsx';
-
+import { AnimatePresence, motion } from 'framer-motion';
 interface TodayWeatherProps {
     classifedWeather: Map<Code, Weather[]> | undefined;
     codes: Code[];
 }
 const TodayWeather = (props: TodayWeatherProps) => {
     const storeValue2 = useSelector((state: RootState) => state.address);
+    const [selectedId, setSelectedId] = useState<string | null>(null)
     const { name } = storeValue2;
 
     // const [address, setAddress] = useState<string>();
@@ -48,20 +50,43 @@ const TodayWeather = (props: TodayWeatherProps) => {
     const { data: miseDust, isLoading } = useSWR<resMiseData>(stationName ? miseDustWithStationName(stationName.response.body.items[0]["stationName"]) : null, fetcher);
     return (
         <div className='absolute top-0 w-full flex flex-col items-center  bg-main-color text-white py-2 px-1 h-1/2'>
-            <div className=' absolute right-0 bottom-0 bg-slate-300 flex'>
+            <motion.div key={"1"} layoutId={"1"} onClick={() => setSelectedId("1")} className='cursor-pointer absolute z-50 right-1 bottom-1 bg-glass flex rounded-lg p-1'>
                 {isLoading ? (<Loader isLoading={isLoading} color='#776B5D' />) : (
-                    <>
-                        <div>
-                            {miseDust?.response.body.items[0].pm10Grade}10grade
-                            {miseDust?.response.body.items[0].pm10Value}10value
-                        </div>
-                        <div>
-                            {miseDust?.response.body.items[0].pm25Grade}25grade
-                            {miseDust?.response.body.items[0].pm25Value}25value
-                        </div>
-                    </>
+                    <motion.div className='flex items-center'>
+                        <MiseIcon miseGrade={miseDust?.response.body.items[0].pm10Grade} />
+                        <motion.div className='ml-2 text-sm'>
+                            <motion.p>미세먼지</motion.p>
+                            <motion.p>{miseGrade[miseDust?.response.body.items[0].pm10Grade! as string]}</motion.p>
+                        </motion.div>
+                    </motion.div>
                 )}
-            </div>
+            </motion.div>
+            <AnimatePresence >
+                {selectedId && (
+                    <motion.div onClick={() => setSelectedId(null)} className='flex justify-center absolute z-30 cursor-pointer w-full h-full bg-[rgba(0,0,0,0.7)]' layoutId={selectedId}>
+                        <motion.div className='w-1/2 h-full bg-glass flex flex-col items-center'>
+                            <motion.h5>{miseDust?.response.body.items[0].dataTime}</motion.h5>
+                            <motion.h1 className='text-2xl font-normal mb-1'>{name?.slice(7, 11).trim()}</motion.h1>
+                            <MiseIcon miseGrade={miseDust?.response.body.items[0].pm10Grade} />
+                            <motion.p className='mt-1'>{miseGrade[miseDust?.response.body.items[0].pm10Grade! as string]}</motion.p>
+                            <motion.div className="flex gap-3 mt-5 text-sm">
+                                <motion.div className="flex flex-col items-center">
+                                    <motion.h1 className='mb-1'>미세먼지</motion.h1>
+                                    <MiseIcon miseGrade={miseDust?.response.body.items[0].pm10Grade} />
+                                    <motion.p className='mt-1'>{miseGrade[miseDust?.response.body.items[0].pm10Grade! as string]}</motion.p>
+                                    <motion.span>{miseDust?.response.body.items[0].pm10Value}</motion.span>
+                                </motion.div>
+                                <motion.div className="flex flex-col items-center">
+                                    <h1 className='mb-1'>초미세먼지</h1>
+                                    <MiseIcon miseGrade={miseDust?.response.body.items[0].pm25Grade} />
+                                    <p className='mt-1'>{miseGrade[miseDust?.response.body.items[0].pm25Grade! as string]}</p>
+                                    <span>{miseDust?.response.body.items[0].pm25Value}</span>
+                                </motion.div>
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
             {tmps && skys && tmxs && tmns && ptys && (
                 <>
                     <h1 className='text-2xl font-normal'>{name?.slice(7, 11).trim()}</h1>
