@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Code, Weather, YYYYMMDD, miseDustWithStationName, miseGrade, nowHours, resMiseData, sky, stationNameWithTmxTmy, tmxTmyCoordsWithAddress } from '../../data/weather.ts';
-import MiseIcon from '../weather/MiseIcon.tsx';
+import MiseIcon from '../weather/miseIcon.tsx';
 import Icon from '../weather/weatherIcon.tsx';
 import useSWR from 'swr';
 import { fetcher } from '../../network/fetcher.ts';
@@ -16,7 +16,6 @@ const TodayWeather = (props: TodayWeatherProps) => {
     const storeValue2 = useSelector((state: RootState) => state.address);
     const [selectedId, setSelectedId] = useState<string | null>(null)
     const { name } = storeValue2;
-
     // const [address, setAddress] = useState<string>();
     const { codes, classifedWeather } = props;
     // eslint-disable-next-line array-callback-return
@@ -49,41 +48,45 @@ const TodayWeather = (props: TodayWeatherProps) => {
     const { data: stationName } = useSWR(tmxtmy ? stationNameWithTmxTmy(tmxtmy.response.body.items[0]["tmX"], tmxtmy.response.body.items[0]["tmY"]) : null, fetcher);
     const { data: miseDust, isLoading } = useSWR<resMiseData>(stationName ? miseDustWithStationName(stationName.response.body.items[0]["stationName"]) : null, fetcher);
     return (
-        <div className='absolute top-0 w-full flex flex-col items-center  bg-main-color text-white py-2 px-1 h-1/2'>
-            <motion.div key={"1"} layoutId={"1"} onClick={() => setSelectedId("1")} className='cursor-pointer absolute z-50 right-1 bottom-1 bg-glass flex rounded-lg p-1'>
+        <div className='absolute top-0 w-full flex flex-col items-center  bg-main-color text-white px-1 h-1/2'>
+            <motion.div layout key={selectedId} layoutId={"popo"} onClick={() => setSelectedId("popo")} className='cursor-pointer absolute z-50 right-1 bottom-1 bg-glass flex rounded-lg p-1'>
                 {isLoading ? (<Loader isLoading={isLoading} color='#776B5D' />) : (
-                    <motion.div className='flex items-center'>
+                    <div className='flex items-center'>
                         <MiseIcon miseGrade={miseDust?.response.body.items[0].pm10Grade} />
-                        <motion.div className='ml-2 text-sm'>
-                            <motion.p>미세먼지</motion.p>
-                            <motion.p>{miseGrade[miseDust?.response.body.items[0].pm10Grade! as string]}</motion.p>
-                        </motion.div>
-                    </motion.div>
+                        <div className='ml-2 text-sm'>
+                            <p>미세먼지</p>
+                            <p>{miseGrade[miseDust?.response.body.items[0].pm10Grade! as string]}</p>
+                        </div>
+                    </div>
                 )}
             </motion.div>
-            <AnimatePresence >
+            <AnimatePresence mode="wait" initial={false} >
                 {selectedId && (
-                    <motion.div onClick={() => setSelectedId(null)} className='flex justify-center absolute z-30 cursor-pointer w-full h-full bg-[rgba(0,0,0,0.7)]' layoutId={selectedId}>
-                        <motion.div className='w-1/2 h-full bg-glass flex flex-col items-center'>
-                            <motion.h5>{miseDust?.response.body.items[0].dataTime}</motion.h5>
-                            <motion.h1 className='text-2xl font-normal mb-1'>{name?.slice(7, 11).trim()}</motion.h1>
+                    <motion.div layoutId={selectedId} onClick={() => setSelectedId(null)} className='flex justify-center absolute z-30 cursor-pointer w-full h-full bg-[rgba(0,0,0,0.7)]'>
+                        <div className='w-1/2 h-full bg-glass flex flex-col items-center'>
+                            <h5>{miseDust?.response.body.items[0].dataTime}</h5>
+                            <h1 className='text-2xl font-normal mb-1'>{name?.slice(7, 11).trim()}</h1>
                             <MiseIcon miseGrade={miseDust?.response.body.items[0].pm10Grade} />
-                            <motion.p className='mt-1'>{miseGrade[miseDust?.response.body.items[0].pm10Grade! as string]}</motion.p>
-                            <motion.div className="flex gap-3 mt-5 text-sm">
-                                <motion.div className="flex flex-col items-center">
-                                    <motion.h1 className='mb-1'>미세먼지</motion.h1>
+                            <p className='mt-1'>{miseGrade[miseDust?.response.body.items[0].pm10Grade! as string]}</p>
+                            <div className="flex gap-3 mt-5 text-sm">
+                                <div className="flex flex-col items-center">
+                                    <h1 className='mb-1'>미세먼지</h1>
                                     <MiseIcon miseGrade={miseDust?.response.body.items[0].pm10Grade} />
-                                    <motion.p className='mt-1'>{miseGrade[miseDust?.response.body.items[0].pm10Grade! as string]}</motion.p>
-                                    <motion.span>{miseDust?.response.body.items[0].pm10Value}</motion.span>
-                                </motion.div>
+                                    <p className='mt-1'>{miseGrade[miseDust?.response.body.items[0].pm10Grade! as string]}</p>
+                                    <span>{miseDust?.response.body.items[0].pm10Value}
+                                        <span className='text-xs font-base ml-1'>㎍/㎥</span>
+                                    </span>
+                                </div>
                                 <motion.div className="flex flex-col items-center">
                                     <h1 className='mb-1'>초미세먼지</h1>
                                     <MiseIcon miseGrade={miseDust?.response.body.items[0].pm25Grade} />
                                     <p className='mt-1'>{miseGrade[miseDust?.response.body.items[0].pm25Grade! as string]}</p>
-                                    <span>{miseDust?.response.body.items[0].pm25Value}</span>
+                                    <span>{miseDust?.response.body.items[0].pm25Value}
+                                        <span className='text-xs font-base ml-1'>㎍/㎥</span>
+                                    </span>
                                 </motion.div>
-                            </motion.div>
-                        </motion.div>
+                            </div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
