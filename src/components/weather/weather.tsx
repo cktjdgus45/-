@@ -16,9 +16,7 @@ import { useNavermaps } from 'react-naver-maps';
 const WeatherTemplate = () => {
     const dispatch = useDispatch();
     const storeValue = useSelector((state: RootState) => state.coords);
-    const storeValue2 = useSelector((state: RootState) => state.address);
     const { nx, ny } = storeValue;
-    const { name } = storeValue2;
     const navermaps = useNavermaps();
     const latlong = dfs_xy_conv("not", nx, ny)! as { lat: number, lng: number };
     const location = new navermaps.LatLng(
@@ -52,14 +50,17 @@ const WeatherTemplate = () => {
     const { data, isLoading } = useSWR<resWeatherData>(weatherApiWithGridXY(nx, ny), fetcher);
     const [classifedWeather, setClassfiedWeather] = useState<Map<Code, Weather[]>>();
     useEffect(() => {
-        if (!isLoading && data) {
+        if (!isLoading && data?.response.body.items) {
+            console.log(data);
             const weathers = data?.response.body.items.item;
             for (let idx = 0; idx < weathers.length; idx++) {
                 const element = weathers[idx];
                 setClassfiedWeather(weathersClassifiedWithCatergory(element));
             }
+        } else {
+            setClassfiedWeather(prev => prev);
         }
-    }, [data, isLoading])
+    }, [data, isLoading, data?.response.body.items])
     return (
         <div className='w-full h-full'>
             {
