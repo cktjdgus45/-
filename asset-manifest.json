@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/dogWorld/static/css/main.98a84804.css",
+    "main.js": "/dogWorld/static/js/main.d53024c0.js",
+    "index.html": "/dogWorld/index.html",
+    "main.98a84804.css.map": "/dogWorld/static/css/main.98a84804.css.map",
+    "main.d53024c0.js.map": "/dogWorld/static/js/main.d53024c0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.98a84804.css",
+    "static/js/main.d53024c0.js"
+  ]
+}
