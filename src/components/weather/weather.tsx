@@ -47,7 +47,7 @@ const WeatherTemplate = () => {
     }, [dispatch]);
 
 
-    const { data, isLoading } = useSWR<resWeatherData>(weatherApiWithGridXY(nx, ny), fetcher);
+    const { data, isLoading } = useSWR<resWeatherData>(weatherApiWithGridXY(nx, ny), fetcher, { revalidateOnMount: true });
     const [classifedWeather, setClassfiedWeather] = useState<Map<Code, Weather[]>>();
     useEffect(() => {
         if (!isLoading && data?.response.body.items) {
@@ -58,7 +58,7 @@ const WeatherTemplate = () => {
                 setClassfiedWeather(weathersClassifiedWithCatergory(element));
             }
         } else {
-            setClassfiedWeather(prev => prev);
+            console.log('NO_DATA')
         }
     }, [data, isLoading, data?.response.body.items])
     return (
