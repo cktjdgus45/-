@@ -4,6 +4,7 @@ export type Coord = {
 }
 
 export type Hospital = {
+    id: string;
     name: string;
     phone: string;
     jibunAdress: string;
@@ -23,6 +24,7 @@ export const coords: Coord[] = [
 
 export const hospitals: Hospital[] = [
     {
+        id: '1',
         name: 'a병원',
         phone: '010-0111-1111',
         jibunAdress: '경기도 화성시 봉담읍 10-35',
@@ -32,6 +34,7 @@ export const hospitals: Hospital[] = [
         }
     },
     {
+        id: '2',
         name: 'b병원',
         phone: '010-0000-2222',
         jibunAdress: '경기도 화성시 봉담읍 11-10',
