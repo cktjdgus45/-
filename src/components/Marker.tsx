@@ -19,6 +19,7 @@ const Marker = (props: MarkerProps) => {
         hospital,
         infowindow,
     } = props;
+    console.log(lat, lng)
     const marker2Ref = useRef<naver.maps.Marker | null>(null);
     if (!marker2Ref.current) {
         marker2Ref.current = new navermaps.Marker({

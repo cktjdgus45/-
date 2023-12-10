@@ -1,15 +1,26 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Container as MapDiv, NaverMap, useNavermaps, InfoWindow } from 'react-naver-maps';
-import { hospitals } from '../data/latlon.ts';
 import Marker from './Marker.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsSplitUpAndLeft } from '@fortawesome/free-solid-svg-icons';
+import { RootState } from '../store/store.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import useSWR from 'swr';
+import { fetcher } from '../network/fetcher.ts';
+import { setAddress } from '../store/features/address.ts';
+import { setCoord } from '../store/features/latlng.ts';
 
 
 
 export default function MyMap() {
+    const dispatch = useDispatch();
     const navermaps = useNavermaps();
+    const jibunAddress = useSelector((state: RootState) => state.address);
+    const latlng = useSelector((state: RootState) => state.latlng);
+    const { name } = jibunAddress;
+    const { data: hospitals, isLoading } = useSWR(`${process.env.REACT_APP_SERVER_BASE_URL}/address/${name?.slice(4, 7)}`, fetcher);
+    console.log(name, latlng.lat, latlng.lng);
     const [map, setMap] = useState<naver.maps.Map | null>(null)
     const [infowindow, setInfoWindow] = useState<naver.maps.InfoWindow | null>(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -17,6 +28,7 @@ export default function MyMap() {
         if (!map || !infowindow) return
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
+        dispatch(setCoord({ lat, lng }));
         const location = new navermaps.LatLng(
             lat,
             lng
@@ -27,6 +39,7 @@ export default function MyMap() {
             }
             const result = response.v2;
             const address = result.address;
+            dispatch(setAddress({ name: address.jibunAddress }));
             infowindow.setContent(
                 '<div style="padding:10px;">' +
                 `${address.jibunAddress}` +
@@ -66,15 +79,15 @@ export default function MyMap() {
                 }}
             >
                 <NaverMap
-                    defaultCenter={new navermaps.LatLng(37.5666805, 126.9784147)}
+                    defaultCenter={new navermaps.LatLng(latlng.lat, latlng.lat)}
                     defaultZoom={10}
                     defaultMapTypeId={navermaps.MapTypeId.NORMAL}
                     ref={setMap}
                 >
                     <InfoWindow ref={setInfoWindow} content={''} />
                     {
-                        hospitals.map((hospital) =>
-                            <Marker coord={hospital.coord} map={map} hospital={hospital} infowindow={infowindow} />
+                        (!isLoading && hospitals) && hospitals.map((hospital) =>
+                            <Marker coord={{ lat: 37.1687388, lng: 127.1084327 }} map={map} hospital={hospital} infowindow={infowindow} />
                         )
                     }
                 </NaverMap>
@@ -87,5 +100,7 @@ export default function MyMap() {
         </>
     )
 }
+
+
 
 

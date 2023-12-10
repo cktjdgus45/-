@@ -13,9 +13,9 @@ interface TodayWeatherProps {
     codes: Code[];
 }
 const TodayWeather = (props: TodayWeatherProps) => {
-    const storeValue2 = useSelector((state: RootState) => state.address);
+    const jibunAddress = useSelector((state: RootState) => state.address);
     const [selectedId, setSelectedId] = useState<string | null>(null)
-    const { name } = storeValue2;
+    const { name } = jibunAddress;
     // const [address, setAddress] = useState<string>();
     const { codes, classifedWeather } = props;
     // eslint-disable-next-line array-callback-return
