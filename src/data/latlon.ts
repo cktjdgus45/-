@@ -6,8 +6,10 @@ export type Coord = {
 export type Hospital = {
     id: string;
     name: string;
-    phone: string;
-    jibunAdress: string;
+    phoneNumber: string;
+    address: string;
+    x: number; //lat
+    y: number;//lng
 }
 
 export const coords: Coord[] = [

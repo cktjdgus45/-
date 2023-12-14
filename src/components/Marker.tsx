@@ -19,7 +19,6 @@ const Marker = (props: MarkerProps) => {
         hospital,
         infowindow,
     } = props;
-    console.log(lat, lng)
     const marker2Ref = useRef<naver.maps.Marker | null>(null);
     if (!marker2Ref.current) {
         marker2Ref.current = new navermaps.Marker({
@@ -32,8 +31,8 @@ const Marker = (props: MarkerProps) => {
             `
             <div style="padding:5px;">
             <h5 style="">${hospital.name}</h5>
-            <h5 style="">${hospital.jibunAdress}</h5>
-            <h5 style="">${hospital.phone}</h5>
+            <h5 style="">${hospital.address}</h5>
+            <h5 style="">${hospital.phoneNumber}</h5>
             </div>
             `,
         );

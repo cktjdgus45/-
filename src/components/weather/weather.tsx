@@ -51,7 +51,6 @@ const WeatherTemplate = () => {
     const [classifedWeather, setClassfiedWeather] = useState<Map<Code, Weather[]>>();
     useEffect(() => {
         if (!isLoading && data?.response.body.items) {
-            console.log(data);
             const weathers = data?.response.body.items.item;
             for (let idx = 0; idx < weathers.length; idx++) {
                 const element = weathers[idx];

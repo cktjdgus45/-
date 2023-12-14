@@ -10,6 +10,7 @@ import useSWR from 'swr';
 import { fetcher } from '../network/fetcher.ts';
 import { setAddress } from '../store/features/address.ts';
 import { setCoord } from '../store/features/latlng.ts';
+import { Hospital } from '../data/latlon.ts';
 
 
 
@@ -19,8 +20,8 @@ export default function MyMap() {
     const jibunAddress = useSelector((state: RootState) => state.address);
     const latlng = useSelector((state: RootState) => state.latlng);
     const { name } = jibunAddress;
-    const { data: hospitals, isLoading } = useSWR(`${process.env.REACT_APP_SERVER_BASE_URL}/address/${name?.slice(4, 7)}`, fetcher);
-    console.log(name, latlng.lat, latlng.lng);
+    const { data: hospitals, isLoading } = useSWR<Hospital[]>(`${process.env.REACT_APP_SERVER_BASE_URL}/address/${name?.slice(4, 7)}`, fetcher);
+    console.log(hospitals)
     const [map, setMap] = useState<naver.maps.Map | null>(null)
     const [infowindow, setInfoWindow] = useState<naver.maps.InfoWindow | null>(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,7 +80,7 @@ export default function MyMap() {
                 }}
             >
                 <NaverMap
-                    defaultCenter={new navermaps.LatLng(latlng.lat, latlng.lat)}
+                    defaultCenter={new navermaps.LatLng(latlng.lat, latlng.lng)}
                     defaultZoom={10}
                     defaultMapTypeId={navermaps.MapTypeId.NORMAL}
                     ref={setMap}
@@ -87,7 +88,7 @@ export default function MyMap() {
                     <InfoWindow ref={setInfoWindow} content={''} />
                     {
                         (!isLoading && hospitals) && hospitals.map((hospital) =>
-                            <Marker coord={{ lat: 37.1687388, lng: 127.1084327 }} map={map} hospital={hospital} infowindow={infowindow} />
+                            <Marker coord={{ lat: hospital.x, lng: hospital.y }} map={map} hospital={hospital} infowindow={infowindow} />
                         )
                     }
                 </NaverMap>
