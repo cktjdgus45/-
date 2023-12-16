@@ -1,56 +1,84 @@
+import TokenStorage from '../db/token';
+import HttpClient from '../network/http';
 export default class PostService {
-    baseURL: string;
-    constructor(baseURL) {
-        this.baseURL = baseURL
+    http: HttpClient;
+    tokenStorage: TokenStorage;
+    constructor(http, tokenStorage) {
+        this.http = http;
+        this.tokenStorage = tokenStorage;
     }
 
     async getPosts(username) {
         const query = username ? `?username=${username}` : '';
-        const response = await fetch(`${this.baseURL}/posts${query}`, {
+        return this.http.fetch(`/posts${query}`, {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        });
-        const data = await response.json();
-        if (response.status !== 200) {
-            throw new Error(data.message);
-        }
-        return data;
+            headers: this.getHeaders(),
+        })
+        // const response = await fetch(`${this.baseURL}/posts${query}`, { //중복
+        //     method: 'GET',
+        //     headers: { 'Content-Type': 'application/json' }
+        // });
+        // const data = await response.json();
+        // if (response.status !== 200) {
+        //     throw new Error(data.message);
+        // }
+        // return data;
     }
 
     async postPost(text) {
-        const response = await fetch(`${this.baseURL}/posts`, {
+        return this.http.fetch(`/posts`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text, username: 'popo', name: 'popo' })
-        });
-        const data = await response.json();
-        if (response.status !== 201) {
-            throw new Error(data.message);
-        }
-        return data;
+            headers: this.getHeaders(),
+            body: JSON.stringify({ text, username: 'popo6', name: '차성현' })
+        })
+        // const response = await fetch(`${this.baseURL}/posts`, { //중복
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ text, username: 'popo', name: 'popo' })
+        // });
+        // const data = await response.json();
+        // if (response.status !== 201) {
+        //     throw new Error(data.message);
+        // }
+        // return data;
     }
 
-    async deletePost(tweetId) {
-        const response = await fetch(`${this.baseURL}/posts/${tweetId}`, {
+    async deletePost(postId) {
+        return this.http.fetch(`/posts/${postId}`, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
-        });
-        const data = await response.json();
-        if (response.status !== 204) {
-            throw new Error(data.message);
-        }
+            headers: this.getHeaders(),
+        })
+        // const response = await fetch(`${this.baseURL}/posts/${postId}`, {
+        //     method: 'DELETE',
+        //     headers: { 'Content-Type': 'application/json' }
+        // });
+        // const data = await response.json();
+        // if (response.status !== 204) {
+        //     throw new Error(data.message);
+        // }
     }
 
-    async updateTweet(tweetId, text) {
-        const response = await fetch(`${this.baseURL}/posts/${tweetId}`, {
+    async updateTweet(postId, text) {
+        return this.http.fetch(`/posts/${postId}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text })
-        });
-        const data = await response.json();
-        if (response.status !== 200) {
-            throw new Error(data.message);
+            headers: this.getHeaders(),
+            body: JSON.stringify({ text }),
+        })
+        // const response = await fetch(`${this.baseURL}/posts/${postId}`, {
+        //     method: 'PUT',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ text })
+        // });
+        // const data = await response.json();
+        // if (response.status !== 200) {
+        //     throw new Error(data.message);
+        // }
+        // return data;
+    }
+    getHeaders() {
+        const token = this.tokenStorage.getToken();
+        return {
+            Authoriation: `Bearer ${token}`,
         }
-        return data;
     }
 }

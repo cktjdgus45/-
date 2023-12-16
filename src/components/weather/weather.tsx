@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { fetcher } from '../../network/fetcher.ts';
 import { resWeatherData, weatherApiWithGridXY, weathersClassifiedWithCatergory, Code, Weather } from '../../data/weather.ts';
 import { useDispatch, useSelector } from 'react-redux';
@@ -57,9 +57,10 @@ const WeatherTemplate = () => {
                 setClassfiedWeather(weathersClassifiedWithCatergory(element));
             }
         } else {
+            mutate(weatherApiWithGridXY(nx, ny));
             console.log('NO_DATA')
         }
-    }, [data, isLoading, data?.response.body.items])
+    }, [data, isLoading, data?.response.body.items, nx, ny])
     return (
         <div className='w-full h-full'>
             {
