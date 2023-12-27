@@ -1,16 +1,24 @@
+import { AuthErrorEventBus } from '../context/AuthContext';
+
 export default class HttpClient {
     baseURL: string;
-    constructor(baseURL) {
+    authErrorEventBus: AuthErrorEventBus;
+    constructor(baseURL, authErrorEventBus) {
         this.baseURL = baseURL;
+        this.authErrorEventBus = authErrorEventBus;
     }
 
     async fetch(url, options) {
+        const { body, method, headers } = options;
+        console.log(body, method, headers)
+        console.log(`${this.baseURL}${url}`);
         const response = await fetch(`${this.baseURL}${url}`, {
-            ...options,
+            method,
             headers: {
-                'Cotent-Type': 'application/json',
-                ...options.headers,
+                'Content-Type': 'application/json',
+                ...headers,
             },
+            body
         })
         let data;
         try {
@@ -18,9 +26,14 @@ export default class HttpClient {
         } catch (error) {
             console.error(error);
         }
-        if (response.status > 299 || response.status < 200) {  //100,300,400,500
+        if (response.status > 299 || response.status < 200) {  //100,300,400,500 error
             const message = data && data.message ? data.message : 'Something wrong';
-            throw new Error(message);
+            const error = new Error(message);
+            if (response.status === 401) {
+                this.authErrorEventBus.notify(error);
+                return;
+            }
+            throw error;
         }
         return data;
     }

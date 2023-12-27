@@ -14,19 +14,17 @@ import Footer from './components/UI/Footer.tsx';
 function App() {
   return (
     <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_Client_ID! as string}>
-      <BrowserRouter>
-        <div className='w-[880px] bg-sub-color flex flex-col h-full'>
-          <Header />
-          <main className='basis-7/10 bg-third-color'>
-            <Routes>
-              <Route path="/" element={< Community />} />
-              <Route path="/map" element={< MyMap />} />
-              <Route path="/weather" element={<WeatherTemplate />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <div className='w-[880px] bg-sub-color flex flex-col h-full'>
+        <Header />
+        <main className='basis-7/10 bg-third-color'>
+          <Routes>
+            <Route path="/dogWorld" element={< Community />} />
+            <Route path="/map" element={< MyMap />} />
+            <Route path="/weather" element={<WeatherTemplate />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </NavermapsProvider>
   );
 }

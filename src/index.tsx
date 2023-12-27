@@ -7,15 +7,26 @@ import store from './store/store.ts';
 import HttpClient from './network/http.ts';
 import AuthService from './service/auth.ts';
 import TokenStorage from './db/token.ts';
+import { AuthErrorEventBus, AuthProvider } from './context/AuthContext.tsx';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root')! as Element);
-const httpClient = new HttpClient(process.env.REACT_APP_SERVER_BASE_URL);
-const authService = new AuthService(process.env.REACT_APP_SERVER_BASE_URL, new TokenStorage());
+const url = process.env.REACT_APP_SERVER_BASE_URL;
+console.log(url);
+const authErrorEventBus = new AuthErrorEventBus();
+const httpClient = new HttpClient(url, authErrorEventBus);
+const authService = new AuthService(httpClient, new TokenStorage());
+
 root.render(
-  <Provider store={store}>
-    <div className='w-screen h-screen flex justify-center'>
-      <App />
-    </div>
-  </Provider>
+  <BrowserRouter>
+    <AuthProvider authService={authService} authErrorEventBus={authErrorEventBus}>
+      <Provider store={store}>
+        <div className='w-screen h-screen flex justify-center'>
+          <App />
+        </div>
+      </Provider>
+    </AuthProvider>
+  </BrowserRouter>
+
 );
 
