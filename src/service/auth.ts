@@ -33,7 +33,7 @@ export default class AuthService {
         return this.http.fetch('/auth/me', {
             method: 'GET',
             headers: {
-                Authoriation: `Bearer ${token}`
+                Authorization: `Bearer ${token}`
             }
         })
     }

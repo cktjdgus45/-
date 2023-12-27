@@ -3,7 +3,6 @@ import { NavermapsProvider } from 'react-naver-maps';
 import MyMap from './components/MyMap.tsx';
 import WeatherTemplate from './components/weather/weather.tsx';
 import {
-  BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";

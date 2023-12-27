@@ -10,8 +10,6 @@ export default class HttpClient {
 
     async fetch(url, options) {
         const { body, method, headers } = options;
-        console.log(body, method, headers)
-        console.log(`${this.baseURL}${url}`);
         const response = await fetch(`${this.baseURL}${url}`, {
             method,
             headers: {

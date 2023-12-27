@@ -12,7 +12,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root')! as Element);
 const url = process.env.REACT_APP_SERVER_BASE_URL;
-console.log(url);
 const authErrorEventBus = new AuthErrorEventBus();
 const httpClient = new HttpClient(url, authErrorEventBus);
 const authService = new AuthService(httpClient, new TokenStorage());
