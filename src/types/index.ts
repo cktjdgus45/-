@@ -50,14 +50,21 @@ export type INewUser = {
     token: string;
 };
 
-export type IUserResponse = {
-    token: string;
-    username: string;
-}
-
 // export type INewUser = {
 //     name: string;
 //     email: string;
 //     username: string;
 //     password: string;
 // };
+
+export type IAuthHandler = {
+    login: (username: any, password: any) => Promise<void>;
+    logout: () => Promise<void>;
+    signUp: (username: any, password: any, name: any, email: any, url: any) => Promise<void>;
+    user: IAuthorizedUser | undefined;
+}
+
+export type IAuthorizedUser = {
+    token: string;
+    username: string;
+}

@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import { fetcher } from '../../network/fetcher.ts';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store.ts';
-import Loader from '../UI/Loader.tsx';
+import Loader from '../layout/Loader.tsx';
 import { AnimatePresence, motion } from 'framer-motion';
 interface TodayWeatherProps {
     classifedWeather: Map<Code, Weather[]> | undefined;

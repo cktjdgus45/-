@@ -6,15 +6,18 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Header from './components/UI/Header.tsx';
 import Community from './components/community/Community.tsx';
-import Footer from './components/UI/Footer.tsx';
+import Footer from './components/layout/Footer.tsx';
+import Header from './components/layout/Header.tsx';
+import { useAuth } from './context/AuthContext.tsx';
+
 
 function App() {
+  const authHandler = useAuth();
   return (
     <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_Client_ID! as string}>
       <div className='w-[880px] bg-sub-color flex flex-col h-full'>
-        <Header />
+        <Header authHandler={authHandler} />
         <main className='basis-7/10 bg-third-color'>
           <Routes>
             <Route path="/dogWorld" element={< Community />} />

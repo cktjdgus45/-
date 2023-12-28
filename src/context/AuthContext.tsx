@@ -1,9 +1,8 @@
 import { createContext, createRef, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import React from 'react';
 import AuthService from '../service/auth';
-import Header from '../components/UI/Header.tsx';
 import Login from '../pages/Login.tsx';
-import { IUserResponse } from '../types';
+import { IAuthorizedUser } from '../types';
 
 
 export const AuthContext = createContext({});
@@ -17,7 +16,7 @@ interface IAuthProviderProps {
 }
 
 export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuthProviderProps) => {
-    const [user, setUser] = useState<IUserResponse | undefined>(undefined);
+    const [user, setUser] = useState<IAuthorizedUser | undefined>(undefined);
 
     useImperativeHandle(contextRef, () => (user ? user.token : undefined));
 
@@ -63,7 +62,6 @@ export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuth
                 children
             ) : (
                 <>
-                    <Header />
                     <Login onSignUp={signUp} onLogin={login} />
                 </>
             )

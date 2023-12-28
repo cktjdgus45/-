@@ -8,7 +8,7 @@ import { setXY } from '../../store/features/coords.ts';
 import { setAddress } from '../../store/features/address.ts';
 import { dfs_xy_conv } from '../../service/changeCoordsToGrid.ts';
 import InfoBoxWrapper from './InfoBoxWrapper.tsx';
-import Loader from '../UI/Loader.tsx';
+import Loader from '../layout/Loader.tsx';
 import TodayWeather from './TodayWeather.tsx';
 import { useNavermaps } from 'react-naver-maps';
 
