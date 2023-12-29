@@ -9,9 +9,25 @@ module.exports = {
         'sub-color': '#EBE3D5',//3
         'span-color': '#231F1F',
         'third-color': '#F3EEEA',//4
+        'glass': 'hsla(0,0%,100%,.2)',
+        'glass-md': 'hsla(0,0%,80%,.4)',
+        'glass-base': 'hsla(0,0%,60%,.6)',
+        'glass-sm': 'hsla(0,0%,40%,.8)',
+        'glass-xs': 'hsla(0,0%,20%,1.0)',
       },
       backgroundColor: {
         'glass': 'hsla(0,0%,100%,.2)',
+        'glass-md': 'hsla(0,0%,80%,.4)',
+        'glass-base': 'hsla(0,0%,60%,.6)',
+        'glass-sm': 'hsla(0,0%,40%,.8)',
+        'glass-xs': 'hsla(0,0%,20%,1.0)',
+      },
+      borderColor: {
+        'glass': 'hsla(0,0%,100%,.2)',
+        'glass-md': 'hsla(0,0%,80%,.4)',
+        'glass-base': 'hsla(0,0%,60%,.6)',
+        'glass-sm': 'hsla(0,0%,40%,.8)',
+        'glass-xs': 'hsla(0,0%,20%,1.0)',
       },
       flexBasis: {
         '7/10': '70%',
