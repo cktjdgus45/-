@@ -53,3 +53,14 @@ li {
     padding-left: 0;
     margin-left: 0;
 }
+
+/* Header-DropDown Menu */
+.dropdown-menu {
+    opacity: 0;
+  transition: opacity 300ms ease-in-out;
+  pointer-events: none;
+  }
+.dropdown-menu.active {
+    opacity: 1;
+    pointer-events: auto;
+  }

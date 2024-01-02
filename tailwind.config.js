@@ -21,6 +21,10 @@ module.exports = {
         'glass-base': 'hsla(0,0%,60%,.6)',
         'glass-sm': 'hsla(0,0%,40%,.8)',
         'glass-xs': 'hsla(0,0%,20%,1.0)',
+        'main-color': '#776B5D',//1
+        'hover-main-color': '#B0A695',//2
+        'sub-color': '#EBE3D5',//3
+
       },
       borderColor: {
         'glass': 'hsla(0,0%,100%,.2)',
