@@ -68,3 +68,13 @@ export type IAuthorizedUser = {
     token: string;
     username: string;
 }
+
+export type IPost = {
+    "id": number,
+    "text": string,
+    "createdAt": string,
+    "userId": number,
+    "username": string,
+    "name": string,
+    "url": string
+}

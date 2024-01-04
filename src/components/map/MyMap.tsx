@@ -4,13 +4,13 @@ import { Container as MapDiv, NaverMap, useNavermaps, InfoWindow } from 'react-n
 import Marker from './Marker.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsSplitUpAndLeft } from '@fortawesome/free-solid-svg-icons';
-import { RootState } from '../store/store.ts';
+import { RootState } from '../../store/store.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import useSWR from 'swr';
-import { fetcher } from '../network/fetcher.ts';
-import { setAddress } from '../store/features/address.ts';
-import { setCoord } from '../store/features/latlng.ts';
-import { Hospital } from '../data/latlon.ts';
+import { fetcher } from '../../network/fetcher.ts';
+import { setAddress } from '../../store/features/address.ts';
+import { setCoord } from '../../store/features/latlng.ts';
+import { Hospital } from '../../data/latlon.ts';
 
 
 

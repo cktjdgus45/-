@@ -5,10 +5,16 @@ import Login from '../pages/Login.tsx';
 import { IAuthorizedUser } from '../types';
 
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext({} as IAuthContext);
 
 const contextRef = createRef();
 
+export interface IAuthContext {
+    user: IAuthorizedUser | undefined;
+    signUp: (username: string, password: string, name: string, email: string, url: string) => Promise<void>;
+    login: (username: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+}
 interface IAuthProviderProps {
     authService: AuthService;
     children: React.ReactNode;
@@ -82,4 +88,4 @@ export class AuthErrorEventBus {
 
 export default AuthContext;
 export const fetchToken = () => contextRef.current;
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = (): IAuthContext => useContext(AuthContext);

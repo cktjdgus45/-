@@ -2,7 +2,7 @@ import React from "react";
 import { useRef } from "react";
 import { Overlay, Listener, useNavermaps } from "react-naver-maps";
 
-import { Coord, Hospital } from "../data/latlon";
+import { Coord, Hospital } from "../../data/latlon";
 
 interface MarkerProps {
     coord: Coord;

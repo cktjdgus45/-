@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import { faCloud } from '@fortawesome/free-solid-svg-icons';
 import { faTruckMedical } from '@fortawesome/free-solid-svg-icons';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { IAuthHandler } from '../../types';
 interface IHeaderProps {
@@ -11,6 +12,8 @@ interface IHeaderProps {
 }
 
 const Header = ({ authHandler }: IHeaderProps) => {
+    const location = useLocation();
+    const currentUrl = location.pathname;
     console.log(authHandler);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
@@ -35,10 +38,10 @@ const Header = ({ authHandler }: IHeaderProps) => {
                                     <div className={`dropdown-menu ${isDropdownOpen ? 'dropdown-menu active' : 'dropdown-menu'} absolute w-32 text-center right-0 mt-2 bg-sub-color text-main-color rounded shadow-md`}>
                                         <ul className="list-none p-2">
                                             <li className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
-                                                <a href="/">프로필</a>
+                                                <a href="/profile">프로필</a>
                                             </li>
                                             <li onClick={authHandler.logout} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
-                                                <a href="/">로그아웃</a>
+                                                <h3>로그아웃</h3>
                                             </li>
                                         </ul>
                                     </div>
@@ -46,11 +49,11 @@ const Header = ({ authHandler }: IHeaderProps) => {
                             </div>
                         )
                     }
-                    {/* {authHandler.user && (
-                        <li onClick={authHandler.logout} className='ml-4 cursor-pointer hover:text-hover-main-color px-4 py-2 bg-main-color text-sm text-white rounded-md transition-colors duration-200 ease-in-out'>
-                            <span>로그아웃</span>
+                    {currentUrl === process.env.PUBLIC_URL && (
+                        <li className='ml-4 cursor-pointer hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
+                            <FontAwesomeIcon onClick={() => handleNavigate('/dogWorld')} icon={faSquarePlus} />
                         </li>
-                    )} */}
+                    )}
                     <li className='ml-4 cursor-pointer hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
                         <FontAwesomeIcon onClick={() => handleNavigate('/dogWorld')} icon={faHouse} />
                     </li>

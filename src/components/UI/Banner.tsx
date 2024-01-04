@@ -8,7 +8,7 @@ interface BannerProps {
 const Banner = memo(({ text, isAlert }: BannerProps) => (
   <>
     {text && (
-      <p className={`banner ${isAlert ? 'banner-red' : 'banner-green'}`}>
+      <p className={`m-2 p-2 text-base font-bold ${isAlert ? 'bg-red-400' : 'bg-green-400'}`}>
         {text}
       </p>
     )}

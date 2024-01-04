@@ -8,7 +8,7 @@ export default class PostService {
         this.tokenStorage = tokenStorage;
     }
 
-    async getPosts(username) {
+    async getPosts(username?: string) {
         const query = username ? `?username=${username}` : '';
         return this.http.fetch(`/posts${query}`, {
             method: 'GET',
@@ -78,7 +78,7 @@ export default class PostService {
     getHeaders() {
         const token = this.tokenStorage.getToken();
         return {
-            Authoriation: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         }
     }
 }

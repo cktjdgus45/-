@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import dogVideo from '../assets/runwithdog.mp4';
-import Banner from '../components/Banner.tsx';
+import Banner from '../components/UI/Banner.tsx';
 
 const Login = ({ onSignUp, onLogin }) => {
   const [signup, setSignup] = useState(false);
@@ -11,7 +11,6 @@ const Login = ({ onSignUp, onLogin }) => {
   const [url, setURL] = useState('');
   const [text, setText] = useState('');
   const [isAlert, setIsAlert] = useState(false);
-  console.log(dogVideo);
   const onSubmit = (event) => {
     event.preventDefault();
     if (signup) {
