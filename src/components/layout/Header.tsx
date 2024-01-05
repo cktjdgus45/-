@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
@@ -9,9 +9,10 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { IAuthHandler } from '../../types';
 interface IHeaderProps {
     authHandler: IAuthHandler;
+    setAddPostForm: Dispatch<SetStateAction<boolean>>;
 }
 
-const Header = ({ authHandler }: IHeaderProps) => {
+const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
     const location = useLocation();
     const currentUrl = location.pathname;
     console.log(authHandler);
@@ -24,6 +25,9 @@ const Header = ({ authHandler }: IHeaderProps) => {
     const handleNavigate = (path) => {
         navigate(path);
     };
+    const showAddForm = () => {
+        setAddPostForm(true);
+    }
     return (
         <>
             <nav className='flex items-center justify-between bg-sub-color basis-1/10'>
@@ -51,7 +55,7 @@ const Header = ({ authHandler }: IHeaderProps) => {
                     }
                     {currentUrl === process.env.PUBLIC_URL && (
                         <li className='ml-4 cursor-pointer hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
-                            <FontAwesomeIcon onClick={() => handleNavigate('/dogWorld')} icon={faSquarePlus} />
+                            <FontAwesomeIcon onClick={showAddForm} icon={faSquarePlus} />
                         </li>
                     )}
                     <li className='ml-4 cursor-pointer hover:text-hover-main-color transition-colors duration-200 ease-in-out'>

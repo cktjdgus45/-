@@ -29,7 +29,7 @@ export default class PostService {
         return this.http.fetch(`/posts`, {
             method: 'POST',
             headers: this.getHeaders(),
-            body: JSON.stringify({ text, username: 'popo6', name: '차성현' })
+            body: JSON.stringify({ text })
         })
         // const response = await fetch(`${this.baseURL}/posts`, { //중복
         //     method: 'POST',

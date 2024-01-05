@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { IPostServiceProps } from '../App';
 import { IPost } from '../types';
 import { useAuth } from '../context/AuthContext.tsx';
 import Banner from '../components/UI/Banner.tsx';
 import PostCard from '../components/community/PostCard.tsx';
+import PostService from '../service/post.ts';
+import NewPostForm from '../components/community/NewPostForm.tsx';
 
-const Community = ({ postService }: IPostServiceProps) => {
+interface ICommunityProps {
+    postService: PostService;
+    isAddPostFormOpen: boolean;
+    setAddPostForm: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunityProps) => {
     const [posts, setPosts] = useState<IPost[]>();
     const [error, setError] = useState('');
     const { user } = useAuth();
@@ -24,6 +31,7 @@ const Community = ({ postService }: IPostServiceProps) => {
     return (
         <div className=''>
             {error && <Banner text={error} isAlert={true} />}
+            {isAddPostFormOpen && (<NewPostForm postService={postService} onError={onError} setAddPostForm={setAddPostForm} />)}
             {posts?.length === 0 && <p className=''>No Posts Yet</p>}
             <>
                 {posts?.map((post) => (
