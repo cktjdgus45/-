@@ -31,13 +31,13 @@ const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunit
     return (
         <div className=''>
             {error && <Banner text={error} isAlert={true} />}
-            {isAddPostFormOpen && (<NewPostForm postService={postService} onError={onError} setAddPostForm={setAddPostForm} />)}
+            {isAddPostFormOpen && (<NewPostForm setPosts={setPosts} postService={postService} onError={onError} setAddPostForm={setAddPostForm} />)}
             {posts?.length === 0 && <p className=''>No Posts Yet</p>}
-            <>
+            <div className='w-full h-full flex flex-col items-center bg-red-100'>
                 {posts?.map((post) => (
                     <PostCard post={post} />
                 ))}
-            </>
+            </div>
         </div>
     )
 }
