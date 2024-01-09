@@ -64,3 +64,26 @@ li {
     opacity: 1;
     pointer-events: auto;
   }
+
+/* styles.css */
+/* Custom scrollbar styles */
+/* For WebKit browsers */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #EBE3D5;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #776B5D;
+    border-radius: 4px;
+  }
+  
+  /* For Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #776B5D transparent;
+  }
+  

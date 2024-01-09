@@ -27,7 +27,7 @@ function App({ postService }: IPostServiceProps) {
     <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_Client_ID! as string}>
       <div className='w-[880px] bg-sub-color flex flex-col h-full'>
         <Header authHandler={authHandler} setAddPostForm={setAddPostForm} />
-        <main className='basis-7/10 bg-third-color'>
+        <main className='basis-7/10 bg-third-color overflow-auto'>
           <Routes>
             <Route path="/dogWorld" element={< Community postService={postService} isAddPostFormOpen={isAddPostFormOpen} setAddPostForm={setAddPostForm} />} />
             <Route path="/map" element={< MyMap />} />

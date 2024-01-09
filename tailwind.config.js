@@ -46,7 +46,7 @@ module.exports = {
       }
     }
   },
-  plugins: [],
+  plugins: ['tailwind-scrollbar-hide'],
   variants: {
     extend: {
       backgroundColor: ['active'],
