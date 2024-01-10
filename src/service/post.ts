@@ -58,7 +58,7 @@ export default class PostService {
         // }
     }
 
-    async updateTweet(postId, text) {
+    async updatePost(postId, text) {
         return this.http.fetch(`/posts/${postId}`, {
             method: 'PUT',
             headers: this.getHeaders(),
