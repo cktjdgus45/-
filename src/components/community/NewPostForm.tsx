@@ -19,7 +19,7 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
     const [file, setFile] = useState<File>();
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        postService.postPost(text).then((created) => {
+        postService.postPost(text, file).then((created) => {
             console.log(created);
             setText('');
             setAddPostForm(false);
@@ -40,7 +40,6 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const files = e.target?.files;
-        console.log(e.target)
         if (files && files[0]) {
             setFile(files[0]);
             console.log(files[0]);
@@ -69,7 +68,7 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
     return (
         <>
             <div onClick={handleClose} className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 flex items-center justify-center z-50">
-                <form onClick={preventCloseEventFromOverlay} className="w-1/3 flex-col items-end relative bg-white p-8 rounded-lg shadow-md" onSubmit={onSubmit}>
+                <form encType='multipart/form-data' onClick={preventCloseEventFromOverlay} className="w-1/3 flex-col items-end relative bg-white p-8 rounded-lg shadow-md" onSubmit={onSubmit}>
                     <button
                         type="button"
                         className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
@@ -83,12 +82,13 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
                         required
                         autoFocus
                         type="text"
+                        name="text"
                         placeholder='Enter your text...'
                         value={text}
                         onChange={onChange}
                         className="mb-4 w-full focus:outline-none"
                     />
-                    <input onChange={handleChange} type="file" name="input" id="input-upload" accept='image/*' className='hidden' />
+                    <input onChange={handleChange} type="file" name="file" id="input-upload" accept='image/*' className='hidden' />
                     <label className={`w-full h-60 flex flex-col items-center  justify-center ${!file && 'border-2 border-main-color border-dashed'}`} htmlFor="input-upload" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDragOver} onDrop={handleDrop}>
                         {dragging && (
                             <div className='absolute inset-0 z-50 bg-sky-500/20 pointer-events-none' />

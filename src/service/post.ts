@@ -14,33 +14,18 @@ export default class PostService {
             method: 'GET',
             headers: this.getHeaders(),
         })
-        // const response = await fetch(`${this.baseURL}/posts${query}`, { //중복
-        //     method: 'GET',
-        //     headers: { 'Content-Type': 'application/json' }
-        // });
-        // const data = await response.json();
-        // if (response.status !== 200) {
-        //     throw new Error(data.message);
-        // }
-        // return data;
     }
 
-    async postPost(text) {
+    async postPost(text, file) {
+        const formData = new FormData();
+        formData.append('text', text);
+        formData.append('file', file);
         return this.http.fetch(`/posts`, {
             method: 'POST',
             headers: this.getHeaders(),
-            body: JSON.stringify({ text })
+            body: formData,
+            multipart: true
         })
-        // const response = await fetch(`${this.baseURL}/posts`, { //중복
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ text, username: 'popo', name: 'popo' })
-        // });
-        // const data = await response.json();
-        // if (response.status !== 201) {
-        //     throw new Error(data.message);
-        // }
-        // return data;
     }
 
     async deletePost(postId) {
@@ -48,14 +33,6 @@ export default class PostService {
             method: 'DELETE',
             headers: this.getHeaders(),
         })
-        // const response = await fetch(`${this.baseURL}/posts/${postId}`, {
-        //     method: 'DELETE',
-        //     headers: { 'Content-Type': 'application/json' }
-        // });
-        // const data = await response.json();
-        // if (response.status !== 204) {
-        //     throw new Error(data.message);
-        // }
     }
 
     async updatePost(postId, text) {
@@ -64,16 +41,6 @@ export default class PostService {
             headers: this.getHeaders(),
             body: JSON.stringify({ text }),
         })
-        // const response = await fetch(`${this.baseURL}/posts/${postId}`, {
-        //     method: 'PUT',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ text })
-        // });
-        // const data = await response.json();
-        // if (response.status !== 200) {
-        //     throw new Error(data.message);
-        // }
-        // return data;
     }
     getHeaders() {
         const token = this.tokenStorage.getToken();

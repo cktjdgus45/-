@@ -9,13 +9,17 @@ export default class HttpClient {
     }
 
     async fetch(url, options) {
-        const { body, method, headers } = options;
+        const { body, method, headers: headersOptions, multipart } = options;
+        const headers = {
+            ...headersOptions,
+        };
+
+        if (!multipart) {
+            headers['Content-Type'] = 'application/json';
+        }
         const response = await fetch(`${this.baseURL}${url}`, {
             method,
-            headers: {
-                'Content-Type': 'application/json',
-                ...headers,
-            },
+            headers,
             body
         })
         let data;
