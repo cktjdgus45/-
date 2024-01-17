@@ -19,6 +19,7 @@ const PostCard = ({ post, postService, onError, setPosts }: IPostCardProps) => {
     const navigate = useNavigate();
     const authHandler = useAuth();
     const [isUpdateFormOpen, setUpdateForm] = useState(false);
+    console.log(post);
     const { id, text, createdAt, userId, username, name, url } = post;
     const toggleUpdateForm = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();

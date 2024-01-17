@@ -16,6 +16,7 @@ const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunit
     const [posts, setPosts] = useState<IPost[]>();
     const [error, setError] = useState('');
     const { user } = useAuth();
+    console.log(posts);
     useEffect(() => {
         postService.getPosts()
             .then((posts) => setPosts([...posts]))

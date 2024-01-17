@@ -109,7 +109,7 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
                         type='submit'
                         className="mt-4 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
                     >
-                        게시
+                        등록
                     </button>
                 </form>
             </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import dogVideo from '../assets/runwithdog.mp4';
 import Banner from '../components/UI/Banner.tsx';
 
-const Login = ({ onSignUp, onLogin }) => {
+const AuthForm = ({ onSignUp, onLogin }) => {
   const [signup, setSignup] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -101,7 +101,7 @@ const Login = ({ onSignUp, onLogin }) => {
                 <input
                   name='url'
                   type='url'
-                  placeholder='프로필 사진'
+                  placeholder='프로필 사진URL(선택)'
                   value={url}
                   onChange={onChange}
                   className={`transition-colors duration-200 ease-in-out px-4 py-2 text-sm text-neutral-50 font-light mb-1 bg-glass-md focus:bg-glass ${signup ? 'focus:border-cyan-300' : 'focus:border-pink-300'} ${signup ? 'hover:border-cyan-50' : 'hover:border-pink-50'} border-glass border-[0.7px] border-solid placeholder:text-[rgba(0,0,0,0.6)]`}
@@ -121,4 +121,4 @@ const Login = ({ onSignUp, onLogin }) => {
   );
 };
 
-export default Login;
+export default AuthForm;

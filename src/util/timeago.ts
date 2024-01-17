@@ -4,7 +4,7 @@ export const timeAgo = (timestamp: string) => {
     const secondsAgo = Math.floor((now - timestampDate.getTime()) / 1000);
 
     if (secondsAgo < 60) {
-        return `${secondsAgo}초전`;
+        return `방금 전`;
     } else if (secondsAgo < 3600) {
         const minutesAgo = Math.floor(secondsAgo / 60);
         return `${minutesAgo}분전`;

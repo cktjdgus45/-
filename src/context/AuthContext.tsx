@@ -1,7 +1,7 @@
 import { createContext, createRef, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import React from 'react';
 import AuthService from '../service/auth';
-import Login from '../pages/Login.tsx';
+import AuthForm from '../pages/AuthForm.tsx';
 import { IAuthorizedUser } from '../types';
 
 
@@ -68,7 +68,7 @@ export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuth
                 children
             ) : (
                 <>
-                    <Login onSignUp={signUp} onLogin={login} />
+                    <AuthForm onSignUp={signUp} onLogin={login} />
                 </>
             )
             }
