@@ -42,7 +42,6 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
         const files = e.target?.files;
         if (files && files[0]) {
             setFile(files[0]);
-            console.log(files[0]);
         }
     }
     const handleDrag = (e: React.DragEvent<HTMLLabelElement>) => {
@@ -62,7 +61,6 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
         const files = e.dataTransfer?.files;
         if (files && files[0]) {
             setFile(files[0]);
-            console.log(files[0]);
         }
     }
     return (

@@ -14,7 +14,6 @@ const AuthForm = ({ onSignUp, onLogin }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (signup) {
-      console.log(username, password, name, email, url)
       onSignUp(username, password, name, email, url).catch(setError);
     } else {
       onLogin(username, password).catch(setError);

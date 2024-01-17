@@ -31,15 +31,6 @@ export type IUpdatePost = {
     tags?: string;
 };
 
-export type IUser = {
-    id: string;
-    password: string;
-    name: string;
-    username: string;
-    email: string;
-    url: string;
-    token: string;
-};
 export type INewUser = {
     id: string;
     password: string;
@@ -66,6 +57,14 @@ export type IAuthHandler = {
 
 export type IAuthorizedUser = {
     token: string;
+    user: IUser;
+}
+
+export type IUser = {
+    email: string;
+    id: number;
+    name: string;
+    url: string;
     username: string;
 }
 

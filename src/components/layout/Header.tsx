@@ -15,7 +15,7 @@ interface IHeaderProps {
 const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
     const location = useLocation();
     const currentUrl = location.pathname;
-    console.log(authHandler);
+    console.log(authHandler.user?.user.name);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -36,7 +36,7 @@ const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
                     {authHandler.user &&
                         (
                             <div onClick={toggleDropdown} className='cursor-pointer text-sm flex gap-1 items-center'>
-                                <h6>{authHandler.user.username}</h6>
+                                <h6>{authHandler.user.user.name}</h6>
                                 <div className="relative">
                                     <FontAwesomeIcon className='text-base' icon={faCaretDown} />
                                     <div className={`dropdown-menu ${isDropdownOpen ? 'dropdown-menu active' : 'dropdown-menu'} absolute w-32 text-center right-0 mt-2 bg-sub-color text-main-color rounded shadow-md`}>

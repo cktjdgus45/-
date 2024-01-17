@@ -21,7 +21,6 @@ export default function MyMap() {
     const latlng = useSelector((state: RootState) => state.latlng);
     const { name } = jibunAddress;
     const { data: hospitals, isLoading } = useSWR<Hospital[]>(`${process.env.REACT_APP_SERVER_BASE_URL}/address/${name?.slice(4, 7)}`, fetcher);
-    console.log(hospitals)
     const [map, setMap] = useState<naver.maps.Map | null>(null)
     const [infowindow, setInfoWindow] = useState<naver.maps.InfoWindow | null>(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -16,7 +16,6 @@ export default class AuthService {
                 username, password, name, email, url
             })
         })
-        console.log(data);
         this.tokenStorage.saveToken(data.token);
         return data;
     }

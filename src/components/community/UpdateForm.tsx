@@ -18,7 +18,6 @@ const UpdateForm = ({ postService, onError, setPosts, postId, prevText, setUpdat
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         postService.updatePost(postId, text).then((updated) => {
-            console.log(updated);
             setText('');
             setUpdateForm(false);
             setPosts((prevPosts) => {
