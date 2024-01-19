@@ -27,10 +27,15 @@ export default class AuthService {
         this.tokenStorage.saveToken(data.token); // response로 token을 받음.
         return data;
     }
-    async update(username, file, cloudinaryId) {
+    async update(username, file, existUrl, cloudinaryId) {
         const formData = new FormData();
         formData.append('username', username);
-        formData.append('file', file);
+        console.log(existUrl)
+        if (file) {
+            formData.append('file', file);
+        } else {
+            formData.append('existUrl', existUrl);
+        }
         formData.append('cloudinaryId', cloudinaryId);
         const data = await this.http.fetch('/auth/me', {
             method: 'PUT',

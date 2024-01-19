@@ -11,14 +11,15 @@ interface IUpdateProfileFormProps {
 }
 
 const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFormProps) => {
-    console.log(authHandler);
     const navigate = useNavigate();
     const [text, setText] = useState('');
     const [dragging, setDragging] = useState(false);
     const [file, setFile] = useState<File>();
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        authHandler.update(text, file, cloudinaryId()).then((result) => {
+        const existUrl = authHandler.user?.user.url! as string;
+        console.log(authHandler.user?.user)
+        authHandler.update(text, file, existUrl, cloudinaryId()).then((result) => {
             console.log(result);
             setText('');
             setEditProfileForm(false);
@@ -87,6 +88,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                     type="text"
                     name="username"
                     placeholder={authHandler.user?.user.username}
+                    defaultValue={authHandler.user?.user.username}
                     value={text}
                     onChange={onChange}
                     className="mb-4 w-full focus:outline-none"
