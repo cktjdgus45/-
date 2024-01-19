@@ -1,39 +1,36 @@
 import React, { ChangeEvent, useState } from 'react';
-import PostService from '../../service/post';
 import { useNavigate } from 'react-router-dom';
-import { IPost } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import Overlay from '../UI/Overlay.tsx';
+import { IAuthContext } from '../../context/AuthContext.tsx';
 
-interface INewPostFormProps {
-    postService: PostService;
-    onError: (error: any) => void;
-    setAddPostForm: React.Dispatch<React.SetStateAction<boolean>>;
-    setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
+interface IUpdateProfileFormProps {
+    authHandler: IAuthContext;
+    setEditProfileForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPostFormProps) => {
+const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFormProps) => {
+    console.log(authHandler);
     const navigate = useNavigate();
     const [text, setText] = useState('');
     const [dragging, setDragging] = useState(false);
     const [file, setFile] = useState<File>();
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        postService.postPost(text, file).then((created) => {
-            console.log(created);
+        authHandler.update(text, file).then((result) => {
+            console.log(result);
             setText('');
-            setAddPostForm(false);
-            setPosts((prevPosts) => [created, ...prevPosts || []]);
+            setEditProfileForm(false);
             navigate('/dogWorld');
         })
-            .catch(onError);
+            .catch(authHandler.error.onError);
     }
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setText(event.target.value);
     }
     const handleClose = () => {
-        setAddPostForm(false);
+        setEditProfileForm(false);
     }
     const preventCloseEventFromOverlay = (event: React.MouseEvent<HTMLFormElement>) => {
         event.stopPropagation();
@@ -65,7 +62,7 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
         }
     }
     return (
-        <Overlay setForm={setAddPostForm}>
+        <Overlay setForm={setEditProfileForm}>
             <form encType='multipart/form-data' onClick={preventCloseEventFromOverlay} className="relative w-1/3 flex-col items-end bg-white p-8 rounded-lg shadow-md" onSubmit={onSubmit}>
                 <button
                     type="button"
@@ -80,8 +77,8 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
                     required
                     autoFocus
                     type="text"
-                    name="text"
-                    placeholder='Enter your text...'
+                    name="username"
+                    placeholder={authHandler.user?.user.username}
                     value={text}
                     onChange={onChange}
                     className="mb-4 w-full focus:outline-none"
@@ -107,11 +104,11 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
                     type='submit'
                     className="mt-4 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
                 >
-                    등록
+                    업데이트
                 </button>
             </form>
         </Overlay>
     )
 }
 
-export default NewPostForm;
+export default UpdateProfileForm;

@@ -11,7 +11,7 @@ import Footer from './components/layout/Footer.tsx';
 import Header from './components/layout/Header.tsx';
 import { useAuth } from './context/AuthContext.tsx';
 import PostService from './service/post.ts';
-import MyPosts from './pages/MyPosts.tsx';
+import Profile from './pages/Profile.tsx';
 
 
 export interface IPostServiceProps {
@@ -32,7 +32,7 @@ function App({ postService }: IPostServiceProps) {
             <Route path="/dogWorld" element={< Community postService={postService} isAddPostFormOpen={isAddPostFormOpen} setAddPostForm={setAddPostForm} />} />
             <Route path="/map" element={< MyMap />} />
             <Route path="/weather" element={<WeatherTemplate />} />
-            <Route path="/:username" element={<MyPosts postService={postService} />} />
+            <Route path="/:username" element={<Profile postService={postService} />} />
           </Routes>
         </main>
         <Footer />

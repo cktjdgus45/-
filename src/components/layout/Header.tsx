@@ -7,7 +7,7 @@ import { faTruckMedical } from '@fortawesome/free-solid-svg-icons';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { IAuthHandler, IUser } from '../../types';
-import Profile from '../UI/Profile.tsx';
+import Avartar from '../UI/Avartar.tsx';
 interface IHeaderProps {
     authHandler: IAuthHandler;
     setAddPostForm: Dispatch<SetStateAction<boolean>>;
@@ -16,8 +16,8 @@ interface IHeaderProps {
 const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
     const location = useLocation();
     const currentUrl = location.pathname;
-    console.log(authHandler.user?.user.name);
-    const { url, username, name } = authHandler.user?.user! as IUser;
+    console.log(authHandler)
+    const { url, username } = authHandler.user?.user! as IUser;
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -53,13 +53,13 @@ const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
                         (
                             <div onClick={toggleDropdown} className='cursor-pointer text-sm flex gap-2 items-center'>
                                 <h6 className='text-sm font-bold'>{username}</h6>
-                                <Profile width={30} height={30} url={url} username={username} />
+                                <Avartar width={30} height={30} url={url} username={username} />
                                 <div className="relative">
                                     <FontAwesomeIcon className='text-base' icon={faCaretDown} />
                                     <div className={`dropdown-menu ${isDropdownOpen ? 'dropdown-menu active' : 'dropdown-menu'} absolute w-32 text-center right-0 mt-2 bg-sub-color text-main-color rounded shadow-md`}>
                                         <ul className="list-none p-2 font-bold text-sm">
-                                            <li className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
-                                                <a href="/profile">프로필</a>
+                                            <li onClick={() => navigate(`/${username}`)} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
+                                                <h3>프로필</h3>
                                             </li>
                                             <li onClick={authHandler.logout} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
                                                 <h3>로그아웃</h3>

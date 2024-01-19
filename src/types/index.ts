@@ -53,6 +53,11 @@ export type IAuthHandler = {
     logout: () => Promise<void>;
     signUp: (username: any, password: any, name: any, email: any, url: any) => Promise<void>;
     user: IAuthorizedUser | undefined;
+    error: {
+        error: string;
+        onError: (error: any) => void;
+    }
+    update: (username: any, file: any) => Promise<void>;
 }
 
 export type IAuthorizedUser = {

@@ -1,14 +1,14 @@
 import React from 'react';
 import MinidenticonImg from './MinidenticonImg.tsx';
 
-interface IProfileProps {
+interface IAvartarProps {
     width: 15 | 25 | 30 | 35;
     height: 15 | 25 | 30 | 35;
     url: string;
     username: string;
 }
 
-const Profile = ({ width, height, url, username }: IProfileProps) => {
+const Avartar = ({ width, height, url, username }: IAvartarProps) => {
     return (
         <div className="bg-red p-1 rounded-full shadow-2xl">
             {url === "" ? (
@@ -30,4 +30,4 @@ const Profile = ({ width, height, url, username }: IProfileProps) => {
     )
 }
 
-export default Profile;
+export default Avartar;

@@ -27,16 +27,32 @@ export default class AuthService {
         this.tokenStorage.saveToken(data.token); // response로 token을 받음.
         return data;
     }
+    async update(username, file) {
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('file', file);
+        const data = await this.http.fetch('/auth/me', {
+            method: 'PUT',
+            headers: this.getHeaders(),
+            body: formData,
+            multipart: true
+        })
+        this.tokenStorage.saveToken(data.token); // response로 token을 받음.
+        return data;
+    }
     async me() {
-        const token = this.tokenStorage.getToken();
         return this.http.fetch('/auth/me', {
             method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+            headers: this.getHeaders(),
         })
     }
     async logout() {
         this.tokenStorage.clearToken();
+    }
+    getHeaders() {
+        const token = this.tokenStorage.getToken();
+        return {
+            Authorization: `Bearer ${token}`,
+        }
     }
 }

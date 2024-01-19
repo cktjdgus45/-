@@ -2,19 +2,12 @@ import { createContext, createRef, useCallback, useContext, useEffect, useImpera
 import React from 'react';
 import AuthService from '../service/auth';
 import AuthForm from '../pages/AuthForm.tsx';
-import { IAuthorizedUser } from '../types';
+import { IAuthHandler, IAuthorizedUser } from '../types';
 
 
-export const AuthContext = createContext({} as IAuthContext);
+export const AuthContext = createContext({} as IAuthHandler);
 
 const contextRef = createRef();
-
-export interface IAuthContext {
-    user: IAuthorizedUser | undefined;
-    signUp: (username: string, password: string, name: string, email: string, url: string) => Promise<void>;
-    login: (username: string, password: string) => Promise<void>;
-    logout: () => Promise<void>;
-}
 interface IAuthProviderProps {
     authService: AuthService;
     children: React.ReactNode;
@@ -23,20 +16,27 @@ interface IAuthProviderProps {
 
 export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuthProviderProps) => {
     const [user, setUser] = useState<IAuthorizedUser | undefined>(undefined);
-
+    const [error, setError] = useState('');
     useImperativeHandle(contextRef, () => (user ? user.token : undefined));
 
     useEffect(() => {
         authErrorEventBus.listen((err) => {
             console.error(err);
+            setError(error.toString());
             setUser(undefined);
         })
-    }, [authErrorEventBus]);
+    }, [authErrorEventBus, error]);
 
     useEffect(() => {
         authService.me().then(setUser).catch(console.error);
     }, [authService]);
 
+    const onError = (error) => {
+        setError(error.toString());
+        setTimeout(() => {
+            setError('');
+        }, 3000);
+    }
     const signUp = useCallback(
         async (username, password, name, email, url) =>
             authService.signup(username, password, name, email, url)
@@ -45,6 +45,11 @@ export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuth
     const login = useCallback(
         async (username, password) =>
             authService.login(username, password).then((user) => setUser(user))
+        , [authService]
+    );
+    const update = useCallback(
+        async (username, file) =>
+            authService.update(username, file).then((user) => setUser(user))
         , [authService]
     );
     const logout = useCallback(
@@ -57,11 +62,12 @@ export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuth
             user, // == user: user
             signUp, // ==signUp : signUp , 각자 각각 독립되게 변할때 각자만 변함.
             login,
-            logout
+            logout,
+            update,
+            error: { error, onError }
         })
-        , [user, signUp, login, logout]
+        , [user, signUp, login, logout, update, error]
     );
-    console.log(user);
     return (
         <AuthContext.Provider value={context}>
             {user ? (
@@ -88,4 +94,4 @@ export class AuthErrorEventBus {
 
 export default AuthContext;
 export const fetchToken = () => contextRef.current;
-export const useAuth = (): IAuthContext => useContext(AuthContext);
+export const useAuth = (): IAuthHandler => useContext(AuthContext);
