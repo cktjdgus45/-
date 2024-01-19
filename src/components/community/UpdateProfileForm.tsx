@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import Overlay from '../UI/Overlay.tsx';
-import { IAuthContext } from '../../context/AuthContext.tsx';
+import { IAuthHandler } from '../../types/index.ts';
 
 interface IUpdateProfileFormProps {
-    authHandler: IAuthContext;
+    authHandler: IAuthHandler;
     setEditProfileForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -18,13 +18,21 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
     const [file, setFile] = useState<File>();
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        authHandler.update(text, file).then((result) => {
+        authHandler.update(text, file, cloudinaryId()).then((result) => {
             console.log(result);
             setText('');
             setEditProfileForm(false);
             navigate('/dogWorld');
         })
             .catch(authHandler.error.onError);
+    }
+    const cloudinaryId = () => {
+        const profileUrl = authHandler.user?.user.url ?? "";
+        const regex = /\/upload\/v\d+\/([^./]+)/;
+        const match = regex.exec(profileUrl);
+        const cloudinaryId = match ? match[1] : "";
+        console.log(cloudinaryId); // Output: y6eozxfdlpmvlozuyz0w
+        return cloudinaryId;
     }
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setText(event.target.value);

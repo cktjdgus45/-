@@ -57,7 +57,7 @@ export type IAuthHandler = {
         error: string;
         onError: (error: any) => void;
     }
-    update: (username: any, file: any) => Promise<void>;
+    update: (username: string, file: File | undefined, cloudinaryId: string | "") => Promise<void>;
 }
 
 export type IAuthorizedUser = {
