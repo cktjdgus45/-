@@ -2,8 +2,8 @@ import React from 'react';
 import MinidenticonImg from './MinidenticonImg.tsx';
 
 interface IAvartarProps {
-    width: 15 | 25 | 30 | 35;
-    height: 15 | 25 | 30 | 35;
+    width: 10 | 15 | 20;
+    height: 10 | 15 | 20;
     url: string;
     username: string;
 }

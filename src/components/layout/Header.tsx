@@ -53,7 +53,7 @@ const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
                         (
                             <div onClick={toggleDropdown} className='cursor-pointer text-sm flex gap-2 items-center'>
                                 <h6 className='text-sm font-bold'>{username}</h6>
-                                <Avartar width={30} height={30} url={url} username={username} />
+                                <Avartar width={10} height={10} url={url} username={username} />
                                 <div className="relative">
                                     <FontAwesomeIcon className='text-base' icon={faCaretDown} />
                                     <div className={`dropdown-menu ${isDropdownOpen ? 'dropdown-menu active' : 'dropdown-menu'} absolute w-32 text-center right-0 mt-2 bg-sub-color text-main-color rounded shadow-md`}>
