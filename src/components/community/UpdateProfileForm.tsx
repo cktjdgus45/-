@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import Overlay from '../UI/Overlay.tsx';
 import { IAuthHandler } from '../../types/index.ts';
+import Avartar from '../UI/Avartar.tsx';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 interface IUpdateProfileFormProps {
     authHandler: IAuthHandler;
@@ -93,26 +95,36 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                     onChange={onChange}
                     className="mb-4 w-full focus:outline-none"
                 />
-                <input onChange={handleChange} type="file" name="file" id="input-upload" accept='image/*' className='hidden' />
-                <label className={`w-full h-60 flex flex-col items-center  justify-center ${!file && 'border-2 border-main-color border-dashed'}`} htmlFor="input-upload" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDragOver} onDrop={handleDrop}>
-                    {dragging && (
-                        <div className='absolute inset-0 z-50 bg-sky-500/20 pointer-events-none' />
-                    )}
-                    {!file && (
-                        <div className='flex flex-col items-center  justify-center pointer-events-none'>
-                            <FontAwesomeIcon className='text-hover-main-color p-5 text-4xl font-bold' icon={faImage} />
-                            <p className='text-main-color text-sm font-semibold'>여기에 파일을 드롭하세요.</p>
-                        </div>
-                    )}
-                    {file && (
-                        <div className='relative w-full aspect-square'>
-                            <img className='object-cover' src={URL.createObjectURL(file)} alt='local file' sizes='650px' />
-                        </div>
-                    )}
-                </label>
+                <div className='w-full h-full flex justify-around items-center gap-2'>
+                    <div className='basis-1/2 h-full flex items-center justify-center'>
+                        <Avartar width={24} height={24} url={authHandler.user?.user.url ?? ""} username='profile_image' />
+                        {/* <img className='w-full h-full rounded-sm object-cover' src={authHandler.user?.user.url} alt="profile_image" /> */}
+                    </div>
+                    {file && (<FontAwesomeIcon className='text-2xl font-bold text-main-color' icon={faArrowRight} />)}
+                    <div className='basis-1/2 h-full flex items-center justify-center'>
+                        <input onChange={handleChange} type="file" name="file" id="input-upload" accept='image/*' className='hidden' />
+                        <label className={`overflow-hidden w-full h-full cursor-pointer flex flex-col items-center  justify-center ${!file && 'border-2 border-main-color border-dashed'}`} htmlFor="input-upload" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDragOver} onDrop={handleDrop}>
+                            {dragging && (
+                                <div className='absolute inset-0 z-50 bg-sky-500/20 pointer-events-none' />
+                            )}
+                            {!file && (
+                                <div className='p-6 flex flex-col items-center  justify-center pointer-events-none'>
+                                    <FontAwesomeIcon className='text-hover-main-color p-5 text-4xl font-bold' icon={faImage} />
+                                    <p className='text-main-color text-sm font-semibold'>여기에 파일을 드롭하세요.</p>
+                                </div>
+                            )}
+                            {file && (
+                                <div className='w-full h-full flex flex-col items-center  justify-center '>
+                                    <Avartar width={24} height={24} url={URL.createObjectURL(file)} username='local file' />
+                                    {/* <img className='object-cover w-full h-32' src={URL.createObjectURL(file)} alt='local file' sizes='650px' /> */}
+                                </div>
+                            )}
+                        </label>
+                    </div>
+                </div>
                 <button
                     type='submit'
-                    className="mt-4 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
+                    className="w-full h-full mt-6 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
                 >
                     업데이트
                 </button>

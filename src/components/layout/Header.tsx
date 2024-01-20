@@ -56,7 +56,7 @@ const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
                                 <Avartar width={10} height={10} url={url} username={username} />
                                 <div className="relative">
                                     <FontAwesomeIcon className='text-base' icon={faCaretDown} />
-                                    <div className={`dropdown-menu ${isDropdownOpen ? 'dropdown-menu active' : 'dropdown-menu'} absolute w-32 text-center right-0 mt-2 bg-sub-color text-main-color rounded shadow-md`}>
+                                    <div className={`dropdown-menu ${isDropdownOpen ? 'dropdown-menu active' : 'dropdown-menu'} absolute w-32 text-center right-0 mt-3 bg-sub-color text-main-color rounded shadow-md`}>
                                         <ul className="list-none p-2 font-bold text-sm">
                                             <li onClick={() => navigate(`/${username}`)} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
                                                 <h3>프로필</h3>

@@ -2,15 +2,15 @@ import React from 'react';
 import MinidenticonImg from './MinidenticonImg.tsx';
 
 interface IAvartarProps {
-    width: 10 | 15 | 20;
-    height: 10 | 15 | 20;
+    width: 10 | 15 | 20 | 24 | 28 | 36;
+    height: 10 | 15 | 20 | 24 | 28 | 36;
     url: string;
     username: string;
 }
 
 const Avartar = ({ width, height, url, username }: IAvartarProps) => {
     return (
-        <div className="bg-red p-1 rounded-full shadow-2xl">
+        <div className="rounded-full p-1">
             {url === "" ? (
                 <MinidenticonImg
                     username={username}
