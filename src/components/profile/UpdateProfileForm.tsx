@@ -6,6 +6,7 @@ import Overlay from '../UI/Overlay.tsx';
 import { IAuthHandler } from '../../types/index.ts';
 import Avartar from '../UI/Avartar.tsx';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Loader from '../UI/Loader.tsx';
 
 interface IUpdateProfileFormProps {
     authHandler: IAuthHandler;
@@ -14,16 +15,17 @@ interface IUpdateProfileFormProps {
 
 const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFormProps) => {
     const navigate = useNavigate();
-    const [text, setText] = useState('');
+    const [text, setText] = useState("");
+    const [loading, setLoading] = useState(false);
     const [dragging, setDragging] = useState(false);
     const [file, setFile] = useState<File>();
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+        setLoading(true);
         const existUrl = authHandler.user?.user.url! as string;
-        console.log(authHandler.user?.user)
         authHandler.update(text, file, existUrl, cloudinaryId()).then((result) => {
-            console.log(result);
             setText('');
+            setLoading(false);
             setEditProfileForm(false);
             navigate('/dogWorld');
         })
@@ -88,17 +90,15 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                     required
                     autoFocus
                     type="text"
-                    name="username"
-                    placeholder={authHandler.user?.user.username}
-                    defaultValue={authHandler.user?.user.username}
-                    value={text}
+                    name="name"
+                    placeholder={authHandler.user?.user.name}
+                    value={text || authHandler.user?.user.name}
                     onChange={onChange}
                     className="mb-4 w-full focus:outline-none"
                 />
                 <div className='w-full h-full flex justify-around items-center gap-2'>
                     <div className='basis-1/2 h-full flex items-center justify-center'>
-                        <Avartar width={24} height={24} url={authHandler.user?.user.url ?? ""} username='profile_image' />
-                        {/* <img className='w-full h-full rounded-sm object-cover' src={authHandler.user?.user.url} alt="profile_image" /> */}
+                        <Avartar width={24} height={24} url={authHandler.user?.user.url ?? ""} name='profile_image' />
                     </div>
                     {file && (<FontAwesomeIcon className='text-2xl font-bold text-main-color' icon={faArrowRight} />)}
                     <div className='basis-1/2 h-full flex items-center justify-center'>
@@ -115,8 +115,8 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                             )}
                             {file && (
                                 <div className='w-full h-full flex flex-col items-center  justify-center '>
-                                    <Avartar width={24} height={24} url={URL.createObjectURL(file)} username='local file' />
-                                    {/* <img className='object-cover w-full h-32' src={URL.createObjectURL(file)} alt='local file' sizes='650px' /> */}
+                                    <Avartar width={24} height={24} url={URL.createObjectURL(file)} name='local file' />
+                                    {/* <img className='object-cover -full h-32' src={URL.createObjectURL(file)} alt='local file' sizes='650px' /> */}
                                 </div>
                             )}
                         </label>
@@ -126,7 +126,9 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                     type='submit'
                     className="w-full h-full mt-6 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
                 >
-                    업데이트
+                    {loading ? (<Loader kind='clip' isLoading={loading} color='#fff' />) : (
+                        <span>업데이트</span>
+                    )}
                 </button>
             </form>
         </Overlay>

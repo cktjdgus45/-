@@ -5,6 +5,7 @@ import { IPost } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import Overlay from '../UI/Overlay.tsx';
+import Loader from '../UI/Loader.tsx';
 
 interface INewPostFormProps {
     postService: PostService;
@@ -15,14 +16,17 @@ interface INewPostFormProps {
 
 const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPostFormProps) => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const [text, setText] = useState('');
     const [dragging, setDragging] = useState(false);
     const [file, setFile] = useState<File>();
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+        setLoading(true);
         postService.postPost(text, file).then((created) => {
             console.log(created);
             setText('');
+            setLoading(false);
             setAddPostForm(false);
             setPosts((prevPosts) => [created, ...prevPosts || []]);
             navigate('/dogWorld');
@@ -107,7 +111,9 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
                     type='submit'
                     className="mt-4 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
                 >
-                    등록
+                    {loading ? (<Loader kind='clip' isLoading={loading} color='#fff' />) : (
+                        <span>업데이트</span>
+                    )}
                 </button>
             </form>
         </Overlay>

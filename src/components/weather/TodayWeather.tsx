@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import { fetcher } from '../../network/fetcher.ts';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store.ts';
-import Loader from '../layout/Loader.tsx';
+import Loader from '../UI/Loader.tsx';
 import { AnimatePresence, motion } from 'framer-motion';
 interface TodayWeatherProps {
     classifedWeather: Map<Code, Weather[]> | undefined;
@@ -50,7 +50,7 @@ const TodayWeather = (props: TodayWeatherProps) => {
     return (
         <div className='absolute top-0 w-full flex flex-col items-center  bg-main-color text-white px-1 h-1/2'>
             <motion.div layout key={selectedId} layoutId={"popo"} onClick={() => setSelectedId("popo")} className='cursor-pointer absolute z-50 right-1 bottom-1 bg-glass flex rounded-lg p-1'>
-                {isLoading ? (<Loader isLoading={isLoading} color='#776B5D' />) : (
+                {isLoading ? (<Loader kind='grid' isLoading={isLoading} color='#776B5D' />) : (
                     <div className='flex items-center'>
                         <MiseIcon miseGrade={miseDust?.response.body.items[0].pm10Grade} />
                         <div className='ml-2 text-sm'>

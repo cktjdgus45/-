@@ -1,22 +1,32 @@
 import React, { useState } from 'react';
 import dogVideo from '../assets/runwithdog.mp4';
 import Banner from '../components/UI/Banner.tsx';
+import Loader from '../components/UI/Loader.tsx';
 
 const AuthForm = ({ onSignUp, onLogin }) => {
   const [signup, setSignup] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [url, setURL] = useState('');
   const [text, setText] = useState('');
   const [isAlert, setIsAlert] = useState(false);
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    if (signup) {
-      onSignUp(username, password, name, email, url).catch(setError);
-    } else {
-      onLogin(username, password).catch(setError);
+    setLoading(true);
+
+    try {
+      if (signup) {
+        await onSignUp(username, password, name, email, url);
+      } else {
+        await onLogin(username, password);
+      }
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -24,7 +34,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
     setText(error.toString());
     setIsAlert(true);
   };
-
+  console.log(loading);
   const onChange = (event) => {
     const {
       target: { name, value, checked },
@@ -107,7 +117,11 @@ const AuthForm = ({ onSignUp, onLogin }) => {
                 />
               )}
               <button className={`tracking-wide transition-colors duration-300 ease-in-out self-end px-1 py-2 mt-3 rounded-lg text-sm text-white font-semibold ${signup ? 'bg-cyan-300' : 'bg-pink-300'} ${signup ? 'hover:bg-cyan-500' : 'hover:bg-pink-500'}`} type='submit'>
-                {signup ? '회원가입' : '로그인'}
+                {loading ? (
+                  <Loader kind='clip' isLoading={loading} color='#fff' />
+                ) : (
+                  signup ? '회원가입' : '로그인'
+                )}
               </button>
             </form>
 
