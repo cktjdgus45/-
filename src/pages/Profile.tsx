@@ -22,12 +22,9 @@ const Profile = ({ postService }: IPostServiceProps) => {
         }, 3000);
     }
     useEffect(() => {
-        // Check if the authenticated user matches the one in the URL parameter
         const user = authHandler.user?.user;
         if (user && user.username !== username) {
-            // Redirect or handle unauthorized access (e.g., show an error message)
             console.log('Unauthorized access!');
-            // Redirect the user to a login page or another route
             navigate('/dogWorld');
         }
     }, [authHandler.user?.user, navigate, username]);

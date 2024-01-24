@@ -27,9 +27,9 @@ export default class AuthService {
         this.tokenStorage.saveToken(data.token); // response로 token을 받음.
         return data;
     }
-    async update(username, file, existUrl, cloudinaryId) {
+    async update(name, file, existUrl, cloudinaryId) {
         const formData = new FormData();
-        formData.append('username', username);
+        formData.append('name', name);
         console.log(existUrl)
         if (file) {
             formData.append('file', file);

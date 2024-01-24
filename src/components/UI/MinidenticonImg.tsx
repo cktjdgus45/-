@@ -4,22 +4,22 @@ import React, { useMemo } from 'react';
 import { minidenticon } from "https://cdn.jsdelivr.net/npm/minidenticons@4.2.0/minidenticons.min.js";
 
 interface MinidenticonImgProps {
-  username: string;
+  name: string;
   saturation: string;
   width: string;
   height: string;
 }
 
-const MinidenticonImg = ({ username, saturation, ...props }: MinidenticonImgProps) => {
+const MinidenticonImg = ({ name, saturation, ...props }: MinidenticonImgProps) => {
   const svgURI = useMemo(
     () =>
       "data:image/svg+xml;utf8," +
-      encodeURIComponent(minidenticon(username, saturation)),
-    [username, saturation]
+      encodeURIComponent(minidenticon(name, saturation)),
+    [name, saturation]
   );
   return (
     <>
-      <img className='bg-main-color rounded-full' src={svgURI} alt={username} {...props} />
+      <img className='bg-main-color rounded-full' src={svgURI} alt={name} {...props} />
 
     </>
   )
