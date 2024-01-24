@@ -5,15 +5,15 @@ interface IAvartarProps {
     width: 10 | 15 | 20 | 24 | 28 | 36;
     height: 10 | 15 | 20 | 24 | 28 | 36;
     url: string;
-    username: string;
+    name: string;
 }
 
-const Avartar = ({ width, height, url, username }: IAvartarProps) => {
+const Avartar = ({ width, height, url, name }: IAvartarProps) => {
     return (
         <div className="rounded-full p-1">
             {url === "" ? (
                 <MinidenticonImg
-                    username={username}
+                    name={name}
                     saturation="80"
                     width={width.toString()}
                     height={height.toString()}
@@ -22,7 +22,7 @@ const Avartar = ({ width, height, url, username }: IAvartarProps) => {
                 <img
                     src={url}
                     alt="User Avatar"
-                    className={`bg-main-color w-${width} h-${height} rounded-full`}
+                    className={`w-${width} h-${height} rounded-full`}
                 />
             )
             }
