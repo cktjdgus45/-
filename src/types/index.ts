@@ -66,8 +66,6 @@ export type IAuthorizedUser = {
 }
 
 export type IUser = {
-    email: string;
-    id: number;
     name: string;
     url: string;
     username: string;
@@ -80,5 +78,6 @@ export type IPost = {
     "userId": number,
     "username": string,
     "name": string,
-    "url": string
+    "url": string,
+    "fileUrl": string,
 }
