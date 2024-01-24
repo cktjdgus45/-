@@ -98,8 +98,8 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
                         </div>
                     )}
                     {file && (
-                        <div className='relative w-full aspect-square'>
-                            <img className='object-cover' src={URL.createObjectURL(file)} alt='local file' sizes='650px' />
+                        <div className='relative w-full h-full aspect-square'>
+                            <img className='object-cover w-full h-full' src={URL.createObjectURL(file)} alt='local file' sizes='650px' />
                         </div>
                     )}
                 </label>
