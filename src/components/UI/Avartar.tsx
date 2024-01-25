@@ -10,7 +10,7 @@ interface IAvartarProps {
 
 const Avartar = ({ width, height, url, name }: IAvartarProps) => {
     return (
-        <div className="rounded-full p-1">
+        <div className="rounded-full">
             {url === "" ? (
                 <MinidenticonImg
                     name={name}
@@ -22,7 +22,7 @@ const Avartar = ({ width, height, url, name }: IAvartarProps) => {
                 <img
                     src={url}
                     alt="User Avatar"
-                    className={`w-${width} h-${height} rounded-full`}
+                    className='w-10 h-10 rounded-full'
                 />
             )
             }
