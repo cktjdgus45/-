@@ -7,14 +7,17 @@ import Hero from '../components/profile/Hero.tsx';
 import { IPost } from '../types/index.ts';
 import PostThumbnail from '../components/community/PostThumbnail.tsx';
 import Banner from '../components/UI/Banner.tsx';
+import PostDetail from '../components/community/PostDetail.tsx';
 
 const Profile = ({ postService }: IPostServiceProps) => {
     const navigate = useNavigate();
     const { username } = useParams(); // get user's posts with postService,protect router
     const [error, setError] = useState('');
     const [myPosts, setMyPosts] = useState<IPost[]>();
+    const [myPost, setMyPost] = useState<IPost>();
     const authHandler = useAuth();
     const [editProfileForm, setEditProfileForm] = useState(false);
+    const [isPostDetailOpen, setIsPostDetailOpen] = useState(false);
     const onError = (error) => {
         setError(error.toString());
         setTimeout(() => {
@@ -31,15 +34,18 @@ const Profile = ({ postService }: IPostServiceProps) => {
     useEffect(() => {
         postService.getPosts(username).then(setMyPosts).catch(onError);
     }, [postService, username])
+    console.log(myPost);
+    console.log(isPostDetailOpen);
     return (
         <div className='w-full h-full '>
             {error && <Banner text={error} isAlert={true} />}
             <Hero authHandler={authHandler} setEditProfileForm={setEditProfileForm} />
             <div className="grid grid-cols-3 gap-4">
-                {myPosts?.map(post => <PostThumbnail key={post.id} post={post} postService={postService} onError={onError} setPosts={setMyPosts} />)}
+                {myPosts?.map(post => <PostThumbnail key={post.id} post={post} postService={postService} onError={onError} setPosts={setMyPosts} setMyPost={setMyPost} setIsPostDetailOpen={setIsPostDetailOpen} />)}
 
             </div>
             {editProfileForm && (<UpdateProfileForm setEditProfileForm={setEditProfileForm} authHandler={authHandler} />)}
+            {isPostDetailOpen && myPost && (<PostDetail post={myPost} postService={postService} onError={onError} setPosts={setMyPosts} setIsPostDetailOpen={setIsPostDetailOpen} />)}
         </div>
     )
 }

@@ -26,9 +26,8 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
     const toggleUpdateForm = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
         event.stopPropagation();
-        setUpdateForm(prev => {
-            return !prev
-        });
+        setUpdateForm(prev => !prev
+        );
     };
     const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
@@ -40,10 +39,27 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
         })
         navigate('/dogWorld');
     };
+    const handleClose = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        const isClickInsideForm = e.target instanceof Element && e.target.closest('.post-detail-component');
+
+        if (!isClickInsideForm) {
+            setIsPostDetailOpen(false);
+        }
+    }
     const { id, text, createdAt, username, name, url, fileUrl } = post;
     return (
-        <Overlay setForm={setIsPostDetailOpen}>
-            <div className='flex gap-3 p-2 w-1/2 h-2/3 mx-auto my-4 bg-white border border-gray-300 rounded-md shadow-md overflow-hidden'>
+        <div onClick={handleClose} className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <button
+                type="button"
+                className="absolute top-2 right-2 text-white hover:text-hover-main-color focus:outline-none"
+                onClick={handleClose}
+            >
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div className='post-detail-component flex gap-3 p-2 w-1/2 h-2/3 mx-auto my-4 bg-white border border-gray-300 rounded-md shadow-md overflow-hidden'>
                 <div className='basis-1/2'>
                     <img className='object-cover w-full h-full rounded-sm' src={fileUrl} alt="post_image" />
                 </div>
@@ -76,7 +92,8 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
                     {isUpdateFormOpen && <UpdatePostForm postService={postService} onError={onError} setPosts={setPosts} postId={id} prevText={text} setUpdateForm={setUpdateForm} />}
                 </div>
             </div>
-        </Overlay>
+        </div>
+
     )
 }
 
