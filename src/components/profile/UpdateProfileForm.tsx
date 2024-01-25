@@ -23,7 +23,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
         event.preventDefault();
         setLoading(true);
         const existUrl = authHandler.user?.user.url! as string;
-        authHandler.update(text, file, existUrl, cloudinaryId()).then((result) => {
+        authHandler.update(text, file, existUrl).then((result) => {
             setText('');
             setLoading(false);
             setEditProfileForm(false);
@@ -31,16 +31,18 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
         })
             .catch(authHandler.error.onError);
     }
-    const cloudinaryId = () => {
-        const profileUrl = authHandler.user?.user.url ?? "";
-        const regex = /\/upload\/v\d+\/([^./]+)/;
-        const match = regex.exec(profileUrl);
-        const cloudinaryId = match ? match[1] : "";
-        console.log(cloudinaryId); // Output: y6eozxfdlpmvlozuyz0w
-        return cloudinaryId;
-    }
+    // const cloudinaryId = () => {
+    //     const profileUrl = authHandler.user?.user.url ?? "";
+    //     const regex = /\/upload\/v\d+\/([^./]+)/;
+    //     const match = regex.exec(profileUrl);
+    //     const cloudinaryId = match ? match[1] : "";
+    //     console.log(cloudinaryId); // Output: y6eozxfdlpmvlozuyz0w
+    //     return cloudinaryId;
+    // }
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setText(event.target.value);
+        if (event.target.value.length <= 10) {
+            setText(event.target.value);
+        }
     }
     const handleClose = () => {
         setEditProfileForm(false);
@@ -92,7 +94,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                     type="text"
                     name="name"
                     placeholder={authHandler.user?.user.name}
-                    value={text || authHandler.user?.user.name}
+                    value={text}
                     onChange={onChange}
                     className="mb-4 w-full focus:outline-none"
                 />

@@ -48,8 +48,8 @@ export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuth
         , [authService]
     );
     const update = useCallback(
-        async (username, file, existUrl,cloudinaryId) =>
-            authService.update(username, file, existUrl,cloudinaryId).then((user) => setUser(user))
+        async (username, file, existUrl) =>
+            authService.update(username, file, existUrl).then((user) => setUser(user))
         , [authService]
     );
     const logout = useCallback(

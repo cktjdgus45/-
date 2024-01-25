@@ -39,17 +39,20 @@ const AuthForm = ({ onSignUp, onLogin }) => {
     const {
       target: { name, value, checked },
     } = event;
+    const validateTextLimit = (inputValue, maxLength) => {
+      return inputValue.length <= maxLength ? inputValue : inputValue.slice(0, maxLength);
+    };
     switch (name) {
       case 'username':
-        return setUsername(value);
+        return setUsername(validateTextLimit(value, 20));
       case 'password':
-        return setPassword(value);
+        return setPassword(validateTextLimit(value, 20));
       case 'name':
-        return setName(value);
+        return setName(validateTextLimit(value, 20));
       case 'email':
-        return setEmail(value);
+        return setEmail(validateTextLimit(value, 20));
       case 'url':
-        return setURL(value);
+        return setURL(validateTextLimit(value, 20));
       case 'signup':
         return setSignup(checked);
       default:

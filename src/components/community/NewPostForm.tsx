@@ -33,8 +33,11 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
         })
             .catch(onError);
     }
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setText(event.target.value);
+    const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const textareaText = event.target.value;
+        if (textareaText.length <= 255) {
+            setText(textareaText);
+        }
     }
     const handleClose = () => {
         setAddPostForm(false);
@@ -80,15 +83,15 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
-                <input
+
+                <textarea
                     required
                     autoFocus
-                    type="text"
                     name="text"
                     placeholder='Enter your text...'
                     value={text}
                     onChange={onChange}
-                    className="mb-4 w-full focus:outline-none"
+                    className="mb-4 w-full h-32 focus:outline-none resize-none" // Adjust the height as needed
                 />
                 <input onChange={handleChange} type="file" name="file" id="input-upload" accept='image/*' className='hidden' />
                 <label className={`w-full h-60 flex flex-col items-center  justify-center ${!file && 'border-2 border-main-color border-dashed'}`} htmlFor="input-upload" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDragOver} onDrop={handleDrop}>
