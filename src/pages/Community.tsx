@@ -34,7 +34,7 @@ const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunit
             {error && <Banner text={error} isAlert={true} />}
             {isAddPostFormOpen && (<NewPostForm setPosts={setPosts} postService={postService} onError={onError} setAddPostForm={setAddPostForm} />)}
             {posts?.length === 0 && <p className=''>No Posts Yet</p>}
-            <div className='flex flex-col items-center gap-5'>
+            <div className='flex flex-col items-center gap-y-20'>
                 {posts?.map((post) => (
                     <PostCard post={post} setPosts={setPosts} postService={postService} onError={onError} />
                 ))}
