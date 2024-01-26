@@ -16,7 +16,7 @@ const PostCard = ({ post, postService, onError, setPosts }: IPostCardProps) => {
     const { id, text, createdAt, name, url, fileUrl } = post;
 
     return (
-        <div className='bg-white rounded-md shadow-md overflow-hidden'>
+        <div className='w-80 h-full bg-white rounded-md shadow-md overflow-hidden'>
             <div className='flex flex-col gap-2'>
                 <div className='flex items-center'>
                     <Avartar width={10} height={10} url={url} name={name} />
@@ -26,9 +26,9 @@ const PostCard = ({ post, postService, onError, setPosts }: IPostCardProps) => {
                 <div className="w-80 h-52 relative overflow-hidden">
                     <img className='object-cover w-full h-full' src={fileUrl} alt="post_image" />
                 </div>
-                <div className='flex gap-2 items-center'>
-                    <h2 className='text-xs font-base text-main-color'>{name}</h2>
-                    <p className='text-span-color text-sm font-normal'>{text}</p>
+                <div className='flex-wrap flex items-center gap-2'>
+                    <h2 className=' text-main-color'>{name}</h2>
+                    <p className='text-span-color overflow-hidden break-words'>{text}</p>
                 </div>
                 {isUpdateFormOpen && <UpdatePostForm postId={id} prevText={text} postService={postService} onError={onError} setPosts={setPosts} setUpdateForm={setUpdateForm} />}
             </div>
