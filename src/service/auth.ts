@@ -43,7 +43,6 @@ export default class AuthService {
             body: formData,
             multipart: true
         })
-        this.tokenStorage.saveToken(data.token); // response로 token을 받음.
         return data;
     }
     async me() {

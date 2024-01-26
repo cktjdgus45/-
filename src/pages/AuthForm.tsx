@@ -119,7 +119,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
                   className={`placeholder:font-semibold outline-none transition-colors duration-200 ease-in-out px-4 py-2 text-sm text-neutral-50 font-light mb-1 bg-glass-md focus:outline-none hover:outline-none focus:bg-glass ${signup ? 'focus:border-slate-700' : 'focus:border-stone-700'} ${signup ? 'hover:border-slate-50' : 'hover:border-stone-50'} border-glass !important border-2 border-solid placeholder:text-[rgba(255,255,255,0.9)]`}
                 />
               )}
-              <button className={`tracking-wide transition-colors duration-700 ease-in-out self-end px-1 py-2 mt-3 rounded-lg text-sm text-white font-semibold ${signup ? 'bg-slate-300' : 'bg-stone-300'} ${signup ? 'hover:bg-slate-700' : 'hover:bg-stone-700'}`} type='submit'>
+              <button className={`relative w-full h-full tracking-wide transition-colors duration-300 ease-in-out self-end px-4 py-2 mt-3 rounded-lg text-sm text-white font-semibold ${signup ? 'bg-main-color' : 'bg-hover-main-color'} ${signup ? 'hover:main-color' : 'hover:bg-hover-main-color'}`} type='submit'>
                 {loading ? (
                   <Loader kind='clip' isLoading={loading} color='#fff' />
                 ) : (

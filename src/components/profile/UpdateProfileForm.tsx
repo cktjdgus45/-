@@ -126,7 +126,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                 </div>
                 <button
                     type='submit'
-                    className="w-full h-full mt-6 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
+                    className="relative w-full h-full mt-6 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
                 >
                     {loading ? (<Loader kind='clip' isLoading={loading} color='#fff' />) : (
                         <span>업데이트</span>

@@ -13,7 +13,7 @@ const Loader = ({ isLoading, color, kind }: LoaderProps) => {
         <div className='flex items-center justify-center h-full'>
             <div className="textcenter">
                 {kind === "grid" && (<GridLoader color={color} loading={isLoading} aria-label="Loading Spinner" />)}
-                {kind === "clip" && (<ClipLoader color={color} loading={isLoading} aria-label="Loading Spinner" />)}
+                {kind === "clip" && (<ClipLoader size={15} color={color} loading={isLoading} aria-label="Loading Spinner" />)}
             </div>
         </div>
     );
