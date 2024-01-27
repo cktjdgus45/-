@@ -8,7 +8,6 @@ import PostService from '../../service/post.ts';
 import UpdatePostForm from './UpdatePostForm.tsx';
 import { useNavigate } from 'react-router-dom';
 import Avartar from '../UI/Avartar.tsx';
-import Overlay from '../UI/Overlay.tsx';
 import { timeAgo } from '../../util/timeago.ts';
 
 interface IPostCardProps {
@@ -89,7 +88,7 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
                         </div>
                         <h3 className='text-main-color text-sm font-bold break-words overflow-hidden'>{text}</h3>
                     </div>
-                    {isUpdateFormOpen && <UpdatePostForm postService={postService} onError={onError} setPosts={setPosts} postId={id} prevText={text} setUpdateForm={setUpdateForm} />}
+                    {isUpdateFormOpen && <UpdatePostForm post={post} postService={postService} onError={onError} setPosts={setPosts} postId={id} setUpdateForm={setUpdateForm} />}
                 </div>
             </div>
         </div>

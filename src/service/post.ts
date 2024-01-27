@@ -35,11 +35,19 @@ export default class PostService {
         })
     }
 
-    async updatePost(postId, text) {
+    async updatePost(postId, text, file, existUrl) {
+        const formData = new FormData();
+        formData.append('text', text);
+        if (file) {
+            formData.append('file', file);
+        } else {
+            formData.append('existUrl', existUrl);
+        }
         return this.http.fetch(`/posts/${postId}`, {
             method: 'PUT',
             headers: this.getHeaders(),
-            body: JSON.stringify({ text }),
+            body: formData,
+            multipart: true
         })
     }
     getHeaders() {

@@ -24,7 +24,6 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
         event.preventDefault();
         setLoading(true);
         postService.postPost(text, file).then((created) => {
-            console.log(created);
             setText('');
             setLoading(false);
             setAddPostForm(false);
