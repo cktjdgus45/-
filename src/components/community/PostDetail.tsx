@@ -59,11 +59,11 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
-            <div className='post-detail-component flex gap-3 p-2 w-1/2 h-2/3 mx-auto my-4 bg-white border border-gray-300 rounded-md shadow-md overflow-hidden'>
-                <div className='basis-1/2'>
+            <div className='post-detail-component flex gap-2 p-2 w-1/2 h-2/3 mx-auto my-4 bg-white border border-gray-300 rounded-md shadow-md overflow-hidden'>
+                <div className='w-1/2'>
                     <img className='object-cover w-full h-full rounded-sm' src={fileUrl} alt="post_image" />
                 </div>
-                <div className='basis-1/2'>
+                <div className='w-1/2'>
                     <div className='flex justify-between items-center'>
                         <div className='flex items-center gap-2'>
                             <Avartar width={10} height={10} name={name} url={url} />
@@ -80,14 +80,14 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
                             </div>
                         )}
                     </div>
-                    <hr className='opacity-60 w-full bg-main-color border-t-2 border-b-2 border-solid' />
-                    <div className='flex items-center gap-2'>
+                    <hr className='my-1 opacity-60 w-full bg-main-color border-t-2 border-b-2 border-solid' />
+                    <div className='flex flex-wrap items-center gap-2'>
                         <Avartar width={10} height={10} name={name} url={url} />
                         <div className="flex flex-col">
                             <h3 className='text-main-color text-sm font-bold'>{name}</h3>
                             <h3 className='text-main-color text-sm font-bold'>{timeAgo(createdAt)}</h3>
                         </div>
-                        <h3 className='text-main-color text-sm font-bold'>{text}</h3>
+                        <h3 className='text-main-color text-sm font-bold break-words overflow-hidden'>{text}</h3>
                     </div>
                     {isUpdateFormOpen && <UpdatePostForm postService={postService} onError={onError} setPosts={setPosts} postId={id} prevText={text} setUpdateForm={setUpdateForm} />}
                 </div>
