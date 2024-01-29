@@ -27,6 +27,14 @@ export default class PostService {
             multipart: true
         })
     }
+    async postComment(text, postId) {
+        return this.http.fetch(`/posts/${postId}/comments`, {
+            method: 'POST',
+            headers: this.getHeaders(),
+            body: JSON.stringify({ text }),
+            multipart: false
+        })
+    }
 
     async deletePost(postId) {
         return this.http.fetch(`/posts/${postId}`, {
