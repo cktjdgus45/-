@@ -8,6 +8,7 @@ interface IOverlayProps {
 const Overlay = ({ setForm, children }: IOverlayProps) => {
     const handleClose = (e: React.MouseEvent) => {
         e.stopPropagation();
+        console.log('Overlay closed');
         setForm(prev => !prev);
     }
     return (

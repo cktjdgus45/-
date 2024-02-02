@@ -7,6 +7,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
   const [signup, setSignup] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
 
     try {
       if (signup) {
-        await onSignUp(username, password, name, email, url);
+        await onSignUp(username, password, passwordCheck, name, email, url);
       } else {
         await onLogin(username, password);
       }
@@ -47,17 +48,20 @@ const AuthForm = ({ onSignUp, onLogin }) => {
         return setUsername(validateTextLimit(value, 20));
       case 'password':
         return setPassword(validateTextLimit(value, 20));
+      case 'passwordCheck':
+        return setPasswordCheck(validateTextLimit(value, 20));
       case 'name':
         return setName(validateTextLimit(value, 20));
       case 'email':
         return setEmail(validateTextLimit(value, 20));
       case 'url':
-        return setURL(validateTextLimit(value, 20));
+        return setURL(validateTextLimit(value ?? "", 140));
       case 'signup':
         return setSignup(checked);
       default:
     }
   };
+  console.log(url);
   return (
     <div className='flex flex-col justify-start items-center h-screen'>
       <div className='relative w-full h-full'>
@@ -87,6 +91,15 @@ const AuthForm = ({ onSignUp, onLogin }) => {
                 className={`placeholder:font-semibold outline-none transition-colors duration-200 ease-in-out px-4 py-2 text-sm text-neutral-50  font-light mb-1 bg-glass-md focus:outline-none hover:outline-none focus:bg-glass ${signup ? 'focus:border-slate-700' : 'focus:border-stone-700'} ${signup ? 'hover:border-slate-50' : 'hover:border-stone-50'} border-glass !important border-2 border-solid placeholder:text-[rgba(255,255,255,0.9)]`}
                 onChange={onChange}
               />
+              {signup && (
+                <input
+                  name='passwordCheck'
+                  type='password'
+                  placeholder='passwordCheck'
+                  value={passwordCheck}
+                  className={`placeholder:font-semibold outline-none transition-colors duration-200 ease-in-out px-4 py-2 text-sm text-neutral-50  font-light mb-1 bg-glass-md focus:outline-none hover:outline-none focus:bg-glass ${signup ? 'focus:border-slate-700' : 'focus:border-stone-700'} ${signup ? 'hover:border-slate-50' : 'hover:border-stone-50'} border-glass !important border-2 border-solid placeholder:text-[rgba(255,255,255,0.9)]`}
+                  onChange={onChange}
+                />)}
               {signup && (
                 <input
                   name='name'
@@ -119,7 +132,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
                   className={`placeholder:font-semibold outline-none transition-colors duration-200 ease-in-out px-4 py-2 text-sm text-neutral-50 font-light mb-1 bg-glass-md focus:outline-none hover:outline-none focus:bg-glass ${signup ? 'focus:border-slate-700' : 'focus:border-stone-700'} ${signup ? 'hover:border-slate-50' : 'hover:border-stone-50'} border-glass !important border-2 border-solid placeholder:text-[rgba(255,255,255,0.9)]`}
                 />
               )}
-              <button className={`relative w-full h-full tracking-wide transition-colors duration-300 ease-in-out self-end px-4 py-2 mt-3 rounded-lg text-sm text-white font-semibold ${signup ? 'bg-main-color' : 'bg-hover-main-color'} ${signup ? 'hover:main-color' : 'hover:bg-hover-main-color'}`} type='submit'>
+              <button className={`relative w-full h-full tracking-wide transition-colors duration-300 ease-in-out self-end px-4 py-2 mt-3 rounded-lg text-sm text-white font-semibold ${signup ? 'bg-main-color' : 'bg-main-color'} ${signup ? 'hover:bg-hover-main-color' : 'hover:bg-hover-main-color'}`} type='submit'>
                 {loading ? (
                   <Loader kind='clip' isLoading={loading} color='#fff' />
                 ) : (

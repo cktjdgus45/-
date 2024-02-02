@@ -16,7 +16,6 @@ const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunit
     const [posts, setPosts] = useState<IPost[]>();
     const [error, setError] = useState('');
     const { user } = useAuth();
-    console.log(posts);
     useEffect(() => {
         postService.getPosts()
             .then((posts) => setPosts([...posts]))
@@ -33,7 +32,7 @@ const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunit
         <div className='w-full h-full bg-sub-color'>
             {error && <Banner text={error} isAlert={true} />}
             {isAddPostFormOpen && (<NewPostForm setPosts={setPosts} postService={postService} onError={onError} setAddPostForm={setAddPostForm} />)}
-            {posts?.length === 0 && <p className=''>No Posts Yet</p>}
+            {posts?.length === 0 && <p className=''>포스트가 아직 없습니다.</p>}
             <div className='flex flex-col items-center gap-y-20'>
                 {posts?.map((post) => (
                     <PostCard post={post} setPosts={setPosts} postService={postService} onError={onError} />

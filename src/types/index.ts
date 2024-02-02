@@ -80,4 +80,14 @@ export type IPost = {
     "name": string,
     "url": string,
     "fileUrl": string,
+    "comments": string,
+}
+
+export type IComment = {
+    id: number;
+    createdAt: string;
+    name: string;
+    text: string;
+    url: string;
+    username: string;
 }
