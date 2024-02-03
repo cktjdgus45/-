@@ -76,7 +76,7 @@ const InfoBoxWrapper = (props: InfoBoxWrapperProps) => {
 
     return (
         <AnimatePresence initial={false}>
-            <div className='relative w-full h-full transition-colors duration-300 ease-linear'>
+            <div className='overflow-hidden relative w-full h-full transition-colors duration-300 ease-linear'>
                 <motion.div custom={back} variants={rowVariants} initial="hidden" animate="visible" exit="exit" transition={{ type: "tween", duration: 1 }} key={page} className='grid w-full h-32 grid-cols-6 absolute bottom-1/4'>
                     {
                         tmpskypty.slice(OFFSET * page, OFFSET * page + OFFSET).map((item, i) => (
@@ -84,8 +84,8 @@ const InfoBoxWrapper = (props: InfoBoxWrapperProps) => {
                         ))
                     }
                 </motion.div>
-                <FontAwesomeIcon className='text-hover-main-color hover:text-span-color absolute top-1/2 left-0 transform -translate-y-1/5 cursor-pointer text-3xl font-bold ' onClick={prevPage} icon={faArrowLeft} />
-                <FontAwesomeIcon className='text-hover-main-color hover:text-span-color absolute top-1/2 right-0 transform -translate-y-1/5 cursor-pointer text-3xl font-bold ' onClick={nextPage} icon={faArrowRight} />
+                <FontAwesomeIcon className='text-hover-main-color hover:text-main-color absolute top-1/2 left-0 transform -translate-y-1/5 cursor-pointer text-3xl font-bold transition-colors duration-300 ease-in-out' onClick={prevPage} icon={faArrowLeft} />
+                <FontAwesomeIcon className='text-hover-main-color hover:text-main-color absolute top-1/2 right-0 transform -translate-y-1/5 cursor-pointer text-3xl font-bold transition-colors duration-300 ease-in-out' onClick={nextPage} icon={faArrowRight} />
             </div>
         </AnimatePresence>
     )

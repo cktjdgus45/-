@@ -32,45 +32,45 @@ const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
     }
     return (
         <>
-            <nav className='flex items-center justify-between bg-sub-color basis-1/10'>
+            <nav className='flex items-center justify-around bg-sub-color basis-1/10  text-main-color text-base font-normal'>
                 <img className='pl-8' alt='logo' src={process.env.PUBLIC_URL + '/logo.png'} />
-                <ul className='pr-8 flex gap-4 items-center justify-around text-main-color text-2xl'>
+                <ul className='pr-8 flex gap-4 items-center justify-around'>
                     {currentUrl === process.env.PUBLIC_URL && (
-                        <li className='ml-4 cursor-pointer hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
-                            <FontAwesomeIcon onClick={showAddForm} icon={faSquarePlus} />
+                        <li className='cursor-pointer hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
+                            <h3 onClick={showAddForm}>새 글</h3>
                         </li>
                     )}
                     <li className='cursor-pointer hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
-                        <FontAwesomeIcon onClick={() => handleNavigate('/dogWorld')} icon={faHouse} />
+                        <h3 onClick={() => handleNavigate('/dogWorld')}>커뮤니티</h3>
                     </li>
                     <li className='cursor-pointer hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
-                        <FontAwesomeIcon onClick={() => handleNavigate('/map')} icon={faTruckMedical} />
+                        <h3 onClick={() => handleNavigate('/map')}>응급24시</h3>
                     </li>
                     <li className='cursor-pointer hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
-                        <FontAwesomeIcon onClick={() => handleNavigate('/weather')} icon={faCloud} />
+                        <h3 onClick={() => handleNavigate('/weather')}>날씨</h3>
                     </li>
-                    {authHandler.user &&
-                        (
-                            <div onClick={toggleDropdown} className='cursor-pointer text-sm flex justify-around gap-1 items-center'>
-                                <h6 className='text-sm font-bold'>{name}</h6>
-                                <Avartar width={28} height={28} url={url} name={name} />
-                                <div className="relative">
-                                    <FontAwesomeIcon className='text-base' icon={faCaretDown} />
-                                    <div className={`dropdown-menu ${isDropdownOpen ? 'dropdown-menu active' : 'dropdown-menu'} absolute w-32 text-center right-0 mt-3 bg-sub-color text-main-color rounded shadow-md`}>
-                                        <ul className="list-none p-2 font-bold text-sm">
-                                            <li onClick={() => handleNavigate(`/${username}`)} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
-                                                <h3>프로필</h3>
-                                            </li>
-                                            <li onClick={authHandler.logout} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
-                                                <h3>로그아웃</h3>
-                                            </li>
-                                        </ul>
-                                    </div>
+                </ul>
+                {authHandler.user &&
+                    (
+                        <div onClick={toggleDropdown} className='z-50 cursor-pointer text-sm flex justify-around gap-1 items-center'>
+                            <h6 className='text-sm font-bold'>{name}</h6>
+                            <Avartar width={28} height={28} url={url} name={name} />
+                            <div className="relative">
+                                <FontAwesomeIcon className='text-base' icon={faCaretDown} />
+                                <div className={`dropdown-menu ${isDropdownOpen ? 'dropdown-menu active' : 'dropdown-menu'} absolute w-32 text-center right-0 mt-3 bg-sub-color text-main-color rounded shadow-md`}>
+                                    <ul className="list-none p-2 font-bold text-sm">
+                                        <li onClick={() => handleNavigate(`/${username}`)} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
+                                            <h3>프로필</h3>
+                                        </li>
+                                        <li onClick={authHandler.logout} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
+                                            <h3>로그아웃</h3>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                        )
-                    }
-                </ul>
+                        </div>
+                    )
+                }
             </nav>
         </>
     )
