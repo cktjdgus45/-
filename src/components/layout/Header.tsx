@@ -58,7 +58,7 @@ const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
                                     <FontAwesomeIcon className='text-base' icon={faCaretDown} />
                                     <div className={`dropdown-menu ${isDropdownOpen ? 'dropdown-menu active' : 'dropdown-menu'} absolute w-32 text-center right-0 mt-3 bg-sub-color text-main-color rounded shadow-md`}>
                                         <ul className="list-none p-2 font-bold text-sm">
-                                            <li onClick={() => navigate(`/${username}`)} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
+                                            <li onClick={() => handleNavigate(`/${username}`)} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">
                                                 <h3>프로필</h3>
                                             </li>
                                             <li onClick={authHandler.logout} className="rounded-md cursor-pointer hover:bg-hover-main-color p-2 transition-colors duration-200 ease-in-out">

@@ -6,6 +6,7 @@ import UpdatePostForm from './UpdatePostForm.tsx';
 import Avartar from '../UI/Avartar.tsx';
 import Loader from '../UI/Loader.tsx';
 import Comments from './comments.tsx';
+import { useNavigate } from 'react-router-dom';
 interface IPostCardProps {
     post: IPost;
     postService: PostService;
@@ -17,10 +18,14 @@ const PostCard = ({ post, postService, onError, setPosts }: IPostCardProps) => {
     const [isUpdateFormOpen, setUpdateForm] = useState(false);
     const [isOpenCommentBox, setIsOpenCommentBox] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { id, text, createdAt, name, url, fileUrl } = post;
+    const { id, text, createdAt, name, username, url, fileUrl } = post;
     //comment
     const [commentText, setCommentText] = useState('');
     const [comments, setComments] = useState<IComment[]>();
+    const navigate = useNavigate();
+    const handleNavigate = (path) => {
+        navigate(path);
+    };
     useEffect(() => {
         setComments((JSON.parse(post.comments)));
     }, [post.comments]);
@@ -50,9 +55,11 @@ const PostCard = ({ post, postService, onError, setPosts }: IPostCardProps) => {
         <div className='w-1/2 h-full bg-white rounded-md shadow-md overflow-hidden'>
             <div className='flex flex-col'>
                 <div className='flex items-center gap-1 p-2'>
-                    <Avartar width={10} height={10} url={url} name={name} />
-                    <h2 className='text-xs font-bold text-main-color'>{name}</h2>
-                    <span className='text-sm text-gray-500 ml-1'>{`• ${timeAgo(createdAt)}`}</span>
+                    <div className='cursor-pointer' onClick={() => handleNavigate(`/${username}`)} >
+                        <Avartar width={10} height={10} url={url} name={name} />
+                    </div>
+                    <h2 onClick={() => handleNavigate(`/${username}`)} className='cursor-pointer text-xs font-bold text-main-color'>{name}</h2>
+                    <span className='text-xs text-gray-500 ml-1'>{`• ${timeAgo(createdAt)}`}</span>
                 </div>
                 <div className="w-full h-full relative overflow-hidden">
                     <img className='object-cover w-full h-full' src={fileUrl} alt="post_image" />
