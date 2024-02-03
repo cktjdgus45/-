@@ -56,25 +56,25 @@ const Comments = ({ setIsOpenCommentBox, comments, postService, onError, setPost
                 </svg>
             </button>
             <section className="max-w-md comments-component relative w-1/3 flex-col items-end bg-white rounded-lg shadow-md">
-                <header className='p-6'>
+                <header className='p-6 bg-sub-color rounded-t-lg'>
                     <h3 className='text-xl font-semibold text-main-color'>Comments</h3>
                 </header>
-                <main className='max-h-64 overflow-y-auto flex flex-col gap-4'>
+                <main className='mb-2 max-h-64 overflow-y-auto flex flex-col gap-1'>
                     {comments ? comments.map((comment) => (
                         <CommentBox comment={comment} />
                     )) : 'no comments'}
                 </main>
                 <footer className='w-full'>
-                    <div className="w-full relative flex-col items-end bg-white p-8 rounded-lg shadow-md">
+                    <div className="w-full relative flex-col items-end bg-sub-color p-2 rounded-b-lg shadow-md">
                         <textarea
-                            className="w-full h-16 focus:outline-none resize-none"
+                            className="ring-2 w-full h-16 p-2 border border-glass outline-none focus:ring-2 ring-stone-300 focus:ring-stone-500 resize-none transition-all duration-300 ease-in-out"
                             placeholder="댓글 추가..."
                             value={commentText}
                             onChange={handleInputChange}
                         />
                         <div className="flex justify-end w-full">
                             <button
-                                className={`px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out ${commentText.trim() === '' && 'opacity-50 cursor-default hover:bg-main-color'}`}
+                                className={`px-4 py-2 bg-main-color text-white rounded-full focus:outline-none transition-colors duration-300 ease-in-out ${commentText.trim() === '' && 'opacity-50 cursor-default hover:bg-main-color'}`}
                                 onClick={handleAddComment}
                                 disabled={commentText.trim() === ''}
                             >
