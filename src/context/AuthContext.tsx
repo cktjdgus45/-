@@ -3,6 +3,7 @@ import React from 'react';
 import AuthService from '../service/auth';
 import AuthForm from '../pages/AuthForm.tsx';
 import { IAuthHandler, IAuthorizedUser } from '../types';
+import Loader from '../components/UI/Loader.tsx';
 
 
 export const AuthContext = createContext({} as IAuthHandler);
@@ -16,21 +17,28 @@ interface IAuthProviderProps {
 
 export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuthProviderProps) => {
     const [user, setUser] = useState<IAuthorizedUser | undefined>(undefined);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     useImperativeHandle(contextRef, () => (user ? user.token : undefined));
 
     useEffect(() => {
         authErrorEventBus.listen((err) => {
+            setLoading(false);
             console.error(err);
             setError(error.toString());
             setUser(undefined);
+            setLoading(false);
         })
     }, [authErrorEventBus, error]);
 
     useEffect(() => {
-        authService.me().then(setUser).catch(console.error);
+        authService.me()
+            .then((fetchedUser) => {
+                setUser(fetchedUser);
+                setLoading(false);
+            })
+            .catch(console.error);
     }, [authService]);
-
     const onError = (error) => {
         setError(error.toString());
         setTimeout(() => {
@@ -70,14 +78,19 @@ export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuth
     );
     return (
         <AuthContext.Provider value={context}>
-            {user ? (
+            {loading ? (
+                <div className='w-screen h-screen flex justify-center'>
+                    <div className='bg-sub-color flex items-center justify-center w-[880px] h-screen'>
+                        <Loader isLoading={loading} color='#776B5D' kind='grid' />
+                    </div>
+                </div>
+            ) : user ? (
                 children
             ) : (
                 <>
                     <AuthForm onSignUp={signUp} onLogin={login} />
                 </>
-            )
-            }
+            )}
         </AuthContext.Provider>
     )
 }

@@ -51,7 +51,7 @@ export type INewUser = {
 export type IAuthHandler = {
     login: (username: any, password: any) => Promise<void>;
     logout: () => Promise<void>;
-    signUp: (username: any, password: any, name: any, email: any, url: any) => Promise<void>;
+    signUp: (username: any, password: any, passwordCheck: any, name: any, email: any, url: any) => Promise<void>
     user: IAuthorizedUser | undefined;
     error: {
         error: string;
