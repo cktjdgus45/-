@@ -11,13 +11,12 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 interface IUpdatePostFormProps {
     post: IPost;
     postService: PostService;
-    onError: (error: any) => void;
     setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
     postId: number;
     setUpdateForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UpdatePostForm = ({ post, postService, onError, setPosts, postId, setUpdateForm }: IUpdatePostFormProps) => {
+const UpdatePostForm = ({ post, postService, setPosts, postId, setUpdateForm }: IUpdatePostFormProps) => {
     const navigate = useNavigate();
     const [text, setText] = useState('');
     const [loading, setLoading] = useState(false);
@@ -41,7 +40,11 @@ const UpdatePostForm = ({ post, postService, onError, setPosts, postId, setUpdat
             }
             );
             navigate('/dogWorld');
-        }).catch(onError);
+        }).catch((error) => {
+            setLoading(false);
+            setUpdateForm(false);
+            console.error(error)
+        });
     }
     const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const textareaText = event.target.value;

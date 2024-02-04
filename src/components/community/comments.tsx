@@ -8,12 +8,11 @@ interface ICommentsProps {
     comments: IComment[] | undefined;
     post: IPost;
     postService: PostService;
-    onError: (error: any) => void;
     setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
     setIsOpenCommentBox: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Comments = ({ setIsOpenCommentBox, comments, postService, onError, setPosts, post }: ICommentsProps) => {
+const Comments = ({ setIsOpenCommentBox, comments, postService, setPosts, post }: ICommentsProps) => {
     const [commentText, setCommentText] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -41,7 +40,10 @@ const Comments = ({ setIsOpenCommentBox, comments, postService, onError, setPost
                     );
                     return updatedPosts;
                 });
-            }).catch(onError);
+            }).catch((error) => {
+                setLoading(false);
+                console.error(error)
+            });
         }
     };
     return (

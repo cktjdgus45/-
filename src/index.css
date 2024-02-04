@@ -111,3 +111,16 @@ li {
 ::-webkit-scrollbar-corner {
   display: none;
 }
+/* Banner animation */
+@keyframes slideUp {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 300ms ease-out;
+}

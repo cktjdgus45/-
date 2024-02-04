@@ -10,11 +10,10 @@ import { useNavigate } from 'react-router-dom';
 interface IPostCardProps {
     post: IPost;
     postService: PostService;
-    onError: (error: any) => void;
     setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
 }
 
-const PostCard = ({ post, postService, onError, setPosts }: IPostCardProps) => {
+const PostCard = ({ post, postService, setPosts }: IPostCardProps) => {
     const [isUpdateFormOpen, setUpdateForm] = useState(false);
     const [isOpenCommentBox, setIsOpenCommentBox] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -36,7 +35,6 @@ const PostCard = ({ post, postService, onError, setPosts }: IPostCardProps) => {
         setLoading(true);
         if (commentText.trim() !== '') {
             postService.postComment(commentText, post.id).then((updatedPost) => {
-                console.log(updatedPost);
                 setCommentText('');
                 setLoading(false);
                 setPosts((prevPosts) => {
@@ -46,11 +44,9 @@ const PostCard = ({ post, postService, onError, setPosts }: IPostCardProps) => {
                     );
                     return updatedPosts;
                 });
-            }).catch(onError);
+            }).catch((error) => console.error(error));
         }
     };
-    console.log(comments);
-    console.log(isOpenCommentBox);
     return (
         <div className='w-1/2 h-full bg-white rounded-md shadow-md overflow-hidden'>
             <div className='flex flex-col'>
@@ -90,8 +86,8 @@ const PostCard = ({ post, postService, onError, setPosts }: IPostCardProps) => {
                         </button>
                     </div>
                 </div>
-                {isUpdateFormOpen && <UpdatePostForm post={post} postId={id} postService={postService} onError={onError} setPosts={setPosts} setUpdateForm={setUpdateForm} />}
-                {isOpenCommentBox && <Comments setIsOpenCommentBox={setIsOpenCommentBox} comments={comments} post={post} postService={postService} onError={onError} setPosts={setPosts} />
+                {isUpdateFormOpen && <UpdatePostForm post={post} postId={id} postService={postService} setPosts={setPosts} setUpdateForm={setUpdateForm} />}
+                {isOpenCommentBox && <Comments setIsOpenCommentBox={setIsOpenCommentBox} comments={comments} post={post} postService={postService} setPosts={setPosts} />
                 }
             </div>
         </div>

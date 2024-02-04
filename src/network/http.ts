@@ -1,11 +1,13 @@
-import { AuthErrorEventBus } from '../context/AuthContext';
+import { AuthErrorEventBus, ServerErrorEventBus } from '../context/AuthContext';
 
 export default class HttpClient {
     baseURL: string;
     authErrorEventBus: AuthErrorEventBus;
-    constructor(baseURL, authErrorEventBus) {
+    serverErrorEventBus: ServerErrorEventBus
+    constructor(baseURL, authErrorEventBus, serverErrorEventBus) {
         this.baseURL = baseURL;
         this.authErrorEventBus = authErrorEventBus;
+        this.serverErrorEventBus = serverErrorEventBus;
     }
 
     async fetch(url, options) {
@@ -29,11 +31,13 @@ export default class HttpClient {
             console.error(error);
         }
         if (response.status > 299 || response.status < 200) {  //100,300,400,500 error
-            const message = data && data.message ? data.message : 'Something wrong';
+            const message = data && data.message ? data.message : 'Something wrong'; //message response from server.
             const error = new Error(message);
-            if (response.status === 401) {
+            if (response.status === 401) { // only 401 notify. set global error.
                 this.authErrorEventBus.notify(error);
                 return;
+            } else {
+                this.serverErrorEventBus && this.serverErrorEventBus.notify(error); // except 401 , every http api error.
             }
             throw error;
         }

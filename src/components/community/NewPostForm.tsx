@@ -6,15 +6,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import Overlay from '../UI/Overlay.tsx';
 import Loader from '../UI/Loader.tsx';
+import { useAuth } from '../../context/AuthContext.tsx';
 
 interface INewPostFormProps {
     postService: PostService;
-    onError: (error: any) => void;
     setAddPostForm: React.Dispatch<React.SetStateAction<boolean>>;
     setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
 }
 
-const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPostFormProps) => {
+const NewPostForm = ({ postService, setAddPostForm, setPosts }: INewPostFormProps) => {
+    const { error } = useAuth();
+    console.log(error);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [text, setText] = useState('');
@@ -30,7 +32,11 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
             setPosts((prevPosts) => [created, ...prevPosts || []]);
             navigate('/dogWorld');
         })
-            .catch(onError);
+            .catch((error) => {
+                setLoading(false);
+                setAddPostForm(false);
+                console.error(error)
+            });
     }
     const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const textareaText = event.target.value;
@@ -45,7 +51,6 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
         event.stopPropagation();
     }
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
         const files = e.target?.files;
         if (files && files[0]) {
             setFile(files[0]);
@@ -82,7 +87,6 @@ const NewPostForm = ({ postService, onError, setAddPostForm, setPosts }: INewPos
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
-
                 <textarea
                     required
                     autoFocus

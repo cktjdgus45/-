@@ -13,24 +13,34 @@ interface IAuthProviderProps {
     authService: AuthService;
     children: React.ReactNode;
     authErrorEventBus: AuthErrorEventBus;
+    serverErrorEventBus: ServerErrorEventBus;
 }
 
-export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuthProviderProps) => {
+export const AuthProvider = ({ authService, children, authErrorEventBus, serverErrorEventBus }: IAuthProviderProps) => {
     const [user, setUser] = useState<IAuthorizedUser | undefined>(undefined);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     useImperativeHandle(contextRef, () => (user ? user.token : undefined));
 
     useEffect(() => {
-        authErrorEventBus.listen((err) => {
+        authErrorEventBus.listen((error) => {
             setLoading(false);
-            console.error(err);
+            console.error(error);
             setError(error.toString());
             setUser(undefined);
             setLoading(false);
         })
     }, [authErrorEventBus, error]);
-
+    useEffect(() => {
+        // Listen to server errors
+        serverErrorEventBus.listen((error) => {
+            setLoading(false);
+            setError(error.toString());
+            setTimeout(() => {
+                setError('');
+            }, 3000);
+        });
+    }, [error, serverErrorEventBus]);
     useEffect(() => {
         authService.me()
             .then((fetchedUser) => {
@@ -67,8 +77,8 @@ export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuth
 
     const context = useMemo( // what i want to send data 
         () => ({
-            user, // == user: user
-            signUp, // ==signUp : signUp , 각자 각각 독립되게 변할때 각자만 변함.
+            user,
+            signUp,
             login,
             logout,
             update,
@@ -96,6 +106,15 @@ export const AuthProvider = ({ authService, children, authErrorEventBus }: IAuth
 }
 
 export class AuthErrorEventBus {
+    callback;
+    listen(callback) {
+        this.callback = callback;
+    }
+    notify(error) {
+        this.callback(error);
+    }
+}
+export class ServerErrorEventBus {
     callback;
     listen(callback) {
         this.callback = callback;
