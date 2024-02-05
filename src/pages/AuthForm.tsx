@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import dogVideo from '../assets/runwithdog.mp4';
 import Banner from '../components/UI/Banner.tsx';
 import Loader from '../components/UI/Loader.tsx';
+import { useAuth } from '../context/AuthContext.tsx';
 
 const AuthForm = ({ onSignUp, onLogin }) => {
+  const { error: { error } } = useAuth();
   const [signup, setSignup] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -12,8 +14,6 @@ const AuthForm = ({ onSignUp, onLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [url, setURL] = useState('');
-  const [text, setText] = useState('');
-  const [isAlert, setIsAlert] = useState(false);
   const onSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -25,17 +25,12 @@ const AuthForm = ({ onSignUp, onLogin }) => {
         await onLogin(username, password);
       }
     } catch (error) {
-      setError(error);
+      console.error(error)
     } finally {
       setLoading(false);
     }
   };
 
-  const setError = (error) => {
-    setText(error.toString());
-    setIsAlert(true);
-  };
-  console.log(loading);
   const onChange = (event) => {
     const {
       target: { name, value, checked },
@@ -61,12 +56,12 @@ const AuthForm = ({ onSignUp, onLogin }) => {
       default:
     }
   };
-  console.log(url);
+  console.log(error);
   return (
     <div className='flex flex-col justify-start items-center h-screen'>
+      {error && <Banner text={error} isAlert={true} />}
       <div className='relative w-full h-full'>
         <video className='object-cover w-full h-full' src={dogVideo} autoPlay loop muted controls={false} />
-        <Banner text={text} isAlert={isAlert} />
         <div className='absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-[rgba(0,0,0,0.4)]'>
           <div className='p-5 bg-glass flex flex-col justify-center items-center rounded-lg shadow-2xl'>
             <nav className='text-white text-base font-semibold flex self-start justify-self-start gap-4'>

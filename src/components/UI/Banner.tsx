@@ -17,10 +17,11 @@ const Banner = memo(({ text, isAlert }: BannerProps) => {
       clearTimeout(timeout);
     };
   }, []);
+  console.log(text)
   return (
     <>
       {isVisible && text && (
-        <div className={`fixed w-64 left-[44%]  text-center top-0 transform p-1 text-base font-light ${isAlert ? 'bg-red-400' : 'bg-green-400'} transition-transform ease-in-out duration-300 slide-up`}>
+        <div className={`z-50 fixed w-64 left-[44%]  text-center top-0 transform p-1 text-base font-light ${isAlert ? 'bg-red-400' : 'bg-green-400'} transition-transform ease-in-out duration-300 slide-up`}>
           {text}
         </div>
       )}

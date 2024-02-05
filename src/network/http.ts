@@ -31,13 +31,14 @@ export default class HttpClient {
             console.error(error);
         }
         if (response.status > 299 || response.status < 200) {  //100,300,400,500 error
-            const message = data && data.message ? data.message : 'Something wrong'; //message response from server.
+            const message = data && data.message; //message response from server.
             const error = new Error(message);
+            console.log(response.status)
             if (response.status === 401) { // only 401 notify. set global error.
-                this.authErrorEventBus.notify(error);
+                this.authErrorEventBus && this.authErrorEventBus.notify(message);
                 return;
             } else {
-                this.serverErrorEventBus && this.serverErrorEventBus.notify(error); // except 401 , every http api error.
+                this.serverErrorEventBus && this.serverErrorEventBus.notify(message); // except 401 , every http api error.
             }
             throw error;
         }
