@@ -10,7 +10,6 @@ export default class AuthService {
     }
 
     async signup(username, password, passwordCheck, name, email, url) {
-        console.log(url);
         const data = await this.http.fetch('/auth/signup', {
             method: 'POST',
             body: JSON.stringify({
@@ -31,7 +30,6 @@ export default class AuthService {
     async update(name, file, existUrl) {
         const formData = new FormData();
         formData.append('name', name);
-        console.log(existUrl)
         if (file) {
             formData.append('file', file);
         } else {

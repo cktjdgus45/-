@@ -1,12 +1,8 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse } from '@fortawesome/free-solid-svg-icons';
-import { faCloud } from '@fortawesome/free-solid-svg-icons';
-import { faTruckMedical } from '@fortawesome/free-solid-svg-icons';
-import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { IAuthHandler, IUser } from '../../types';
+import { IAuthHandler, IAuthorizedUser, IUser } from '../../types';
 import Avartar from '../UI/Avartar.tsx';
 interface IHeaderProps {
     authHandler: IAuthHandler;
@@ -16,8 +12,9 @@ interface IHeaderProps {
 const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
     const location = useLocation();
     const currentUrl = location.pathname;
-    console.log(authHandler)
-    const { url, name, username } = authHandler.user?.user! as IUser;
+    console.log(authHandler.user)
+    const { user } = authHandler.user as IAuthorizedUser;
+    const { url, name, username } = user ?? (authHandler.user as unknown as IUser);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
