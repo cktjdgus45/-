@@ -52,7 +52,7 @@ const PostCard = ({ post, postService, setPosts }: IPostCardProps) => {
             <div className='flex flex-col'>
                 <div className='flex items-center gap-1 p-2'>
                     <div className='cursor-pointer' onClick={() => handleNavigate(`/${username}`)} >
-                        <Avartar width={10} height={10} url={url} name={name} />
+                        <Avartar width={32} height={32} url={url} name={name} />
                     </div>
                     <h2 onClick={() => handleNavigate(`/${username}`)} className='cursor-pointer text-xs font-bold text-main-color'>{name}</h2>
                     <span className='text-xs text-gray-500 ml-1'>{`• ${timeAgo(createdAt)}`}</span>

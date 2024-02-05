@@ -97,13 +97,13 @@ const UpdatePostForm = ({ post, postService, setPosts, postId, setUpdateForm }: 
                 autoFocus
                 name="text"
                 placeholder={post.text}
-                value={text}
+                value={text || post.text}
                 onChange={onChange}
                 className="mb-4 w-full h-32 focus:outline-none resize-none"
             />
             <div className='w-full h-full flex justify-around items-center gap-2'>
                 <div className='basis-1/2 h-full flex items-center justify-center'>
-                    <Avartar width={24} height={24} url={post.fileUrl ?? ""} name='profile_image' />
+                    <Avartar width={64} height={64} url={post.fileUrl ?? ""} name='profile_image' />
                 </div>
                 {file && (<FontAwesomeIcon className='text-2xl font-bold text-main-color' icon={faArrowRight} />)}
                 <div className='basis-1/2 h-full flex items-center justify-center'>
@@ -120,7 +120,7 @@ const UpdatePostForm = ({ post, postService, setPosts, postId, setUpdateForm }: 
                         )}
                         {file && (
                             <div className='w-full h-full flex flex-col items-center  justify-center '>
-                                <Avartar width={24} height={24} url={URL.createObjectURL(file)} name='local file' />
+                                <Avartar width={64} height={64} url={URL.createObjectURL(file)} name='local file' />
                                 {/* <img className='object-cover -full h-32' src={URL.createObjectURL(file)} alt='local file' sizes='650px' /> */}
                             </div>
                         )}

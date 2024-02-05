@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import Overlay from '../UI/Overlay.tsx';
-import { IAuthHandler } from '../../types/index.ts';
+import { IAuthHandler, IUser } from '../../types/index.ts';
 import Avartar from '../UI/Avartar.tsx';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../UI/Loader.tsx';
@@ -19,6 +19,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
     const [loading, setLoading] = useState(false);
     const [dragging, setDragging] = useState(false);
     const [file, setFile] = useState<File>();
+    const { name, url } = authHandler.user! as unknown as IUser;
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
@@ -93,14 +94,14 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                     autoFocus
                     type="text"
                     name="name"
-                    placeholder={authHandler.user?.user.name}
+                    placeholder={name}
                     value={text}
                     onChange={onChange}
                     className="mb-4 w-full focus:outline-none"
                 />
                 <div className='w-full h-full flex justify-around items-center gap-2'>
                     <div className='basis-1/2 h-full flex items-center justify-center'>
-                        <Avartar width={24} height={24} url={authHandler.user?.user.url ?? ""} name='profile_image' />
+                        <Avartar width={64} height={64} url={url ?? ""} name='profile_image' />
                     </div>
                     {file && (<FontAwesomeIcon className='text-2xl font-bold text-main-color' icon={faArrowRight} />)}
                     <div className='basis-1/2 h-full flex items-center justify-center'>
@@ -117,7 +118,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                             )}
                             {file && (
                                 <div className='w-full h-full flex flex-col items-center  justify-center '>
-                                    <Avartar width={24} height={24} url={URL.createObjectURL(file)} name='local file' />
+                                    <Avartar width={64} height={64} url={URL.createObjectURL(file)} name='local file' />
                                     {/* <img className='object-cover -full h-32' src={URL.createObjectURL(file)} alt='local file' sizes='650px' /> */}
                                 </div>
                             )}

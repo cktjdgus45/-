@@ -2,7 +2,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { IPost } from '../../types';
+import { IPost, IUser } from '../../types';
 import { useAuth } from '../../context/AuthContext.tsx';
 import PostService from '../../service/post.ts';
 import UpdatePostForm from './UpdatePostForm.tsx';
@@ -22,6 +22,9 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
     const navigate = useNavigate();
     const authHandler = useAuth();
     const [isUpdateFormOpen, setUpdateForm] = useState(false);
+    const { username } = authHandler.user! as unknown as IUser;
+    const { id, text, createdAt, username: owner, name: ownerName, url: ownerUrl, fileUrl } = post;
+
     const toggleUpdateForm = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
         event.stopPropagation();
@@ -46,7 +49,6 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
             setIsPostDetailOpen(false);
         }
     }
-    const { id, text, createdAt, username, name, url, fileUrl } = post;
     return (
         <div onClick={handleClose} className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 flex items-center justify-center z-50">
             <button
@@ -65,10 +67,10 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
                 <div className='w-1/2'>
                     <div className='flex justify-between items-center'>
                         <div className='flex items-center gap-2'>
-                            <Avartar width={10} height={10} name={name} url={url} />
-                            <h3 className='text-main-color text-sm font-bold'>{name}</h3>
+                            <Avartar width={32} height={32} name={ownerName} url={ownerUrl} />
+                            <h3 className='text-main-color text-sm font-bold'>{ownerName}</h3>
                         </div>
-                        {username === authHandler.user?.user.username && (
+                        {owner === username && (
                             <div className='flex  gap-2'>
                                 <button onClick={toggleUpdateForm} className='text-base cursor-pointer text-main-color hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
                                     <FontAwesomeIcon icon={faPen} />
@@ -81,14 +83,14 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
                     </div>
                     <hr className='my-1 opacity-60 w-full bg-main-color border-t-2 border-b-2 border-solid' />
                     <div className='flex flex-wrap items-center gap-2'>
-                        <Avartar width={10} height={10} name={name} url={url} />
+                        <Avartar width={32} height={32} name={ownerName} url={ownerUrl} />
                         <div className="flex flex-col">
-                            <h3 className='text-main-color text-sm font-bold'>{name}</h3>
+                            <h3 className='text-main-color text-sm font-bold'>{ownerName}</h3>
                             <h3 className='text-main-color text-sm font-bold'>{timeAgo(createdAt)}</h3>
                         </div>
                         <h3 className='text-main-color text-sm font-bold break-words overflow-hidden'>{text}</h3>
                     </div>
-                    {isUpdateFormOpen && <UpdatePostForm post={post} postService={postService} onError={onError} setPosts={setPosts} postId={id} setUpdateForm={setUpdateForm} />}
+                    {isUpdateFormOpen && <UpdatePostForm post={post} postService={postService} setPosts={setPosts} postId={id} setUpdateForm={setUpdateForm} />}
                 </div>
             </div>
         </div>

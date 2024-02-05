@@ -56,7 +56,6 @@ const AuthForm = ({ onSignUp, onLogin }) => {
       default:
     }
   };
-  console.log(error);
   return (
     <div className='flex flex-col justify-start items-center h-screen'>
       {error && <Banner text={error} isAlert={true} />}

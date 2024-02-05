@@ -2,8 +2,8 @@ import React from 'react';
 import MinidenticonImg from './MinidenticonImg.tsx';
 
 interface IAvartarProps {
-    width: 10 | 15 | 20 | 24 | 28 | 36;
-    height: 10 | 15 | 20 | 24 | 28 | 36;
+    width: 24 | 28 | 32 | 36 | 40 | 45 | 50 | 64;
+    height: 24 | 28 | 32 | 36 | 40 | 45 | 50 | 64;
     url: string;
     name: string;
 }
@@ -15,14 +15,14 @@ const Avartar = ({ width, height, url, name }: IAvartarProps) => {
                 <MinidenticonImg
                     name={name}
                     saturation="80"
-                    width={width.toString()}
-                    height={height.toString()}
+                    width="28"
+                    height="28"
                 />
             ) : (
                 <img
                     src={url}
                     alt="User Avatar"
-                    className='w-10 h-10 rounded-full'
+                    className={`w-[${width}px] h-[${height}px] rounded-full`}
                 />
             )
             }
