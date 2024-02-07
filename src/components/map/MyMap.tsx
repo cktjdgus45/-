@@ -87,7 +87,7 @@ export default function MyMap() {
                     <InfoWindow ref={setInfoWindow} content={''} />
                     {
                         (!isLoading && hospitals) && hospitals.map((hospital) =>
-                            <Marker coord={{ lat: hospital.x, lng: hospital.y }} map={map} hospital={hospital} infowindow={infowindow} />
+                            <Marker key={hospital.id} coord={{ lat: hospital.x, lng: hospital.y }} map={map} hospital={hospital} infowindow={infowindow} />
                         )
                     }
                 </NaverMap>

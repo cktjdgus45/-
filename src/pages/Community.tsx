@@ -29,7 +29,7 @@ const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunit
             {posts?.length === 0 && <p className=''>포스트가 아직 없습니다.</p>}
             <div className='flex flex-col items-center gap-y-20'>
                 {posts?.map((post) => (
-                    <PostCard post={post} setPosts={setPosts} postService={postService} />
+                    <PostCard key={post.id} post={post} setPosts={setPosts} postService={postService} />
                 ))}
             </div>
         </div>

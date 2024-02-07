@@ -34,18 +34,15 @@ const Profile = ({ postService }: IPostServiceProps) => {
     useEffect(() => {
         postService.getPosts(username).then(setMyPosts).catch(onError);
     }, [postService, username])
-    console.log(myPost);
-    console.log(isPostDetailOpen);
     return (
         <div className='w-full h-full '>
             {error && <Banner text={error} isAlert={true} />}
             <Hero authHandler={authHandler} setEditProfileForm={setEditProfileForm} />
             <div className="grid grid-cols-3 gap-4">
                 {myPosts?.map(post => <PostThumbnail key={post.id} post={post} postService={postService} onError={onError} setPosts={setMyPosts} setMyPost={setMyPost} setIsPostDetailOpen={setIsPostDetailOpen} />)}
-
             </div>
             {editProfileForm && (<UpdateProfileForm setEditProfileForm={setEditProfileForm} authHandler={authHandler} />)}
-            {isPostDetailOpen && myPost && (<PostDetail post={myPost} postService={postService} onError={onError} setPosts={setMyPosts} setIsPostDetailOpen={setIsPostDetailOpen} />)}
+            {isPostDetailOpen && myPost && (<PostDetail post={myPosts.find(post => post.id === myPost.id)} postService={postService} onError={onError} setPosts={setMyPosts} setIsPostDetailOpen={setIsPostDetailOpen} />)}
         </div>
     )
 }

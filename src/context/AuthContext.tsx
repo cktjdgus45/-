@@ -35,6 +35,9 @@ export const AuthProvider = ({ authService, children, authErrorEventBus, serverE
     useEffect(() => {
         // Listen to server errors
         serverErrorEventBus.listen((error) => {
+            console.log(error);
+            console.log(typeof (error));
+            console.dir(error);
             setLoading(false);
             setError(error.toString());
             setTimeout(() => {

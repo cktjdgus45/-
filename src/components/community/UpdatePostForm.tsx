@@ -121,7 +121,6 @@ const UpdatePostForm = ({ post, postService, setPosts, postId, setUpdateForm }: 
                         {file && (
                             <div className='w-full h-full flex flex-col items-center  justify-center '>
                                 <Avartar width={64} height={64} url={URL.createObjectURL(file)} name='local file' />
-                                {/* <img className='object-cover -full h-32' src={URL.createObjectURL(file)} alt='local file' sizes='650px' /> */}
                             </div>
                         )}
                     </label>

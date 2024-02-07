@@ -1,14 +1,16 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
-import { IPost, IUser } from '../../types';
+import React, { useEffect, useState } from 'react';
+import { IComment, IPost, IUser } from '../../types';
 import { useAuth } from '../../context/AuthContext.tsx';
 import PostService from '../../service/post.ts';
 import UpdatePostForm from './UpdatePostForm.tsx';
 import { useNavigate } from 'react-router-dom';
 import Avartar from '../UI/Avartar.tsx';
 import { timeAgo } from '../../util/timeago.ts';
+import CommentBox from './CommentBox.tsx';
+import Loader from '../UI/Loader.tsx';
 
 interface IPostCardProps {
     post: IPost;
@@ -22,9 +24,36 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
     const navigate = useNavigate();
     const authHandler = useAuth();
     const [isUpdateFormOpen, setUpdateForm] = useState(false);
-    const { username } = authHandler.user! as unknown as IUser;
-    const { id, text, createdAt, username: owner, name: ownerName, url: ownerUrl, fileUrl } = post;
+    const [loading, setLoading] = useState(false);
+    const [comments, setComments] = useState<IComment[]>();
+    const [commentText, setCommentText] = useState('');
 
+
+    const { username } = authHandler.user! as unknown as IUser;
+    const { id, text, createdAt, username: owner, name: ownerName, url: ownerUrl, fileUrl, comments: postComments } = post;
+
+    useEffect(() => {
+        setComments((JSON.parse(postComments)));
+    }, [postComments]);
+    const handleInputChange = (e) => {
+        setCommentText(e.target.value);
+    };
+    const handleAddComment = () => {
+        setLoading(true);
+        if (commentText.trim() !== '') {
+            postService.postComment(commentText, post.id).then((updatedPost) => {
+                setCommentText('');
+                setLoading(false);
+                setPosts((prevPosts) => {
+                    // Update the state with the updated post
+                    const updatedPosts = prevPosts?.map((prevPost) =>
+                        prevPost.id === updatedPost.id ? updatedPost : prevPost
+                    );
+                    return updatedPosts;
+                });
+            }).catch((error) => console.error(error));
+        }
+    };
     const toggleUpdateForm = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
         event.stopPropagation();
@@ -64,7 +93,7 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
                 <div className='w-1/2'>
                     <img className='object-cover w-full h-full rounded-sm' src={fileUrl} alt="post_image" />
                 </div>
-                <div className='w-1/2'>
+                <div className='w-1/2 flex flex-col'>
                     <div className='flex justify-between items-center'>
                         <div className='flex items-center gap-2'>
                             <Avartar width={32} height={32} name={ownerName} url={ownerUrl} />
@@ -82,13 +111,29 @@ const PostDetail = ({ post, postService, onError, setPosts, setIsPostDetailOpen 
                         )}
                     </div>
                     <hr className='my-1 opacity-60 w-full bg-main-color border-t-2 border-b-2 border-solid' />
-                    <div className='flex flex-wrap items-center gap-2'>
-                        <Avartar width={32} height={32} name={ownerName} url={ownerUrl} />
-                        <div className="flex flex-col">
-                            <h3 className='text-main-color text-sm font-bold'>{ownerName}</h3>
-                            <h3 className='text-main-color text-sm font-bold'>{timeAgo(createdAt)}</h3>
+                    <section className='mb-2 overflow-y-auto flex flex-col gap-1'>
+                        {comments ? comments.map((comment) => (
+                            <CommentBox key={comment.id} comment={comment} />
+                        )) : 'no comments'}
+                    </section>
+                    <div className="comment-input w-full relative flex-col items-end bg-white p-2 rounded-lg shadow-md">
+                        <textarea
+                            className="ring-2 w-full h-16 p-2 border border-glass outline-none focus:ring-2 ring-stone-300 focus:ring-stone-500 resize-none transition-all duration-300 ease-in-out"
+                            placeholder="댓글 추가..."
+                            value={commentText}
+                            onChange={handleInputChange}
+                        />
+                        <div className="flex justify-end w-full">
+                            <button
+                                className={`px-4 py-2 bg-main-color text-white rounded-full focus:outline-none transition-colors duration-300 ease-in-out ${commentText.trim() === '' && 'opacity-50 cursor-default hover:bg-main-color'}`}
+                                onClick={handleAddComment}
+                                disabled={commentText.trim() === ''}
+                            >
+                                {loading ? (<Loader kind='clip' isLoading={loading} color='#fff' />) : (
+                                    <p>댓글</p>
+                                )}
+                            </button>
                         </div>
-                        <h3 className='text-main-color text-sm font-bold break-words overflow-hidden'>{text}</h3>
                     </div>
                     {isUpdateFormOpen && <UpdatePostForm post={post} postService={postService} setPosts={setPosts} postId={id} setUpdateForm={setUpdateForm} />}
                 </div>

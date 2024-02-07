@@ -12,7 +12,6 @@ interface IHeaderProps {
 const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
     const location = useLocation();
     const currentUrl = location.pathname;
-    console.log(authHandler.user)
     const { user } = authHandler.user as IAuthorizedUser;
     const { url, name, username } = user ?? (authHandler.user as unknown as IUser);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
