@@ -35,9 +35,6 @@ export const AuthProvider = ({ authService, children, authErrorEventBus, serverE
     useEffect(() => {
         // Listen to server errors
         serverErrorEventBus.listen((error) => {
-            console.log(error);
-            console.log(typeof (error));
-            console.dir(error);
             setLoading(false);
             setError(error.toString());
             setTimeout(() => {
@@ -62,7 +59,10 @@ export const AuthProvider = ({ authService, children, authErrorEventBus, serverE
     const signUp = useCallback(
         async (username, password, passwordCheck, name, email, url) =>
             authService.signup(username, password, passwordCheck, name, email, url)
-                .then((user) => setUser(user)), [authService]
+                .then((user) => {
+                    console.log(user);
+                    setUser(user)
+                }), [authService]
     );
     const login = useCallback(
         async (username, password) =>

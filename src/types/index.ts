@@ -71,17 +71,29 @@ export type IUser = {
     username: string;
 }
 
+// export type IPost = {
+//     id: number,
+//     text: string,
+//     createdAt: string,
+//     userId: number,
+//     username: string,
+//     name: string,
+//     url: string,
+//     fileUrl: string,
+//     comments: string,
+// }
 export type IPost = {
-    "id": number,
-    "text": string,
-    "createdAt": string,
-    "userId": number,
-    "username": string,
-    "name": string,
-    "url": string,
-    "fileUrl": string,
-    "comments": string,
+    id: number;
+    text: string;
+    createdAt: string;
+    userId: number;
+    username: string;
+    name: string;
+    url: string;
+    fileUrl: string;
+    comments: string; // comments 필드를 string[]로 변경
 }
+
 
 export type IComment = {
     id: number;

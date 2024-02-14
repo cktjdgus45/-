@@ -15,6 +15,7 @@ interface ICommunityProps {
 const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunityProps) => {
 
     const [posts, setPosts] = useState<IPost[]>();
+    console.log(posts);
     const { user, error: { error } } = useAuth();
     useEffect(() => {
         postService.getPosts()
@@ -23,7 +24,7 @@ const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunit
     }, [postService, user]);
 
     return (
-        <div className='w-full h-full bg-sub-color'>
+        <section className='w-full h-full bg-sub-color'>
             {error && <Banner text={error} isAlert={true} />}
             {isAddPostFormOpen && (<NewPostForm setPosts={setPosts} postService={postService} setAddPostForm={setAddPostForm} />)}
             {posts?.length === 0 && <p className=''>포스트가 아직 없습니다.</p>}
@@ -32,7 +33,7 @@ const Community = ({ postService, isAddPostFormOpen, setAddPostForm }: ICommunit
                     <PostCard key={post.id} post={post} setPosts={setPosts} postService={postService} />
                 ))}
             </div>
-        </div>
+        </section>
     )
 }
 

@@ -39,10 +39,28 @@ const Profile = ({ postService }: IPostServiceProps) => {
             {error && <Banner text={error} isAlert={true} />}
             <Hero authHandler={authHandler} setEditProfileForm={setEditProfileForm} />
             <div className="grid grid-cols-3 gap-4">
-                {myPosts?.map(post => <PostThumbnail key={post.id} post={post} postService={postService} onError={onError} setPosts={setMyPosts} setMyPost={setMyPost} setIsPostDetailOpen={setIsPostDetailOpen} />)}
+                {myPosts?.map(post => (
+                    <PostThumbnail
+                        post={post}
+                        postService={postService}
+                        onError={onError}
+                        setPosts={setMyPosts}
+                        setMyPost={setMyPost}
+                        setIsPostDetailOpen={setIsPostDetailOpen}
+                    />
+                ))}
             </div>
+
             {editProfileForm && (<UpdateProfileForm setEditProfileForm={setEditProfileForm} authHandler={authHandler} />)}
-            {isPostDetailOpen && myPost && (<PostDetail post={myPosts.find(post => post.id === myPost.id)} postService={postService} onError={onError} setPosts={setMyPosts} setIsPostDetailOpen={setIsPostDetailOpen} />)}
+            {isPostDetailOpen && myPost && (
+                <PostDetail
+                    post={myPosts?.find(post => post.id === myPost?.id) as unknown as IPost}
+                    postService={postService}
+                    onError={onError}
+                    setPosts={setMyPosts}
+                    setIsPostDetailOpen={setIsPostDetailOpen}
+                />
+            )}
         </div>
     )
 }

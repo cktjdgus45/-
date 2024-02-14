@@ -27,23 +27,27 @@ const Comments = ({ setIsOpenCommentBox, comments, postService, setPosts, post }
     const handleInputChange = (e) => {
         setCommentText(e.target.value);
     };
+
     const handleAddComment = () => {
         setLoading(true);
         if (commentText.trim() !== '') {
-            postService.postComment(commentText, post.id).then((updatedPost) => {
+            postService.postComment(commentText, post.id).then((newComments) => {
                 setCommentText('');
                 setLoading(false);
                 setPosts((prevPosts) => {
-                    // Update the state with the updated post
-                    const updatedPosts = prevPosts?.map((prevPost) =>
-                        prevPost.id === updatedPost.id ? updatedPost : prevPost
-                    );
+                    if (!prevPosts) return prevPosts;
+                    const updatedPosts = prevPosts.map((prevPost) => {
+                        if (prevPost.id === post.id) {
+                            return {
+                                ...prevPost,
+                                comments: newComments,
+                            };
+                        }
+                        return prevPost;
+                    });
                     return updatedPosts;
                 });
-            }).catch((error) => {
-                setLoading(false);
-                console.error(error)
-            });
+            }).catch((error) => console.error(error));
         }
     };
     return (
@@ -63,7 +67,7 @@ const Comments = ({ setIsOpenCommentBox, comments, postService, setPosts, post }
                 </header>
                 <main className='mb-2 max-h-64 overflow-y-auto flex flex-col gap-1'>
                     {comments ? comments.map((comment) => (
-                        <CommentBox comment={comment} />
+                        <CommentBox key={comment.id} comment={comment} />
                     )) : 'no comments'}
                 </main>
                 <footer className='w-full'>

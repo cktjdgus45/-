@@ -25,28 +25,44 @@ const PostCard = ({ post, postService, setPosts }: IPostCardProps) => {
     const handleNavigate = (path) => {
         navigate(path);
     };
+
     useEffect(() => {
-        setComments((JSON.parse(post.comments)));
+        if (typeof post.comments === 'string') {
+            setComments(JSON.parse(post.comments));
+        } else {
+            setComments(post.comments);
+        }
     }, [post.comments]);
+
+
+    console.log(typeof (comments))
     const handleInputChange = (e) => {
         setCommentText(e.target.value);
     };
+
     const handleAddComment = () => {
         setLoading(true);
         if (commentText.trim() !== '') {
-            postService.postComment(commentText, post.id).then((updatedPost) => {
+            postService.postComment(commentText, post.id).then((newComments) => {
                 setCommentText('');
                 setLoading(false);
                 setPosts((prevPosts) => {
-                    // Update the state with the updated post
-                    const updatedPosts = prevPosts?.map((prevPost) =>
-                        prevPost.id === updatedPost.id ? updatedPost : prevPost
-                    );
+                    if (!prevPosts) return prevPosts;
+                    const updatedPosts = prevPosts.map((prevPost) => {
+                        if (prevPost.id === post.id) {
+                            return {
+                                ...prevPost,
+                                comments: newComments,
+                            };
+                        }
+                        return prevPost;
+                    });
                     return updatedPosts;
                 });
             }).catch((error) => console.error(error));
         }
     };
+
     return (
         <div className='w-1/2 h-full bg-white rounded-md shadow-md overflow-hidden'>
             <div className='flex flex-col'>
@@ -65,7 +81,9 @@ const PostCard = ({ post, postService, setPosts }: IPostCardProps) => {
                     <p className='text-span-color overflow-hidden break-words font-normal'>{text}</p>
                 </div>
                 <p className='p-2 text-sm text-stone-500'>
-                    <span onClick={() => setIsOpenCommentBox(true)} className="hover:text-hover-main-color transition-colors duration-300 ease-in-out cursor-pointer ">View all {comments?.length} comments</span>
+                    {comments && (
+                        <span onClick={() => setIsOpenCommentBox(true)} className="hover:text-hover-main-color transition-colors duration-300 ease-in-out cursor-pointer ">View all {comments.length} comments</span>
+                    )}
                 </p>
                 <div className="comment-input w-full relative flex-col items-end bg-white p-2 rounded-lg shadow-md">
                     <textarea
