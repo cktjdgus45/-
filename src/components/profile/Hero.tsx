@@ -1,6 +1,6 @@
 import React from 'react';
 import Avartar from '../UI/Avartar.tsx';
-import { IAuthHandler, IUser } from '../../types';
+import { IAuthHandler, IAuthorizedUser, IUser } from '../../types';
 
 interface IHero {
     authHandler: IAuthHandler;
@@ -8,7 +8,8 @@ interface IHero {
 }
 
 const Hero = ({ authHandler, setEditProfileForm }: IHero) => {
-    const { username, name, url } = authHandler.user! as unknown as IUser;
+    const { user } = authHandler.user as IAuthorizedUser;
+    const { username, name, url } = user ?? (authHandler.user as unknown as IUser);
     return (
         <div className='flex gap-3 items-center p-6'>
             <Avartar width={64} height={64} url={url} name={username} />

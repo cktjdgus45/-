@@ -1,12 +1,25 @@
-import TokenStorage from '../db/token';
-import HttpClient from '../network/http';
+import TokenStorage from '../db/token.ts';
+import HttpClient from '../network/http.ts';
 export default class PostService {
     http: HttpClient;
     tokenStorage: TokenStorage;
+    // static instance: PostService;
     constructor(http, tokenStorage) {
         this.http = http;
         this.tokenStorage = tokenStorage;
     }
+    //singleton pattern
+    // public static getInstance(): PostService {
+    //     if (!PostService.instance) {
+    //         const url = process.env.REACT_APP_SERVER_BASE_URL;
+    //         const authErrorEventBus = new AuthErrorEventBus();
+    //         const serverErrorEventBus = new ServerErrorEventBus();
+    //         const httpClient = new HttpClient(url, authErrorEventBus, serverErrorEventBus);
+    //         const tokenService = new TokenStorage();
+    //         PostService.instance = new PostService(httpClient, tokenService);
+    //     }
+    //     return PostService.instance;
+    // }
 
     async getPosts(username?: string) {
         const query = username ? `?username=${username}` : '';
@@ -43,13 +56,13 @@ export default class PostService {
         })
     }
 
-    async updatePost(postId, text, file, existUrl) {
+    async updatePost(postId, text, fileOrExistUrl) {
         const formData = new FormData();
         formData.append('text', text);
-        if (file) {
-            formData.append('file', file);
-        } else {
-            formData.append('existUrl', existUrl);
+        if (fileOrExistUrl instanceof File) {
+            formData.append('file', fileOrExistUrl);
+        } else { // Assume it's an existing URL
+            formData.append('existUrl', fileOrExistUrl);
         }
         return this.http.fetch(`/posts/${postId}`, {
             method: 'PUT',

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import Overlay from '../UI/Overlay.tsx';
-import { IAuthHandler, IUser } from '../../types/index.ts';
+import { IAuthHandler, IAuthorizedUser, IUser } from '../../types/index.ts';
 import Avartar from '../UI/Avartar.tsx';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../UI/Loader.tsx';
@@ -19,7 +19,9 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
     const [loading, setLoading] = useState(false);
     const [dragging, setDragging] = useState(false);
     const [file, setFile] = useState<File>();
-    const { name, url } = authHandler.user! as unknown as IUser;
+    const { user } = authHandler.user as IAuthorizedUser;
+    const { name, url } = user ?? (authHandler.user as unknown as IUser);
+
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
@@ -32,21 +34,11 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
         })
             .catch(authHandler.error.onError);
     }
-    // const cloudinaryId = () => {
-    //     const profileUrl = authHandler.user?.user.url ?? "";
-    //     const regex = /\/upload\/v\d+\/([^./]+)/;
-    //     const match = regex.exec(profileUrl);
-    //     const cloudinaryId = match ? match[1] : "";
-    //     console.log(cloudinaryId); // Output: y6eozxfdlpmvlozuyz0w
-    //     return cloudinaryId;
-    // }
+
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value.length <= 10) {
             setText(event.target.value);
         }
-    }
-    const handleClose = () => {
-        setEditProfileForm(false);
     }
     const preventCloseEventFromOverlay = (event: React.MouseEvent<HTMLFormElement>) => {
         event.stopPropagation();
@@ -77,18 +69,13 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
             setFile(files[0]);
         }
     }
+    const handleClose = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setEditProfileForm(false);
+    }
     return (
-        <Overlay setForm={setEditProfileForm}>
+        <Overlay onClose={handleClose}>
             <form encType='multipart/form-data' onClick={preventCloseEventFromOverlay} className="relative w-1/3 flex-col items-end bg-white p-8 rounded-lg shadow-md" onSubmit={onSubmit}>
-                <button
-                    type="button"
-                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
-                    onClick={handleClose}
-                >
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
                 <input
                     required
                     autoFocus

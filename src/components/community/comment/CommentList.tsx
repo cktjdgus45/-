@@ -1,15 +1,14 @@
 import React from 'react';
-import { IComment } from '../../types';
-import Avartar from '../UI/Avartar.tsx';
-import { timeAgo } from '../../util/timeago.ts';
+import { timeAgo } from '../../../util/timeago.ts';
+import Avartar from '../../UI/Avartar.tsx';
+import { IComment } from '../../../types/index.ts';
 
-interface ICommentsProps {
+interface ICommentListProps {
     comment: IComment;
 }
 
-const CommentBox = ({ comment }: ICommentsProps) => {
+const CommentList = ({ comment }: ICommentListProps) => {
     const { id, createdAt, name, text, url } = comment;
-
     return (
         <li key={id} className="flex flex-wrap items-center gap-2 p-2">
             <Avartar width={28} height={28} url={url} name={name} />
@@ -19,7 +18,6 @@ const CommentBox = ({ comment }: ICommentsProps) => {
                     <p className='text-sm text-span-color'>{text}</p>
                 </div>
                 <p className='text-xs text-gray-600'>{timeAgo(createdAt)}</p>
-
             </div>
 
         </li>
@@ -27,4 +25,4 @@ const CommentBox = ({ comment }: ICommentsProps) => {
 }
 
 
-export default CommentBox;
+export default CommentList;

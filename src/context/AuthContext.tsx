@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { createContext, createRef, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import React from 'react';
 import AuthService from '../service/auth';
@@ -17,6 +18,7 @@ interface IAuthProviderProps {
 }
 
 export const AuthProvider = ({ authService, children, authErrorEventBus, serverErrorEventBus }: IAuthProviderProps) => {
+    const navigate = useNavigate();
     const [user, setUser] = useState<IAuthorizedUser | undefined>(undefined);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -66,13 +68,19 @@ export const AuthProvider = ({ authService, children, authErrorEventBus, serverE
     );
     const login = useCallback(
         async (username, password) =>
-            authService.login(username, password).then((user) => setUser(user))
-        , [authService]
+            authService.login(username, password).then((user) => {
+                setUser(user);
+                navigate('/dogWorld');
+            })
+        , [authService, navigate]
     );
     const update = useCallback(
         async (username, file, existUrl) =>
-            authService.update(username, file, existUrl).then((user) => setUser(user))
-        , [authService]
+            authService.update(username, file, existUrl).then((user) => {
+                setUser(user);
+                navigate('/dogWorld');
+            })
+        , [authService, navigate]
     );
     const logout = useCallback(
         async () => authService.logout().then(() => setUser(undefined)) //callback memoizaion. 재선언 방지.

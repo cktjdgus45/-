@@ -1,15 +1,16 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { IAuthHandler, IAuthorizedUser, IUser } from '../../types';
+import { IAuthorizedUser, IUser } from '../../types';
 import Avartar from '../UI/Avartar.tsx';
+import { useAuth } from '../../context/AuthContext.tsx';
 interface IHeaderProps {
-    authHandler: IAuthHandler;
-    setAddPostForm: Dispatch<SetStateAction<boolean>>;
+    setAddPostForm: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const Header = ({ authHandler, setAddPostForm }: IHeaderProps) => {
+const Header = ({ setAddPostForm }: IHeaderProps) => {
+    const authHandler = useAuth();
     const location = useLocation();
     const currentUrl = location.pathname;
     const { user } = authHandler.user as IAuthorizedUser;

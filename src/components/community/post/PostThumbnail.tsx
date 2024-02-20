@@ -1,30 +1,24 @@
 import React, { useState } from 'react';
-import { IPost } from '../../types';
-import PostService from '../../service/post.ts';
+import { IPost } from '../../../types';
 
 interface IPostCardProps {
     post: IPost;
-    postService: PostService;
-    onError: (error: any) => void;
-    setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
-    setMyPost: React.Dispatch<React.SetStateAction<IPost | undefined>>
-    setIsPostDetailOpen: React.Dispatch<React.SetStateAction<boolean>>
+    onClick: (clickedPost: IPost) => void;
 }
 
-const PostThumbnail = ({ post, postService, onError, setPosts, setMyPost, setIsPostDetailOpen }: IPostCardProps) => {
+const PostThumbnail = ({ post, onClick }: IPostCardProps) => {
     const [isHovered, setIsHovered] = useState(false);
     const { text, fileUrl } = post;
-    const handleOpen = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const handlePostThumbnailClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault();
-        event.stopPropagation();
-        setMyPost(post);
-        setIsPostDetailOpen(true);
+        event.stopPropagation()
+        onClick(post);
     }
     return (
         <div
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onClick={handleOpen}
+            onClick={handlePostThumbnailClick}
             className={`relative group flex justify-between items-center max-w-md w-full mx-auto my-4 bg-white border border-gray-300 rounded-md shadow-md overflow-hidden cursor-pointer`}>
             <img className='object-cover w-full h-80' src={fileUrl} alt="post_image" />
             <div
