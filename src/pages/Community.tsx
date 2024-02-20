@@ -12,7 +12,6 @@ interface ICommunityProps {
 
 const Community = ({ isAddPostFormOpen, setAddPostForm }: ICommunityProps) => {
     const { posts, loading } = useGetPosts();
-    console.log(posts);
     const { error: { error } } = useAuth();
 
     return (

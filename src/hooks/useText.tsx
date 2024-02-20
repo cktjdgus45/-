@@ -9,8 +9,14 @@ const useText = (maxLength: number) => {
             setText(textareaText);
         }
     }
+    const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const textareaText = event.target.value;
+        if (textareaText.length <= maxLength) {
+            setText(textareaText);
+        }
+    }
 
-    return { text, handleTextAreaChange };
+    return { text, handleTextChange, handleTextAreaChange };
 }
 
 export default useText;
