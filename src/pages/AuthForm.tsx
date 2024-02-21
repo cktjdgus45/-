@@ -1,61 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import dogVideo from '../assets/runwithdog.mp4';
 import Banner from '../components/UI/Banner.tsx';
 import Loader from '../components/UI/Loader.tsx';
-import { useAuth } from '../context/AuthContext.tsx';
+import useAuthEvent from '../hooks/useAuthEvent.tsx';
+import useAuthState from '../hooks/useAuthState.tsx';
 
 const AuthForm = ({ onSignUp, onLogin }) => {
-  const { error: { error } } = useAuth();
-  const [signup, setSignup] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [url, setURL] = useState('');
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true);
+  const authState = useAuthState();
+  const { username, password, passwordCheck, name, email, url, onChange } = authState;
+  const { signup, setSignup, onSubmit, error, loading } = useAuthEvent({ onSignUp, onLogin, authState });
 
-    try {
-      if (signup) {
-        await onSignUp(username, password, passwordCheck, name, email, url);
-      } else {
-        await onLogin(username, password);
-      }
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const onChange = (event) => {
-    const {
-      target: { name, value, checked },
-    } = event;
-    const validateTextLimit = (inputValue, maxLength) => {
-      return inputValue.length <= maxLength ? inputValue : inputValue.slice(0, maxLength);
-    };
-    switch (name) {
-      case 'username':
-        return setUsername(validateTextLimit(value, 20));
-      case 'password':
-        return setPassword(validateTextLimit(value, 20));
-      case 'passwordCheck':
-        return setPasswordCheck(validateTextLimit(value, 20));
-      case 'name':
-        return setName(validateTextLimit(value, 20));
-      case 'email':
-        return setEmail(validateTextLimit(value, 20));
-      case 'url':
-        return setURL(validateTextLimit(value ?? "", 140));
-      case 'signup':
-        return setSignup(checked);
-      default:
-    }
-  };
   return (
     <div className='flex flex-col justify-start items-center h-screen'>
       {error && <Banner text={error} isAlert={true} />}
