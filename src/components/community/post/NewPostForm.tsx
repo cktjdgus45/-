@@ -1,8 +1,9 @@
 import React from 'react';
 import Overlay from '../../UI/Overlay.tsx';
-import Loader from '../../UI/Loader.tsx';
 import useNewPostForm from '../../../hooks/useNewPostForm.tsx';
 import FileUploadLabel from '../../UI/FileUploadLabel.tsx';
+import SubmitButton from '../../UI/SubmitButton.tsx';
+import TextInputField from '../../UI/TextInputField.tsx';
 
 interface INewPostFormProps {
     setAddPostForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,25 +14,15 @@ const NewPostForm = ({ setAddPostForm }: INewPostFormProps) => {
     return (
         <Overlay onClose={handleClose}>
             <form onSubmit={handleSubmitForm} encType='multipart/form-data' onClick={preventCloseEventFromOverlay} className="relative w-1/3 flex-col items-end bg-white p-8 rounded-lg shadow-md">
-                <textarea
-                    required
+                <TextInputField
                     autoFocus
-                    name="text"
-                    placeholder='Enter your text...'
+                    placeholder='강아지에 대한 정보를 입력해주세요.'
                     value={text}
                     onChange={handleTextAreaChange}
-                    className="mb-4 w-full h-32 focus:outline-none resize-none" // Adjust the height as needed
                 />
                 <input onChange={handleChangeFileInputChange} type="file" name="file" id="input-upload" accept='image/*' className='hidden' />
                 <FileUploadLabel file={file} dragging={dragging} handleDrag={handleDrag} handleDragOver={handleDragOver} handleDrop={handleDrop} handleChangeFileInputChange={handleChangeFileInputChange} />
-                <button
-                    type='submit'
-                    className="relative w-full h-full mt-6 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
-                >
-                    {loading ? (<Loader kind='clip' isLoading={loading} color='#fff' />) : (
-                        <span>업로드</span>
-                    )}
-                </button>
+                <SubmitButton text={'업로드'} loading={loading} />
             </form>
         </Overlay>
     )

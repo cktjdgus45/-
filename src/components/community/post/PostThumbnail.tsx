@@ -1,6 +1,7 @@
 import React from 'react';
 import { IPost } from '../../../types';
 import useHover from '../../../hooks/useHover.tsx';
+import HoverEffectThumbnailText from '../../UI/HoverEffectThumbnailText.tsx';
 
 interface IPostCardProps {
     post: IPost;
@@ -22,11 +23,7 @@ const PostThumbnail = ({ post, onClick }: IPostCardProps) => {
             onClick={handlePostThumbnailClick}
             className={`relative group flex justify-between items-center max-w-md w-full mx-auto my-4 bg-white border border-gray-300 rounded-md shadow-md overflow-hidden cursor-pointer`}>
             <img className='object-cover w-full h-80' src={fileUrl} alt="post_image" />
-            <div
-                className={`dropdown-menu ${isHovered ? 'dropdown-menu active' : 'dropdown-menu'} absolute inset-0 bg-glass opacity-0 transition-opacity flex justify-center items-center`}
-            >
-                <h2 className='text-white font-bold text-sm'>{text.slice(0, 8)}</h2>
-            </div>
+            <HoverEffectThumbnailText text={text} isHovered={isHovered} />
         </div>
     )
 }

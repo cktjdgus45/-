@@ -11,13 +11,10 @@ const Banner = memo(({ text, isAlert }: BannerProps) => {
     const timeout = setTimeout(() => {
       setIsVisible(false);
     }, 3000);
-
-    // Cleanup the timeout when the component unmounts
     return () => {
       clearTimeout(timeout);
     };
   }, []);
-  console.log(text)
   return (
     <>
       {isVisible && text && (

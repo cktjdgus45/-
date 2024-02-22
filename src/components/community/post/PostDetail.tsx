@@ -1,12 +1,12 @@
 import React from 'react';
 import { IPost } from '../../../types/index.ts';
-import UpdatePostForm from './UpdatePostForm.tsx';
 import CommentForm from '../comment/CommentForm.tsx';
 import Overlay from '../../UI/Overlay.tsx';
 import usePostDetail from '../../../hooks/usePostDetail.tsx';
 import useDeleteClick from '../../../hooks/useDeleteClick.tsx';
 import PostDetailHeader from '../../UI/PostDetailHeader.tsx';
 import CommentSection from '../../UI/CommentSection.tsx';
+import UpdatePostFormRenderer from '../../UI/UpdatePostFormRenderer.tsx';
 
 interface IPostCardProps {
     post: IPost;
@@ -35,7 +35,7 @@ const PostDetail = ({ post, setIsPostDetailOpen }: IPostCardProps) => {
                 <div className='w-1/2 flex flex-col justify-around'>
                     <PostDetailHeader owner={owner} ownerName={ownerName} ownerUrl={ownerUrl} username={username} toggleUpdateForm={toggleUpdateForm} handleDeleteClick={handleDeleteClick} />
                     <hr className='my-1 opacity-60 w-full bg-main-color border-t-2 border-b-2 border-solid' />
-                    {isUpdateFormOpen && <UpdatePostForm post={post} setIsPostDetailOpen={setIsPostDetailOpen} />}
+                    <UpdatePostFormRenderer post={post} isUpdateFormOpen={isUpdateFormOpen} setIsPostDetailOpen={setIsPostDetailOpen} />
                     <CommentSection comments={comments} />
                     <CommentForm postId={id} />
                 </div>
