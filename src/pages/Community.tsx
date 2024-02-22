@@ -13,21 +13,28 @@ interface ICommunityProps {
 const Community = ({ isAddPostFormOpen, setAddPostForm }: ICommunityProps) => {
     const { posts, loading } = useGetPosts();
     const { error: { error } } = useAuth();
+    const renderPosts = () => {
+        if (loading) {
+            return <Loader isLoading={loading} color='#776B5D' kind='grid' />;
+        }
 
+        if (posts?.length === 0) {
+            return <p className=''>포스트가 아직 없습니다.</p>
+        }
+
+        return (
+            <div className='flex flex-col items-center gap-y-20'>
+                {posts?.map((post) => (
+                    <PostCard key={post.id} post={post} />
+                ))}
+            </div>
+        );
+    };
     return (
         <section className='w-full h-full bg-sub-color'>
             {error && <Banner text={error} isAlert={true} />}
             {isAddPostFormOpen && (<NewPostForm setAddPostForm={setAddPostForm} />)}
-            {posts?.length === 0 && <p className=''>포스트가 아직 없습니다.</p>}
-            {loading ? <Loader isLoading={loading} color='#776B5D' kind='grid' />
-                : (
-                    <div className='flex flex-col items-center gap-y-20'>
-                        {posts?.map((post) => (
-                            <PostCard key={post.id} post={post} />
-                        ))}
-                    </div>
-
-                )}
+            {renderPosts()}
         </section>
     )
 }

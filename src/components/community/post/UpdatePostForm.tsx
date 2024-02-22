@@ -2,10 +2,10 @@ import React from 'react';
 import { IPost } from '../../../types/index.ts';
 import Loader from '../../UI/Loader.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
 import Avartar from '../../UI/Avartar.tsx';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import useUpdateForm from '../../../hooks/useUpdateForm.tsx';
+import FileUploadLabel from '../../UI/FileUploadLabel.tsx';
 
 interface IUpdatePostFormProps {
     post: IPost;
@@ -31,22 +31,7 @@ const UpdatePostForm = ({ post, setIsPostDetailOpen }: IUpdatePostFormProps) => 
                 {file && (<FontAwesomeIcon className='text-2xl font-bold text-main-color' icon={faArrowDown} />)}
                 <div className='basis-1/2 h-full flex items-center justify-center'>
                     <input onChange={handleChangeFileInputChange} type="file" name="file" id="input-upload" accept='image/*' className='hidden' />
-                    <label className={`overflow-hidden w-full h-full cursor-pointer flex flex-col items-center  justify-center ${!file && 'border-2 border-main-color border-dashed'}`} htmlFor="input-upload" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDragOver} onDrop={handleDrop}>
-                        {dragging && (
-                            <div className='absolute inset-0 z-50 bg-sky-500/20 pointer-events-none' />
-                        )}
-                        {!file && (
-                            <div className='p-6 flex flex-col items-center  justify-center pointer-events-none'>
-                                <FontAwesomeIcon className='text-hover-main-color p-5 text-4xl font-bold' icon={faImage} />
-                                <p className='text-main-color text-sm font-semibold'>여기에 파일을 드롭하세요.</p>
-                            </div>
-                        )}
-                        {file && (
-                            <div className='w-full h-full flex flex-col items-center  justify-center '>
-                                <Avartar width={64} height={64} url={URL.createObjectURL(file)} name='local file' />
-                            </div>
-                        )}
-                    </label>
+                    <FileUploadLabel file={file} dragging={dragging} handleDrag={handleDrag} handleDragOver={handleDragOver} handleDrop={handleDrop} handleChangeFileInputChange={handleChangeFileInputChange} />
                 </div>
             </div>
             <button

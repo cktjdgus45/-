@@ -3,8 +3,10 @@ import { usePostService } from '../context/PostServiceContext.tsx';
 import { setPosts } from '../store/features/post.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store.ts';
+import { useParams } from 'react-router-dom';
 
-const useGetUserPosts = (username) => {
+const useGetUserPosts = () => {
+    const { username } = useParams();
     const [loading, setLoading] = useState(false);
     const postService = usePostService();
     const dispatch = useDispatch();

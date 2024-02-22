@@ -16,7 +16,7 @@ const useText = (maxLength: number) => {
         }
     }
 
-    return { text, handleTextChange, handleTextAreaChange };
+    return { text, setText, handleTextChange, handleTextAreaChange };
 }
 
 export default useText;
