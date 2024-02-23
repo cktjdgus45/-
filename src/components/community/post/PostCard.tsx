@@ -7,6 +7,7 @@ import PostCardImage from '../../UI/PostCardImage.tsx';
 import CommentInfo from '../../UI/CommentInfo.tsx';
 import PostContent from '../../UI/PostContent.tsx';
 import usePostCard from './../../../hooks/usePostCard.tsx';
+import ConditionalRenderer from './../../UI/ConditionalRenderer.tsx';
 interface IPostCardProps {
     post: IPost;
 }
@@ -22,7 +23,9 @@ const PostCard = ({ post }: IPostCardProps) => {
                 <PostContent name={name} text={text} />
                 <CommentInfo comments={comments} onClick={handleOpenCommentContainerBox} />
                 <CommentForm postId={post.id} />
-                {isOpenCommentBox && <CommentContainerBox setIsOpenCommentBox={setIsOpenCommentBox} comments={comments} post={post} />}
+                <ConditionalRenderer condition={isOpenCommentBox}>
+                    {() => <CommentContainerBox setIsOpenCommentBox={setIsOpenCommentBox} comments={comments} post={post} />}
+                </ConditionalRenderer>
             </div>
         </div>
     )

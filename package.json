@@ -12,9 +12,6 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@reduxjs/toolkit": "^1.9.7",
     "@svgr/webpack": "^5.5.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.9",
     "@types/react": "^18.2.33",
@@ -80,7 +77,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
+    "test": "node scripts/test.js --watchAll",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
@@ -162,6 +159,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
     "@types/navermaps": "^3.7.2",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.53.0",

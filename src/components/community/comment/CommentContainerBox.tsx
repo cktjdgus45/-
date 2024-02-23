@@ -27,7 +27,7 @@ const CommentContainerBox = ({ setIsOpenCommentBox, comments, post }: ICommentCo
                 <main className='mb-2 max-h-64 overflow-y-auto flex flex-col gap-1'>
                     {comments ? comments.map((comment) => (
                         <CommentList key={comment.id} comment={comment} />
-                    )) : 'no comments'}
+                    )) : '댓글이 없습니다.'}
                 </main>
                 <footer className='w-full'>
                     <CommentForm postId={post.id} />

@@ -91,7 +91,7 @@ export type IPost = {
     name: string;
     url: string;
     fileUrl: string;
-    comments: IComment[]; // comments 필드를 string[]로 변경
+    comments: IComment[];
 }
 
 

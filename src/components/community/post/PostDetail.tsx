@@ -6,7 +6,8 @@ import usePostDetail from '../../../hooks/usePostDetail.tsx';
 import useDeleteClick from '../../../hooks/useDeleteClick.tsx';
 import PostDetailHeader from '../../UI/PostDetailHeader.tsx';
 import CommentSection from '../../UI/CommentSection.tsx';
-import UpdatePostFormRenderer from '../../UI/UpdatePostFormRenderer.tsx';
+import ConditionalRenderer from '../../UI/ConditionalRenderer.tsx';
+import UpdatePostForm from './UpdatePostForm.tsx';
 
 interface IPostCardProps {
     post: IPost;
@@ -35,7 +36,9 @@ const PostDetail = ({ post, setIsPostDetailOpen }: IPostCardProps) => {
                 <div className='w-1/2 flex flex-col justify-around'>
                     <PostDetailHeader owner={owner} ownerName={ownerName} ownerUrl={ownerUrl} username={username} toggleUpdateForm={toggleUpdateForm} handleDeleteClick={handleDeleteClick} />
                     <hr className='my-1 opacity-60 w-full bg-main-color border-t-2 border-b-2 border-solid' />
-                    <UpdatePostFormRenderer post={post} isUpdateFormOpen={isUpdateFormOpen} setIsPostDetailOpen={setIsPostDetailOpen} />
+                    <ConditionalRenderer condition={isUpdateFormOpen}>
+                        {() => <UpdatePostForm post={post} setIsPostDetailOpen={setIsPostDetailOpen} />}
+                    </ConditionalRenderer>
                     <CommentSection comments={comments} />
                     <CommentForm postId={id} />
                 </div>

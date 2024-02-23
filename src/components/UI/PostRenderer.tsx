@@ -1,5 +1,3 @@
-// PostsRenderer.tsx
-
 import React from 'react';
 import PostCard from '../community/post/PostCard.tsx';
 import Loader from './Loader.tsx';

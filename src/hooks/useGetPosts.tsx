@@ -5,20 +5,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store.ts';
 
 const useGetPosts = () => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const postService = usePostService();
     const dispatch = useDispatch();
     const posts = useSelector((state: RootState) => state.post.posts);
     useEffect(() => {
         const fetchPosts = async () => {
-            setLoading(true);
             try {
                 const fetchedPosts = await postService.getPosts();
                 dispatch(setPosts(fetchedPosts));
                 setLoading(false);
             } catch (error) {
-                setLoading(false);
                 console.error(error.message);
+            } finally {
+                setLoading(false);
             }
         };
         fetchPosts();
