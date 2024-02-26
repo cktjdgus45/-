@@ -9,7 +9,6 @@ interface ICommentListProps {
 
 const CommentList = ({ comment }: ICommentListProps) => {
     const { id, createdAt, name, text, url } = comment;
-    console.log(comment);
     return (
         <li key={id} className="flex flex-wrap items-center gap-2 p-2">
             <Avartar width={28} height={28} url={url} name={name} />

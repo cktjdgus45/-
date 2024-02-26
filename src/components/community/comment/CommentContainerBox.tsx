@@ -20,7 +20,7 @@ const CommentContainerBox = ({ setIsOpenCommentBox, comments, post }: ICommentCo
     }
     return (
         <Overlay onClose={handleClose}>
-            <section className="max-w-md comments-component relative w-1/3 flex-col items-end bg-white rounded-lg shadow-md">
+            <section data-testid="comment-container-box" className="max-w-md comments-component relative w-1/3 flex-col items-end bg-white rounded-lg shadow-md">
                 <header className='p-6 bg-sub-color rounded-t-lg'>
                     <h3 className='text-xl font-semibold text-main-color'>Comments</h3>
                 </header>

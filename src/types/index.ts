@@ -41,12 +41,6 @@ export type INewUser = {
     token: string;
 };
 
-// export type INewUser = {
-//     name: string;
-//     email: string;
-//     username: string;
-//     password: string;
-// };
 
 export type IAuthHandler = {
     login: (username: any, password: any) => Promise<void>;
@@ -71,17 +65,6 @@ export type IUser = {
     username: string;
 }
 
-// export type IPost = {
-//     id: number,
-//     text: string,
-//     createdAt: string,
-//     userId: number,
-//     username: string,
-//     name: string,
-//     url: string,
-//     fileUrl: string,
-//     comments: string,
-// }
 export type IPost = {
     id: number;
     text: string;

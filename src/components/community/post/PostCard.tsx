@@ -8,7 +8,7 @@ import CommentInfo from '../../UI/CommentInfo.tsx';
 import PostContent from '../../UI/PostContent.tsx';
 import usePostCard from './../../../hooks/usePostCard.tsx';
 import ConditionalRenderer from './../../UI/ConditionalRenderer.tsx';
-interface IPostCardProps {
+export interface IPostCardProps {
     post: IPost;
 }
 

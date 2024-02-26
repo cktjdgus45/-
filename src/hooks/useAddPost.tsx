@@ -8,14 +8,15 @@ const useAddPost = () => {
     const postService = usePostService();
     const dispatch = useDispatch();
     const handleAddPost = async (text, file) => {
-        setLoading(true);
         try {
+            setLoading(true);
             const newPost = await postService.postPost(text, file);
             dispatch(addPost(newPost));
-            setLoading(false);
         } catch (error) {
             setLoading(false);
             console.error(error.message);
+        } finally {
+            setLoading(false);
         }
     }
     return { handleAddPost, loading };
