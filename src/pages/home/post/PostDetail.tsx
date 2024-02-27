@@ -1,13 +1,13 @@
 import React from 'react';
 import { IPost } from '../../../types/index.ts';
-import Overlay from '../../UI/Overlay.tsx';
+import CommentForm from '../comment/CommentForm.tsx';
 import usePostDetail from '../../../hooks/components/post/usePostDetail.tsx';
 import useDeleteClick from '../../../hooks/delete/useDeleteClick.tsx';
-import PostDetailHeader from '../../UI/post/PostDetailHeader.tsx';
-import CommentSection from '../../UI/comment/CommentSection.tsx';
-import ConditionalRenderer from '../../UI/ConditionalRenderer.tsx';
-import UpdatePostForm from '../../../pages/home/post/UpdatePostForm.tsx';
-import CommentForm from '../../../pages/home/comment/CommentForm.tsx';
+import UpdatePostForm from './UpdatePostForm.tsx';
+import Overlay from '../../../components/UI/Overlay.tsx';
+import PostDetailHeader from '../../../components/UI/post/PostDetailHeader.tsx';
+import ConditionalRenderer from '../../../components/UI/ConditionalRenderer.tsx';
+import CommentSection from '../../../components/UI/comment/CommentSection.tsx';
 
 interface IPostCardProps {
     post: IPost;

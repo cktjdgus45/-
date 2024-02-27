@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { createContext, createRef, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import React from 'react';
 import AuthService from '../service/auth';
-import AuthForm from '../pages/AuthForm.tsx';
+import AuthForm from '../pages/auth/AuthForm.tsx';
 import { IAuthHandler, IAuthorizedUser } from '../types';
 import Loader from '../components/UI/Loader.tsx';
 

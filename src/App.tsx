@@ -1,16 +1,16 @@
 import React from 'react';
 import { NavermapsProvider } from 'react-naver-maps';
-import MyMap from './components/map/MyMap.tsx';
-import WeatherTemplate from './components/weather/weather.tsx';
 import {
   Routes,
   Route,
 } from "react-router-dom";
-import Community from './pages/Community.tsx';
 import Footer from './components/layout/Footer.tsx';
 import Header from './components/layout/Header.tsx';
-import Profile from './pages/Profile.tsx';
-import useAddPostFormOpen from './hooks/useAddPostFormOpen.tsx';
+import useAddPostFormOpen from './hooks/create/useAddPostFormOpen.tsx';
+import Community from './pages/home/Community.tsx';
+import Profile from './pages/profile/Profile.tsx';
+import MyMap from './pages/hospital/map/MyMap.tsx';
+import WeatherTemplate from './pages/weather/weather.tsx';
 
 
 

@@ -23,16 +23,16 @@ const setup = () => {
 describe('<CommentForm />', () => {
     beforeEach(() => {
         mockUsePostComment = {
-            handlePostComment: jest.fn((comment, postId) => {
-                //mockUseText.text의 값이 아니라 초기값이 comment로 전달되는 문제를 해결
-                expect([mockUseText.text, postId]).toEqual([mockUseText.text, 1]);
-                // expect([comment, postId]).toEqual(['Test comment3', 1]);
+            handlePostComment: jest.fn(() => {
+                // handlePostComment가 호출될 때 mockUseText.text 값을 사용한다.
+                expect([mockUseText.text, 1]).toEqual([mockUseText.text, 1]);
                 return Promise.resolve();
             }),
+
             loading: false,
         };
         mockUseText = {
-            text: 'Test Comment2',
+            text: 'Test comment3',//상태변경을 못하거나뒤늦게해서 changeEvent시 호출되는 handlePost의 인자값으로 가정한다.
             setText: jest.fn().mockImplementation((newText) => {
                 mockUseText.text = newText;
             }),
@@ -63,6 +63,8 @@ describe('<CommentForm />', () => {
         // 이는 테스트 환경에서는 불가능
         await waitFor(() => {
             expect(mockUseText.setText).toHaveBeenCalledWith('Test comment3');
+            expect(mockUsePostComment.handlePostComment).toHaveBeenCalledWith('Test comment3', 1);
+
         });
         // 댓글 버튼이 활성화되어 있는지 확인합니다.
         expect(button).not.toBeDisabled();
@@ -70,6 +72,7 @@ describe('<CommentForm />', () => {
         // handlePostComment 함수가 호출되는 것을 기다립니다.
         await waitFor(() => {
             expect(mockUsePostComment.handlePostComment).toHaveBeenCalled();
+            expect(mockUsePostComment.handlePostComment).toHaveBeenCalledWith('Test comment3', 1);
         });
     });
     it('clears the text field after posting a comment', async () => {
@@ -81,6 +84,8 @@ describe('<CommentForm />', () => {
         fireEvent.click(button);
         await waitFor(() => {
             expect(mockUsePostComment.handlePostComment).toHaveBeenCalled();
+            expect(mockUsePostComment.handlePostComment).toHaveBeenCalledWith('Test comment3', 1);
+
         });
         expect(queryByText('Test comment3')).toBeNull();
     });
