@@ -34,6 +34,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
         <Overlay onClose={handleClose}>
             <form encType='multipart/form-data' onClick={preventCloseEventFromOverlay} className="relative w-1/3 flex-col items-end bg-white p-8 rounded-lg shadow-md" onSubmit={handleSubmitForm}>
                 <input
+                    aria-label='업데이트할 이름을 입력해주세요.'
                     required
                     autoFocus
                     type="text"
@@ -43,14 +44,14 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                     onChange={handleTextChange}
                     className="mb-4 w-full focus:outline-none"
                 />
-                <div className='w-full h-full flex justify-around items-center gap-2'>
+                <section className='w-full h-full flex justify-around items-center gap-2'>
                     <div className='basis-1/2 h-full flex items-center justify-center'>
                         <Avartar width={64} height={64} url={url ?? ""} name='profile_image' />
                     </div>
                     {file && (<FontAwesomeIcon className='text-2xl font-bold text-main-color' icon={faArrowRight} />)}
                     <div className='basis-1/2 h-full flex items-center justify-center'>
                         <input onChange={handleChangeFileInputChange} type="file" name="file" id="input-upload" accept='image/*' className='hidden' />
-                        <label onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDragOver} onDrop={handleDrop} className={`overflow-hidden w-full h-full cursor-pointer flex flex-col items-center  justify-center ${!file && 'border-2 border-main-color border-dashed'}`} htmlFor="input-upload" >
+                        <label aria-label='업데이트할 프로필사진을 업로드해주세요.' onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDragOver} onDrop={handleDrop} className={`overflow-hidden w-full h-full cursor-pointer flex flex-col items-center  justify-center ${!file && 'border-2 border-main-color border-dashed'}`} htmlFor="input-upload" >
                             {dragging && (
                                 <div className='absolute inset-0 z-50 bg-sky-500/20 pointer-events-none' />
                             )}
@@ -68,7 +69,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                             )}
                         </label>
                     </div>
-                </div>
+                </section>
                 <button
                     type='submit'
                     className="relative w-full h-full mt-6 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"

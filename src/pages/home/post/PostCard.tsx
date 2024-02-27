@@ -17,7 +17,7 @@ const PostCard = ({ post }: IPostCardProps) => {
     const { comments, isOpenCommentBox, setIsOpenCommentBox, goProfilePage, handleOpenCommentContainerBox } = usePostCard(post);
     const { text, createdAt, name, url, fileUrl } = post;
     return (
-        <div className='w-1/2 h-full bg-white rounded-md shadow-md overflow-hidden'>
+        <section className='w-1/2 h-full bg-white rounded-md shadow-md overflow-hidden'>
             <div className='flex flex-col'>
                 <PostAuthorProfile url={url} name={name} createdAt={createdAt} onClick={goProfilePage} />
                 <PostCardImage fileUrl={fileUrl} />
@@ -28,7 +28,7 @@ const PostCard = ({ post }: IPostCardProps) => {
                     {() => <CommentContainerBox setIsOpenCommentBox={setIsOpenCommentBox} comments={comments} post={post} />}
                 </ConditionalRenderer>
             </div>
-        </div>
+        </section>
     )
 }
 

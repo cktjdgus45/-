@@ -13,7 +13,7 @@ const ImageInputField = ({ file, post, handleChangeFileInputChange, dragging, ha
             {file && (<FontAwesomeIcon className='text-2xl font-bold text-main-color' icon={faArrowDown} />)}
             <div className='basis-1/2 h-full flex items-center justify-center'>
                 <input onChange={handleChangeFileInputChange} type="file" name="file" id="input-upload" accept='image/*' className='hidden' />
-                <FileUploadLabel file={file} dragging={dragging} handleDrag={handleDrag} handleDragOver={handleDragOver} handleDrop={handleDrop} handleChangeFileInputChange={handleChangeFileInputChange} />
+                <FileUploadLabel file={file} dragging={dragging} handleDrag={handleDrag} handleDragOver={handleDragOver} handleDrop={handleDrop} />
             </div>
         </div>
     )

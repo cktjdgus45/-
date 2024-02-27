@@ -15,7 +15,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
       {error && <Banner text={error} isAlert={true} />}
       <div className='relative w-full h-full'>
         <video className='object-cover w-full h-full' src={dogVideo} autoPlay loop muted controls={false} />
-        <div className='absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-[rgba(0,0,0,0.4)]'>
+        <article className='absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-[rgba(0,0,0,0.4)]'>
           <div className='p-5 bg-glass flex flex-col justify-center items-center rounded-lg shadow-2xl'>
             <nav className='text-white text-base font-semibold flex self-start justify-self-start gap-4'>
               <h3 onClick={() => setSignup(!signup)} className={`${signup ? 'border-b-2' : ''} border-slate-700 cursor-pointer`}>회원가입</h3>
@@ -23,6 +23,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
             </nav>
             <form className='flex flex-col items-center justify-center mt-2' onSubmit={onSubmit}>
               <input
+                aria-label="아이디를 입력하세요"
                 name='username'
                 type='text'
                 placeholder='Id'
@@ -32,6 +33,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
                 required
               />
               <input
+                aria-label="비밀번호를 입력하세요"
                 name='password'
                 type='password'
                 placeholder='Password'
@@ -41,6 +43,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
               />
               {signup && (
                 <input
+                  aria-label="비밀번호를 다시 입력하세요. 위에서 작성한 비밀번호와 일치하는지 확인합니다."
                   name='passwordCheck'
                   type='password'
                   placeholder='passwordCheck'
@@ -50,6 +53,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
                 />)}
               {signup && (
                 <input
+                  aria-label='이름을 입력하세요.'
                   name='name'
                   type='text'
                   placeholder='이름'
@@ -61,6 +65,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
               )}
               {signup && (
                 <input
+                  aria-label='이메일을 입력하세요.'
                   name='email'
                   type='email'
                   placeholder='이메일'
@@ -72,6 +77,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
               )}
               {signup && (
                 <input
+                  aria-label='원하시는 프로필 사진의 url주소를 입력하세요. 입력안하시면 기본프로필사진으로 설정됩니다.'
                   name='url'
                   type='url'
                   placeholder='프로필 사진URL(선택)'
@@ -90,7 +96,7 @@ const AuthForm = ({ onSignUp, onLogin }) => {
             </form>
 
           </div>
-        </div>
+        </article>
       </div>
     </div>
 

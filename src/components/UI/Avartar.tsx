@@ -9,21 +9,21 @@ interface IAvartarProps {
 const Avartar = ({ width, height, url, name }: IAvartarProps) => {
 
     return (
-        <div className="rounded-full">
+        <figure className="rounded-full">
             {url === "" ? (
                 <img
                     src={process.env.PUBLIC_URL + '/default_user.png'}
-                    alt="User Avatar"
+                    alt={name}
                 />
             ) : (
                 <img
                     src={url}
-                    alt="User Avatar"
+                    alt={name}
                     className={`w-[${width}px] h-[${height}px] rounded-full`}
                 />
             )
             }
-        </div>
+        </figure>
     )
 }
 

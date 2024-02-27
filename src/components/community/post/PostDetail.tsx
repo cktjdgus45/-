@@ -29,11 +29,11 @@ const PostDetail = ({ post, setIsPostDetailOpen }: IPostCardProps) => {
     }
     return (
         <Overlay onClose={handleClose}>
-            <div className='post-detail-component flex gap-2 p-2 w-1/2 h-3/4 mx-auto my-4 bg-white border border-gray-300 rounded-md shadow-md overflow-auto'>
-                <div className='w-1/2'>
+            <article className='post-detail-component flex gap-2 p-2 w-1/2 h-3/4 mx-auto my-4 bg-white border border-gray-300 rounded-md shadow-md overflow-auto'>
+                <section className='w-1/2'>
                     <img className='object-cover w-full h-full rounded-sm' src={fileUrl} alt="post_image" />
-                </div>
-                <div className='w-1/2 flex flex-col justify-around'>
+                </section>
+                <section className='w-1/2 flex flex-col justify-around'>
                     <PostDetailHeader owner={owner} ownerName={ownerName} ownerUrl={ownerUrl} username={username} toggleUpdateForm={toggleUpdateForm} handleDeleteClick={handleDeleteClick} />
                     <hr className='my-1 opacity-60 w-full bg-main-color border-t-2 border-b-2 border-solid' />
                     <ConditionalRenderer condition={isUpdateFormOpen}>
@@ -41,8 +41,8 @@ const PostDetail = ({ post, setIsPostDetailOpen }: IPostCardProps) => {
                     </ConditionalRenderer>
                     <CommentSection comments={comments} />
                     <CommentForm postId={id} />
-                </div>
-            </div>
+                </section>
+            </article>
         </Overlay>
     )
 }

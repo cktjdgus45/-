@@ -22,7 +22,7 @@ const NewPostForm = ({ setAddPostForm }: INewPostFormProps) => {
                     onChange={handleTextAreaChange}
                 />
                 <input onChange={handleChangeFileInputChange} type="file" name="file" id="input-upload" accept='image/*' className='hidden' />
-                <FileUploadLabel file={file} dragging={dragging} handleDrag={handleDrag} handleDragOver={handleDragOver} handleDrop={handleDrop} handleChangeFileInputChange={handleChangeFileInputChange} />
+                <FileUploadLabel file={file} dragging={dragging} handleDrag={handleDrag} handleDragOver={handleDragOver} handleDrop={handleDrop} />
                 <SubmitButton text={'업로드'} loading={loading} />
             </form>
         </Overlay>

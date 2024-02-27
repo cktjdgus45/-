@@ -5,7 +5,7 @@ import Avartar from '../Avartar.tsx';
 
 const PostDetailHeader = ({ owner, ownerName, ownerUrl, username, toggleUpdateForm, handleDeleteClick }) => {
     return (
-        <div className='flex justify-between items-center'>
+        <section className='flex justify-between items-center'>
             <div className='flex items-center gap-2'>
                 <Avartar width={32} height={32} name={ownerName} url={ownerUrl} />
                 <h3 className='text-main-color text-sm font-bold'>{ownerName}</h3>
@@ -13,14 +13,14 @@ const PostDetailHeader = ({ owner, ownerName, ownerUrl, username, toggleUpdateFo
             {owner === username && (
                 <div className='flex  gap-2'>
                     <button onClick={toggleUpdateForm} className='text-base cursor-pointer text-main-color hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
-                        <FontAwesomeIcon icon={faPen} />
+                        <FontAwesomeIcon aria-label="포스트 수정" icon={faPen} />
                     </button>
                     <button onClick={handleDeleteClick} className='text-base cursor-pointer text-main-color hover:text-hover-main-color transition-colors duration-200 ease-in-out'>
-                        <FontAwesomeIcon icon={faTrash} />
+                        <FontAwesomeIcon aria-label="포스트 삭제" icon={faTrash} />
                     </button>
                 </div>
             )}
-        </div>
+        </section>
     )
 }
 

@@ -16,14 +16,14 @@ const CommentForm = ({ postId }: CommentFormProps) => {
         setText('');
     }
     return (
-        <div className="w-full flex-col items-end bg-white p-2 rounded-lg shadow-md">
+        <section className="w-full flex-col items-end bg-white p-2 rounded-lg shadow-md">
             <textarea
                 className="ring-2 w-full h-16 p-2 border border-glass outline-none focus:ring-2 ring-stone-300 focus:ring-stone-500 resize-none transition-all duration-300 ease-in-out"
                 placeholder="댓글 추가..."
                 value={text}
                 onChange={handleTextAreaChange}
             />
-            <div className="flex justify-end w-full">
+            <section className="flex justify-end w-full">
                 <button
                     className={`px-4 py-2 bg-main-color text-white rounded-full focus:outline-none transition-colors duration-300 ease-in-out ${text.trim() === '' && 'opacity-50 cursor-default hover:bg-main-color'}`}
                     onClick={handleAddComment}
@@ -33,8 +33,8 @@ const CommentForm = ({ postId }: CommentFormProps) => {
                         <p>댓글</p>
                     )}
                 </button>
-            </div>
-        </div>
+            </section>
+        </section>
     )
 }
 
