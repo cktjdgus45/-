@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import PostCard from '../community/post/PostCard';
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { MemoryRouter } from 'react-router-dom';
+import PostCard from '../../pages/home/post/PostCard';
 
 // 모의 post 데이터 생성, 실제 IPost 타입을 따라야 함
 const mockPost = {
@@ -81,7 +81,7 @@ describe('<PostCard />', () => {
       goProfilePage: jest.fn(),
       handleOpenCommentContainerBox: jest.fn(),
     };
-    jest.spyOn(require('../../hooks/usePostCard'), 'default').mockReturnValue(mockUsePostCard);
+    jest.spyOn(require('../../hooks/components/post/usePostCard'), 'default').mockReturnValue(mockUsePostCard);
 
   })
   //render PostAuthorProfile
@@ -115,7 +115,7 @@ describe('<PostCard />', () => {
   //ConditionalRenderer - not render case
   it('does not render CommentInfo when comments is an empty array', () => {
     mockUsePostCard['comments'] = [];
-    jest.spyOn(require('../../hooks/usePostCard'), 'default').mockReturnValue(mockUsePostCard);
+    jest.spyOn(require('../../hooks/components/post/usePostCard'), 'default').mockReturnValue(mockUsePostCard);
     renderPostCard();
     const commentInfo = screen.queryByText(/댓글 \d+/i); //댓글 n개
     expect(commentInfo).not.toBeInTheDocument();
@@ -138,7 +138,7 @@ describe('<PostCard />', () => {
   //ConditionalRenderer - not render case
   it('renders CommentContainerBox when isOpenCommentBox is true', () => {
     mockUsePostCard['isOpenCommentBox'] = true;
-    jest.spyOn(require('../../hooks/usePostCard'), 'default').mockReturnValue(mockUsePostCard);
+    jest.spyOn(require('../../hooks/components/post/usePostCard'), 'default').mockReturnValue(mockUsePostCard);
     renderPostCard();
     const commentContainerBox = screen.getByTestId('comment-container-box');
     expect(commentContainerBox).toBeInTheDocument();

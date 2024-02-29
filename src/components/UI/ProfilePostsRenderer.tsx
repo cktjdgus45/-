@@ -7,7 +7,7 @@ const ProfilePostsRenderer = ({ posts, loading, handlePostThumbnailClick }) => {
         <section>
             {loading ? <Loader isLoading={loading} color='#776B5D' kind='grid' />
                 : (
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {posts.map(post => (
                             <PostThumbnail
                                 onClick={handlePostThumbnailClick}

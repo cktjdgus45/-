@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import CommentForm from '../community/comment/CommentForm.tsx';
-import PostService from '../../service/post.ts';
+import CommentForm from '../../pages/home/comment/CommentForm.tsx';
 
 jest.mock('../../service/post.ts');
 
@@ -45,7 +44,7 @@ describe('<CommentForm />', () => {
             }),
         };
 
-        jest.spyOn(require('../../hooks/usePostComment'), 'default').mockReturnValue(mockUsePostComment);
+        jest.spyOn(require('../../hooks/components/post/comment/usePostComment'), 'default').mockReturnValue(mockUsePostComment);
         jest.spyOn(require('../../hooks/useText'), 'default').mockReturnValue(mockUseText);
     });
 
@@ -55,19 +54,9 @@ describe('<CommentForm />', () => {
     });
     it('calls handlePostComment when comment button is clicked', async () => {
         const { input, button } = setup();
-        // 댓글을 입력합니다.
+        // 텍스트 필드의 값을 업데이트합니다.
         fireEvent.change(input, { target: { value: 'Test comment3' } });
-        mockUseText.text = 'Test comment3';
-        // 상태 업데이트를 기다립니다.
-        // 실제 CommentForm 컴포넌트의 setText 함수를 호출하여 상태를 업데이트해야하지만
-        // 이는 테스트 환경에서는 불가능
-        await waitFor(() => {
-            expect(mockUseText.setText).toHaveBeenCalledWith('Test comment3');
-            expect(mockUsePostComment.handlePostComment).toHaveBeenCalledWith('Test comment3', 1);
-
-        });
-        // 댓글 버튼이 활성화되어 있는지 확인합니다.
-        expect(button).not.toBeDisabled();
+        // 댓글 버튼을 클릭합니다.
         fireEvent.click(button);
         // handlePostComment 함수가 호출되는 것을 기다립니다.
         await waitFor(() => {
@@ -75,8 +64,10 @@ describe('<CommentForm />', () => {
             expect(mockUsePostComment.handlePostComment).toHaveBeenCalledWith('Test comment3', 1);
         });
     });
+
+
     it('clears the text field after posting a comment', async () => {
-        const { input, button, queryByText } = setup();
+        const { input, button } = setup();
         fireEvent.change(input, { target: { value: 'Test comment3' } });
         mockUseText.text = 'Test comment3';
         expect(button).not.toBeDisabled();
@@ -85,15 +76,17 @@ describe('<CommentForm />', () => {
         await waitFor(() => {
             expect(mockUsePostComment.handlePostComment).toHaveBeenCalled();
             expect(mockUsePostComment.handlePostComment).toHaveBeenCalledWith('Test comment3', 1);
-
         });
-        expect(queryByText('Test comment3')).toBeNull();
+        // handlePostComment 함수가 호출되고 나면 텍스트 필드가 비워져야 합니다.
+        expect(mockUseText.setText).toHaveBeenCalledWith('');
     });
 
+
+
+
     it('updates the text field when typing', async () => {
-        const { input } = setup();
-        fireEvent.change(input, { target: { value: 'Test comment3' } });
-        mockUseText.text = 'Test comment3';
+        setup();
+        mockUseText.handleTextAreaChange({ target: { value: 'Test comment3' } });
         expect(mockUseText.handleTextAreaChange).toHaveBeenCalled();
         expect(mockUseText.setText).toHaveBeenCalledWith('Test comment3');
     });

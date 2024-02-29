@@ -6,7 +6,7 @@ const Footer = () => {
             <div className='flex-col items-center'>
                 <img alt='로고이미지' src={process.env.PUBLIC_URL + '/logo.png'} />
                 <p>
-                    <p className='mt-2 text-xs text-main-color font-normal'>@2023오늘도안전하개 All rights reserved</p>
+                    <span className='mt-2 text-xs text-main-color font-normal'>@2023오늘도안전하개 All rights reserved</span>
                 </p>
             </div>
             <div>

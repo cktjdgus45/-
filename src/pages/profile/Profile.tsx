@@ -7,7 +7,7 @@ import useSetPostDetail from '../../hooks/components/post/useSetPostDetail.tsx';
 import ProfilePostsRenderer from '../../components/UI/ProfilePostsRenderer.tsx';
 import ConditionalRenderer from '../../components/UI/ConditionalRenderer.tsx';
 import UpdateProfileForm from './UpdateProfileForm.tsx';
-import PostDetail from '../../components/community/post/PostDetail.tsx';
+import PostDetail from '../home/post/PostDetail.tsx';
 import { IPost } from '../../types/index.ts';
 
 const Profile = () => {

@@ -32,7 +32,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
     } = useUpdateProfile(setEditProfileForm, authHandler);
     return (
         <Overlay onClose={handleClose}>
-            <form encType='multipart/form-data' onClick={preventCloseEventFromOverlay} className="relative w-1/3 flex-col items-end bg-white p-8 rounded-lg shadow-md" onSubmit={handleSubmitForm}>
+            <form encType='multipart/form-data' onClick={preventCloseEventFromOverlay} className="max-mobile:text-xs relative w-1/3 flex-col items-end bg-white p-8 rounded-lg shadow-md" onSubmit={handleSubmitForm}>
                 <input
                     aria-label='업데이트할 이름을 입력해주세요.'
                     required
@@ -44,7 +44,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                     onChange={handleTextChange}
                     className="mb-4 w-full focus:outline-none"
                 />
-                <section className='w-full h-full flex justify-around items-center gap-2'>
+                <section className='w-full h-full flex flex-col mobile:flex-row justify-around items-center gap-2'>
                     <div className='basis-1/2 h-full flex items-center justify-center'>
                         <Avartar width={64} height={64} url={url ?? ""} name='profile_image' />
                     </div>
@@ -56,9 +56,9 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                                 <div className='absolute inset-0 z-50 bg-sky-500/20 pointer-events-none' />
                             )}
                             {!file && (
-                                <div className='p-6 flex flex-col items-center  justify-center pointer-events-none'>
+                                <div className='p-3 mobile:p-6 flex flex-col items-center  justify-center pointer-events-none'>
                                     <FontAwesomeIcon className='text-hover-main-color p-5 text-4xl font-bold' icon={faImage} />
-                                    <p className='text-main-color text-sm font-semibold'>여기에 파일을 드롭하세요.</p>
+                                    <p className='text-main-color text-xs font-semibold text-center'>여기에 파일을 드롭하세요.</p>
                                 </div>
                             )}
                             {file && (
@@ -72,7 +72,7 @@ const UpdateProfileForm = ({ setEditProfileForm, authHandler }: IUpdateProfileFo
                 </section>
                 <button
                     type='submit'
-                    className="relative w-full h-full mt-6 px-4 py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
+                    className="relative w-full h-full mt-3 px-2 py-1 max-mobile:text-xs mobile:mt-6 mobile:px-4 mobile:py-2 bg-main-color text-white rounded-md hover:bg-hover-main-color focus:outline-none transition-colors duration-300 ease-in-out"
                 >
                     {loading ? (<Loader kind='clip' isLoading={loading} color='#fff' />) : (
                         <span>업데이트</span>

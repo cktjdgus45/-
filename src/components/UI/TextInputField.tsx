@@ -9,7 +9,7 @@ const TextInputField = ({ placeholder = '', autoFocus = false, value = '', onCha
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`mb-4 w-full h-16 focus:outline-none resize-none ${className}`}
+        className={`text-sm mobile:text-base mb-4 w-full h-16 focus:outline-none resize-none ${className}`}
     />
 );
 
