@@ -2,10 +2,6 @@ import axios from 'axios';
 
 export const fetcher = (url: string) => axios.get(url).then(res => res.data)
 
-//use
-// const additionalData = { text: 's' };
-// const { data, error } = useSWR(['/api/data', formData],
-
 export const postFetcher = async (url: string, formData: any) => {
     const response = await fetch(url, {
         method: 'POST',

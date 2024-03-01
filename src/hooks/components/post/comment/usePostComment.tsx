@@ -13,10 +13,10 @@ const usePostComment = () => {
         try {
             const comments = await postService.postComment(comment, postId);
             dispatch(addComment({ comments, postId }));
-            setLoading(false);
         } catch (error) {
-            setLoading(false);
             console.error(error.message);
+        } finally {
+            setLoading(false);
         }
     }
     return { handlePostComment, loading };
